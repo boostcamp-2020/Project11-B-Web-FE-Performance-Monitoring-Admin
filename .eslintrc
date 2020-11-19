@@ -1,9 +1,21 @@
 {
-  "plugins": ["prettier", "@typescript-eslint"],
-  "extends": ["airbnb-typescript", "react-app", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "prettier",
+    "airbnb-typescript",
+    "react-app",
+    "prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/recommend",
+    "plugin:prettier/recommend"
+  ],
+  "rules": {
+    "array-callback-return": 0,
+    "import/extensions": 0,
+    "react/jsx-one-expression-per-line": 0
   },
   "settings": {
     "import/resolver": {
@@ -11,22 +23,5 @@
         "alwaysTryTypes": true
       }
     }
-  },
-  "rules": {
-    "no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "args": "none"
-      }
-    ],
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "args": "none"
-      }
-    ],
-    "react/jsx-one-expression-per-line":0
   }
 }
