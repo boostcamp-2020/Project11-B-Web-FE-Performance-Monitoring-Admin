@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Box, Checkbox, Button, ButtonGroup, IconButton } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import bb, { line, zoom } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
+
+import Chart from '../components/Chart';
 
 function Issue(): React.ReactElement {
   const json = {
@@ -17,52 +19,10 @@ function Issue(): React.ReactElement {
     ],
   };
 
-  interface Issue {
-    id: number;
-    occuredAt: string;
-  }
-
-  const getChartData = useCallback((issues: Issue[]) => {
-    const data: { occuredAt: string; count: number }[] = [];
-    for (const issue of issues) {
-      if (!data.length) {
-        data.push({ occuredAt: issue.occuredAt, count: 1 });
-      } else if (data[data.length - 1].occuredAt === issue.occuredAt)
-        data[data.length - 1].count += 1;
-      else data.push({ occuredAt: issue.occuredAt, count: 1 });
-    }
-    return data;
-  }, []);
-  const chartDiv = useRef(null);
-  useEffect(() => {
-    const chartData = getChartData(json.issues);
-    bb.generate({
-      bindto: chartDiv.current,
-      data: {
-        x: 'x',
-        json: {
-          issue: chartData.map((data) => data.count),
-          x: chartData.map((data) => data.occuredAt),
-        },
-        type: line(),
-        xFormat: '%Y-%m-%d %H:%M',
-      },
-      zoom: {
-        enabled: zoom(),
-      },
-      axis: {
-        x: {
-          type: 'timeseries',
-        },
-      },
-    });
-  }, [getChartData, json.issues]);
   return (
     <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
       <Box>
-        <Box>
-          <div ref={chartDiv} id="chart" />
-        </Box>
+        <Chart chartData={json.issues} />
       </Box>
       <Box flexGrow={1}>
         <Box>
