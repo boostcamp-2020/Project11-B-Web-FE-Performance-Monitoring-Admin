@@ -1,10 +1,10 @@
 import React from 'react';
-import { PrivateRouter } from './Router';
+import MainLayout from './layout/MainLayout';
 
 function App(): React.ReactElement {
   return (
     <div className="App">
-      <PrivateRouter />
+      <MainLayout />
     </div>
   );
 }
