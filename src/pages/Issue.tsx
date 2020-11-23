@@ -84,7 +84,13 @@ function Issue(): React.ReactElement {
               Assignee
             </Box>
           </Box>
-          <Box>body</Box>
+          <Box display="flex" flexDirection="column">
+            {json.issues.map((issue) => (
+              <Link to={`/issue/${issue.id}`}>
+                {issue.id} 발생 시간 : {issue.occuredAt}
+              </Link>
+            ))}
+          </Box>
         </Box>
       </Box>
     </Box>
