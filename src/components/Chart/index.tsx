@@ -13,7 +13,7 @@ interface IProps {
 
 function Chart(props: IProps): React.ReactElement {
   const { chartData } = props;
-  const sortChartData = useCallback(
+  const issueOrderedByTime = useCallback(
     (issues: Issue[]) => {
       const data: { occuredAt: string; count: number }[] = [];
       for (const issue of chartData) {
@@ -29,7 +29,7 @@ function Chart(props: IProps): React.ReactElement {
   );
   const chartDiv = useRef(null);
   useEffect(() => {
-    const bindedData = sortChartData(chartData);
+    const bindedData = issueOrderedByTime(chartData);
     bb.generate({
       bindto: chartDiv.current,
       data: {
@@ -50,7 +50,7 @@ function Chart(props: IProps): React.ReactElement {
         },
       },
     });
-  }, [sortChartData, chartData]);
+  }, [issueOrderedByTime, chartData]);
   return <div ref={chartDiv} />;
 }
 export default Chart;
