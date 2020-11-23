@@ -5,12 +5,6 @@ import Issue from './pages/Issue';
 import Discover from './pages/Discover';
 import IssueDetail from './pages/IssueDetail';
 
-//   <Route
-//   path="/new-issue"
-//   exact={true}
-//   component={NewIssuePage}
-// />
-
 function PublicRouter(): React.ReactElement {
   return (
     <Switch>
