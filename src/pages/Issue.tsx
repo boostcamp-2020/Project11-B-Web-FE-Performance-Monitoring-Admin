@@ -1,21 +1,50 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Box, Checkbox, Button, ButtonGroup, IconButton } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import 'billboard.js/dist/billboard.css';
-
 import Chart from '../components/Chart';
+import IssueListItem from '../components/IssueListItem';
 
 function Issue(): React.ReactElement {
   const json = {
     issues: [
-      { id: 1, occuredAt: '2020-11-23 01:36' },
-      { id: 2, occuredAt: '2020-11-23 01:36' },
-      { id: 3, occuredAt: '2020-11-23 01:39' },
-      { id: 4, occuredAt: '2020-11-23 01:40' },
-      { id: 5, occuredAt: '2020-11-23 01:45' },
-      { id: 6, occuredAt: '2020-11-23 01:50' },
+      {
+        id: 1,
+        message: 'undefinedMethod is not undefiend',
+        filename: 'src/page/MainPage',
+        occuredAt: '2020-11-23 01:36',
+      },
+      {
+        id: 2,
+        message: 'undefinedMethod is not undefiend',
+        filename: 'src/page/MainPage',
+        occuredAt: '2020-11-23 01:36',
+      },
+      {
+        id: 3,
+        message: 'undefinedMethod is not undefiend',
+        filename: 'src/page/MainPage',
+        occuredAt: '2020-11-23 01:39',
+      },
+      {
+        id: 4,
+        message: 'undefinedMethod is not undefiend',
+        filename: 'src/page/MainPage',
+        occuredAt: '2020-11-23 01:40',
+      },
+      {
+        id: 5,
+        message: 'undefinedMethod is not undefiend',
+        filename: 'src/page/MainPage',
+        occuredAt: '2020-11-23 01:45',
+      },
+      {
+        id: 6,
+        message: 'undefinedMethod is not undefiend',
+        filename: 'src/page/MainPage',
+        occuredAt: '2020-11-23 01:50',
+      },
     ],
   };
 
@@ -84,11 +113,14 @@ function Issue(): React.ReactElement {
               Assignee
             </Box>
           </Box>
-          <Box display="flex" flexDirection="column">
+          <Box
+            display="flex"
+            flexDirection="column"
+            border="1px solid #cfcfcf"
+            borderRadius=".5rem"
+          >
             {json.issues.map((issue) => (
-              <Link to={`/issue/${issue.id}`}>
-                {issue.id} 발생 시간 : {issue.occuredAt}
-              </Link>
+              <IssueListItem issue={issue} />
             ))}
           </Box>
         </Box>
