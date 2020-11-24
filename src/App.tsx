@@ -1,22 +1,10 @@
 import React from 'react';
+import MainLayout from './layout/MainLayout';
 
-function App() {
+function App(): React.ReactElement {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <span>src/App.tsx</span>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainLayout />
     </div>
   );
 }
