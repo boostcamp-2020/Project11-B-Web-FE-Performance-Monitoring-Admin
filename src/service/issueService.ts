@@ -6,11 +6,11 @@ export interface Irequest {
 export default (
   apiRequest: AxiosInstance,
 ): {
-  getIssue: (id: number) => Promise<AxiosResponse>;
+  getIssue: (id: string) => Promise<AxiosResponse>;
   getIssues: () => Promise<AxiosResponse>;
 } => {
-  const getIssue = (id: number) => {
-    return apiRequest.get(`/api/issues/${id}`);
+  const getIssue = (id: string) => {
+    return apiRequest.get(`/api/issue/${id}`);
   };
   const getIssues: () => Promise<AxiosResponse> = () => {
     return apiRequest.get(`/api/issues`);
