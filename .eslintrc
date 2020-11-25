@@ -16,7 +16,8 @@
     "array-callback-return": 0,
     "import/extensions": 0,
     "react/jsx-one-expression-per-line": 0,
-    "import/no-anonymous-default-export": 0
+    "import/no-anonymous-default-export": 0,
+    "no-underscore-dangle": 0
   },
   "settings": {
     "import/resolver": {

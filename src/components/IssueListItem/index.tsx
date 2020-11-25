@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -20,15 +21,37 @@ const useStyle = makeStyles({
   },
 });
 
-interface Issue {
-  id: number;
-  message: string;
-  occuredAt: string;
+interface IStack {
+  columnNo: string;
+  lineNo: string;
+  function: string;
   filename: string;
+}
+interface IssueType {
+  _id: string;
+  message: string;
+  stack: IStack[];
+  occuredAt: Date;
+  sdk: {
+    name: string;
+    version: string;
+  };
+  meta: {
+    broswer: {
+      name: string;
+      version: string;
+    };
+    os: {
+      name: string;
+      version: string;
+    };
+    url: string;
+    ip: string;
+  };
 }
 
 interface IProps {
-  issue: Issue;
+  issue: IssueType;
 }
 
 function IssueListItem(props: IProps): React.ReactElement {
@@ -37,8 +60,8 @@ function IssueListItem(props: IProps): React.ReactElement {
   return (
     <Box px={4} py={2} className={styles.issueItem}>
       <Box display="flex" gridGap={10}>
-        <StyledLink to={`/issue/${issue.id}`}>ReferencedError</StyledLink>
-        <Box color="#817091">{issue.filename}</Box>
+        <StyledLink to={`/issue/${issue._id}`}>ReferencedError</StyledLink>
+        <Box color="#817091">{issue.stack[0].filename}</Box>
       </Box>
       <Box fontSize="14px">{issue.message}</Box>
       <Box display="flex" gridGap={10}>
