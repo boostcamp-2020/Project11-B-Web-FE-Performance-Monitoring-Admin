@@ -3,7 +3,7 @@ import axios from 'axios';
 const isDev: boolean = process.env.NODE_ENV === 'development';
 
 const apiAxios = axios.create({
-  baseURL: isDev ? 'http://panopticon.gq' : 'panopticon-dev.gq',
+  baseURL: isDev ? 'http://panopticon.gq' : '/',
 });
 
 // 요청 인터셉터 추가
