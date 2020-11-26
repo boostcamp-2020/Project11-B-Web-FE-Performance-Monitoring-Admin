@@ -3,7 +3,7 @@ import { Box, Checkbox, Button, ButtonGroup, IconButton } from '@material-ui/cor
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import 'billboard.js/dist/billboard.css';
-import Chart from '../components/Chart';
+import IssueTimeChart from '../components/IssueTimeChart';
 import IssueListItem from '../components/IssueListItem';
 import service from '../service';
 
@@ -17,7 +17,9 @@ function Issue(): React.ReactElement {
   }, []);
   return (
     <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
-      <Box>{/* <Chart /> */}</Box>
+      <Box>
+        <IssueTimeChart />
+      </Box>
       <Box flexGrow={1}>
         <Box>
           <Box display="flex" justifyContent="space-between">
@@ -105,7 +107,7 @@ interface IStack {
 interface IssueType {
   _id: string;
   message: string;
-  stack: IStack[];
+  stack: IStack;
   occuredAt: Date;
   sdk: {
     name: string;
@@ -126,43 +128,3 @@ interface IssueType {
 }
 
 export default Issue;
-// const json = {
-//   issues: [
-//     {
-//       id: 1,
-//       message: 'undefinedMethod is not undefiend',
-//       filename: 'src/page/MainPage',
-//       occuredAt: '2020-11-23 01:36',
-//     },
-//     {
-//       id: 2,
-//       message: 'undefinedMethod is not undefiend',
-//       filename: 'src/page/MainPage',
-//       occuredAt: '2020-11-23 01:36',
-//     },
-//     {
-//       id: 3,
-//       message: 'undefinedMethod is not undefiend',
-//       filename: 'src/page/MainPage',
-//       occuredAt: '2020-11-23 01:39',
-//     },
-//     {
-//       id: 4,
-//       message: 'undefinedMethod is not undefiend',
-//       filename: 'src/page/MainPage',
-//       occuredAt: '2020-11-23 01:40',
-//     },
-//     {
-//       id: 5,
-//       message: 'undefinedMethod is not undefiend',
-//       filename: 'src/page/MainPage',
-//       occuredAt: '2020-11-23 01:45',
-//     },
-//     {
-//       id: 6,
-//       message: 'undefinedMethod is not undefiend',
-//       filename: 'src/page/MainPage',
-//       occuredAt: '2020-11-23 01:50',
-//     },
-//   ],
-// };

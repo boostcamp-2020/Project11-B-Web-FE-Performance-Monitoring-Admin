@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { Box } from '@material-ui/core';

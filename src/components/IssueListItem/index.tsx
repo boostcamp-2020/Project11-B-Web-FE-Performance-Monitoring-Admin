@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -30,7 +29,7 @@ interface IStack {
 interface IssueType {
   _id: string;
   message: string;
-  stack: IStack[];
+  stack: IStack;
   occuredAt: Date;
   sdk: {
     name: string;
@@ -61,7 +60,7 @@ function IssueListItem(props: IProps): React.ReactElement {
     <Box px={4} py={2} className={styles.issueItem}>
       <Box display="flex" gridGap={10}>
         <StyledLink to={`/issue/${issue._id}`}>ReferencedError</StyledLink>
-        <Box color="#817091">{issue.stack[0].filename}</Box>
+        <Box color="#817091">{issue.stack.filename}</Box>
       </Box>
       <Box fontSize="14px">{issue.message}</Box>
       <Box display="flex" gridGap={10}>
