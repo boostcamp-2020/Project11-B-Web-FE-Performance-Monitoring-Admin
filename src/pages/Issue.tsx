@@ -22,7 +22,7 @@ function Issue(): React.ReactElement {
     (async () => {
       const query = qs.stringify({ page }, { addQueryPrefix: true });
       const res = await service.getIssues(query);
-      setTotalPage(res.data.metaData.totalPage);
+      setTotalPage(res.data.metaData[0].totalPage);
       setIssues(res.data.data);
     })();
   }, [page]);
