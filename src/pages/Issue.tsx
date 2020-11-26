@@ -1,58 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Checkbox, Button, ButtonGroup, IconButton } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import 'billboard.js/dist/billboard.css';
 import Chart from '../components/Chart';
 import IssueListItem from '../components/IssueListItem';
+import service from '../service';
 
 function Issue(): React.ReactElement {
-  const json = {
-    issues: [
-      {
-        id: 1,
-        message: 'undefinedMethod is not undefiend',
-        filename: 'src/page/MainPage',
-        occuredAt: '2020-11-23 01:36',
-      },
-      {
-        id: 2,
-        message: 'undefinedMethod is not undefiend',
-        filename: 'src/page/MainPage',
-        occuredAt: '2020-11-23 01:36',
-      },
-      {
-        id: 3,
-        message: 'undefinedMethod is not undefiend',
-        filename: 'src/page/MainPage',
-        occuredAt: '2020-11-23 01:39',
-      },
-      {
-        id: 4,
-        message: 'undefinedMethod is not undefiend',
-        filename: 'src/page/MainPage',
-        occuredAt: '2020-11-23 01:40',
-      },
-      {
-        id: 5,
-        message: 'undefinedMethod is not undefiend',
-        filename: 'src/page/MainPage',
-        occuredAt: '2020-11-23 01:45',
-      },
-      {
-        id: 6,
-        message: 'undefinedMethod is not undefiend',
-        filename: 'src/page/MainPage',
-        occuredAt: '2020-11-23 01:50',
-      },
-    ],
-  };
-
+  const [issues, setIssues] = useState<IssueType[]>([]);
+  useEffect(() => {
+    (async () => {
+      const res = await service.getIssues();
+      setIssues(res.data);
+    })();
+  }, []);
   return (
     <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
-      <Box>
-        <Chart chartData={json.issues} />
-      </Box>
+      <Box>{/* <Chart /> */}</Box>
       <Box flexGrow={1}>
         <Box>
           <Box display="flex" justifyContent="space-between">
@@ -119,8 +84,8 @@ function Issue(): React.ReactElement {
             border="1px solid #cfcfcf"
             borderRadius=".5rem"
           >
-            {json.issues.map((issue) => (
-              <IssueListItem issue={issue} />
+            {issues.map((issue) => (
+              <IssueListItem key={issue._id} issue={issue} />
             ))}
           </Box>
         </Box>
@@ -128,4 +93,76 @@ function Issue(): React.ReactElement {
     </Box>
   );
 }
+
+interface IStack {
+  _id: string;
+  columnNo: string;
+  lineNo: string;
+  function: string;
+  filename: string;
+}
+
+interface IssueType {
+  _id: string;
+  message: string;
+  stack: IStack[];
+  occuredAt: Date;
+  sdk: {
+    name: string;
+    version: string;
+  };
+  meta: {
+    broswer: {
+      name: string;
+      version: string;
+    };
+    os: {
+      name: string;
+      version: string;
+    };
+    url: string;
+    ip: string;
+  };
+}
+
 export default Issue;
+// const json = {
+//   issues: [
+//     {
+//       id: 1,
+//       message: 'undefinedMethod is not undefiend',
+//       filename: 'src/page/MainPage',
+//       occuredAt: '2020-11-23 01:36',
+//     },
+//     {
+//       id: 2,
+//       message: 'undefinedMethod is not undefiend',
+//       filename: 'src/page/MainPage',
+//       occuredAt: '2020-11-23 01:36',
+//     },
+//     {
+//       id: 3,
+//       message: 'undefinedMethod is not undefiend',
+//       filename: 'src/page/MainPage',
+//       occuredAt: '2020-11-23 01:39',
+//     },
+//     {
+//       id: 4,
+//       message: 'undefinedMethod is not undefiend',
+//       filename: 'src/page/MainPage',
+//       occuredAt: '2020-11-23 01:40',
+//     },
+//     {
+//       id: 5,
+//       message: 'undefinedMethod is not undefiend',
+//       filename: 'src/page/MainPage',
+//       occuredAt: '2020-11-23 01:45',
+//     },
+//     {
+//       id: 6,
+//       message: 'undefinedMethod is not undefiend',
+//       filename: 'src/page/MainPage',
+//       occuredAt: '2020-11-23 01:50',
+//     },
+//   ],
+// };
