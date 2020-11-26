@@ -1,0 +1,46 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js Dev Server CD
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/develop.key
+          chmod 600 ~/.ssh/develop.key
+          cat >>~/.ssh/config <<END
+          Host develop
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/develop.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.DEV_USERNAME }}
+          SSH_KEY: ${{ secrets.DEV_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.DEV_HOST }}
+
+      - name: Run Install
+        run: ssh develop 'cd repos/Project11-B-Web-FE-Performance-Monitoring-Admin && git checkout develop && git pull && npm i'
+
+      - name: Build Webpack
+        run: ssh develop 'cd repos/Project11-B-Web-FE-Performance-Monitoring-Admin && npm run build'
