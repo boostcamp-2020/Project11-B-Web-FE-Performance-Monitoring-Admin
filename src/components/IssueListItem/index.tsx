@@ -57,7 +57,7 @@ function IssueListItem(props: IProps): React.ReactElement {
   const { issue } = props;
   const styles = useStyle();
   return (
-    <Box px={4} py={2} className={styles.issueItem}>
+    <Box px={3} py={2} className={styles.issueItem}>
       <Box display="flex" gridGap={10}>
         <StyledLink to={`/issue/${issue._id}`}>ReferencedError</StyledLink>
         <Box color="#817091">{issue.stack.filename}</Box>

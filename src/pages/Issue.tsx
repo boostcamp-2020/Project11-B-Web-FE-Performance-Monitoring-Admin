@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import Pagination from '@material-ui/lab/Pagination';
 import { Box, Checkbox, Button, ButtonGroup, IconButton } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import 'billboard.js/dist/billboard.css';
+import qs from 'qs';
 import IssueTimeChart from '../components/IssueTimeChart';
 import IssueListItem from '../components/IssueListItem';
 import service from '../service';
 
 function Issue(): React.ReactElement {
   const [issues, setIssues] = useState<IssueType[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>();
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   useEffect(() => {
     (async () => {
-      const res = await service.getIssues();
-      setIssues(res.data);
+      const query = qs.stringify({ page }, { addQueryPrefix: true });
+      const res = await service.getIssues(query);
+      setTotalPage(res.data.metaData.totalPage);
+      setIssues(res.data.data);
     })();
-  }, []);
+  }, [page]);
+
   return (
     <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
       <Box>
@@ -89,6 +101,9 @@ function Issue(): React.ReactElement {
             {issues.map((issue) => (
               <IssueListItem key={issue._id} issue={issue} />
             ))}
+            <Box display="flex" flexDirection="column" alignItems="center" p={1}>
+              <Pagination count={totalPage} page={page} onChange={handlePageChange} />
+            </Box>
           </Box>
         </Box>
       </Box>
