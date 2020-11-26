@@ -107,7 +107,7 @@ interface IStack {
 interface IssueType {
   _id: string;
   message: string;
-  stack: IStack[];
+  stack: IStack;
   occuredAt: Date;
   sdk: {
     name: string;
