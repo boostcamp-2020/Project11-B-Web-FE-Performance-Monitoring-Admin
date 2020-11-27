@@ -1,16 +1,13 @@
-# <img src="https://i.imgur.com/25nFdF1.jpg" width="60px;"> Panopticon
+<div style="text-align:center;"> 
+    <img src="https://i.imgur.com/ZV0QxMF.jpg" width="200px;">
+    <h1>Panopticon</h1>
+</div>
 
-<div align="center" style="margin-top : 10px"> 
+![TypeScript](https://img.shields.io/badge/TypeScript-v4.0.5-blue?logo=TypeScript) ![NodeJS](https://img.shields.io/badge/node.js-v14.5.1-green?logo=node.js) ![koa](https://img.shields.io/badge/KOA-4.16.1-yellow?logo=KoaJs) ![mongodb](https://img.shields.io/badge/MongoDB-v4.2.10-green?logo=mongodb) 
 
-![TypeScript](https://img.shields.io/badge/TypeScript-v4.0.5-blue?logo=TypeScript) ![NodeJS](https://img.shields.io/badge/node.js-v14.5.1-green?logo=node.js)
-
-![koa](https://img.shields.io/badge/KOA-4.16.1-yellow?logo=KoaJs) ![mongodb](https://img.shields.io/badge/MongoDB-v4.2.10-green?logo=mongodb)
-
-![react](https://img.shields.io/badge/React-17.0.1-1cf?logo=react) ![Babel](https://img.shields.io/badge/@babel/core-7.12.3-yellow?logo=babel) ![Webpack](https://img.shields.io/badge/Webpack-4.44.2-blue?logo=Webpack)
+![react](https://img.shields.io/badge/React-17.0.1-1cf?logo=react) ![Babel](https://img.shields.io/badge/@babel/core-7.12.3-yellow?logo=babel) ![Webpack](https://img.shields.io/badge/Webpack-4.44.2-blue?logo=Webpack) 
 
 ![npm](https://img.shields.io/badge/npm-6.14.8-red?logo=npm)
-
-</div>
 
 ## :house: 링크
 
@@ -27,7 +24,6 @@
 ### Wiki (Notion)
 
 - [Link](https://www.notion.so/PANOPTIOCN-7417bc8fe4614754b49bdd17745d25a2)
-
 
 ## 프로젝트 소개
 
