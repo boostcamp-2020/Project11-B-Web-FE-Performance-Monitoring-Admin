@@ -28,7 +28,7 @@ function Issue(): React.ReactElement {
   }, [page]);
 
   return (
-    <Box p={5} display="flex" flexDirection="column" minHeight="100vh">
+    <Box p={5} position="relative" display="flex" flexDirection="column" minHeight="100vh">
       <Box>
         <IssueTimeChart />
       </Box>
