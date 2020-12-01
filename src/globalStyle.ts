@@ -16,4 +16,8 @@ const theme = createMuiTheme({
   },
 });
 
+theme.typography.h1 = {
+  fontSize: '2rem',
+};
+
 export default theme;
