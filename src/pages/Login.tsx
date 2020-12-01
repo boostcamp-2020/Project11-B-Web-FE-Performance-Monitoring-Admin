@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const isDev: boolean = process.env.NODE_ENV === 'development';
-// const oauthURL: string = isDev ? 'http://panopticon-dev.gq/api/auth/github' : '/api/auth/github';
-const oauthURL: string = isDev ? 'http://localhost:3000/api/auth/github' : '/api/auth/github';
+const oauthURL: string = isDev ? 'http://panopticon-dev.gq/api/auth/github' : '/api/auth/github';
+// const oauthURL: string = isDev ? 'http://localhost:3000/api/auth/github' : '/api/auth/github';
 
 const Login = (): React.ReactElement => {
   window.history.replaceState(null, '', '/login');
