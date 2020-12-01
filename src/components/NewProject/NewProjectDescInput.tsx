@@ -24,7 +24,6 @@ function NewProjectDescInput(props: IProps): React.ReactElement {
   };
 
   const handleClick = () => {
-    if (inputText === '') return;
     setDesc(inputText);
     handleNext();
   };
