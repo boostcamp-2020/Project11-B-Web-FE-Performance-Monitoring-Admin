@@ -36,6 +36,7 @@
     "@types/react-router-dom": "^5.1.6",
     "axios": "^0.21.0",
     "billboard.js": "^2.1.4",
+    "clsx": "^1.1.1",
     "eslint-import-resolver-typescript": "^2.3.0",
     "qs": "^6.9.4",
     "react": "^17.0.1",
