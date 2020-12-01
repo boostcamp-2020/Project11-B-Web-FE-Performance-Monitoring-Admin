@@ -1,13 +1,68 @@
-import React, { useState } from 'react';
-import { Box, Avatar, ClickAwayListener } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+import React from 'react';
+import { Box, Avatar } from '@material-ui/core';
+import { makeStyles, useTheme, Theme, createStyles, styled } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
 import { NavLink } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ArchiveRoundedIcon from '@material-ui/icons/ArchiveRounded';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import HighlightIcon from '@material-ui/icons/Highlight';
+import Drawer from '@material-ui/core/Drawer';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import clsx from 'clsx';
 import useStyle from './styles';
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      height: '100%',
+      position: 'relative',
+    },
+    drawer: {
+      minHeight: '100vh',
+      backgroundColor: '#311b92',
+    },
+    drawerOpen: {
+      position: 'relative',
+      backgroundColor: '#311b92',
+      width: drawerWidth,
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    drawerClose: {
+      position: 'relative',
+      backgroundColor: '#311b92',
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      overflowX: 'hidden',
+      width: theme.spacing(7) + 1,
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9) + 1,
+      },
+    },
+    toolbar: {
+      color: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: theme.spacing(0, 1),
+    },
+    toolbarBtn: { color: 'white' },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }),
+);
 
 const Tab = styled(NavLink)({
   display: 'flex',
@@ -26,23 +81,45 @@ const Tab = styled(NavLink)({
 });
 
 function Sidebar(): React.ReactElement {
-  const [dropMenu, setDropMenu] = useState(false);
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(true);
 
-  const handleClick = (): void => {
-    setDropMenu(!dropMenu);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   const style = useStyle();
   return (
-    <Box
-      position="fixed"
-      display="flex"
-      flexDirection="column"
-      className={style.container}
-      width={220}
-      pt={2}
-      left={0}
+    <Drawer
+      className={classes.drawer}
+      variant="permanent"
+      classes={{
+        paper: clsx({
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        }),
+      }}
     >
+      <div className={classes.toolbar}>
+        {!open ? (
+          <div>
+            <IconButton className={classes.toolbarBtn} onClick={handleDrawerOpen}>
+              <ChevronRightIcon />
+            </IconButton>
+          </div>
+        ) : (
+          <div>
+            <IconButton className={classes.toolbarBtn} onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+        )}
+      </div>
       <Box
         display="flex"
         flexDirection="row"
@@ -60,7 +137,6 @@ function Sidebar(): React.ReactElement {
           display="flex"
           flexDirection="column"
           overflow="hidden"
-          onClick={handleClick}
           ml={1}
         >
           <Box className={style.profileMenu}>
@@ -71,7 +147,6 @@ function Sidebar(): React.ReactElement {
               fontWeight={700}
               className={style.profileMenuBtn}
               color="white"
-              onClick={handleClick}
             >
               JuyoungPark
               <KeyboardArrowDownIcon />
@@ -80,45 +155,35 @@ function Sidebar(): React.ReactElement {
           <Box component="div" color="white" textOverflow="ellipsis" overflow="hidden">
             juyoung7018.park@gmail.com
           </Box>
-          {dropMenu ? (
-            <ClickAwayListener onClickAway={handleClick}>
-              <Box color="white">
-                <Tab to="/project">Projects</Tab>
-                <Tab to="/issue">Issues</Tab>
-                <Tab to="/issue">Discover</Tab>
-                <Tab to="/issue">Alerts</Tab>
-              </Box>
-            </ClickAwayListener>
-          ) : null}
         </Box>
       </Box>
       <Box display="flex" flexDirection="column" pt={2}>
         <Tab to="/projects" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <ArchiveRoundedIcon />
-            <Box px={2}>Projects</Box>
+            <Box px={3}>Projects</Box>
           </Box>
         </Tab>
         <Tab to="/issue" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <AssignmentIcon />
-            <Box px={2}>Issues</Box>
+            <Box px={3}>Issues</Box>
           </Box>
         </Tab>
         <Tab to="/discover" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <HighlightIcon />
-            <Box px={2}>Discover</Box>
+            <Box px={3}>Discover</Box>
           </Box>
         </Tab>
         <Tab to="/alerts" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <ReportProblemIcon />
-            <Box px={2}>Alerts</Box>
+            <Box px={3}>Alerts</Box>
           </Box>
         </Tab>
       </Box>
-    </Box>
+    </Drawer>
   );
 }
 
