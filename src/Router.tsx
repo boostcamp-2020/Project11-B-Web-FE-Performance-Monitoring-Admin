@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Projects from './pages/Projects';
+import NewProject from './pages/NewProject';
 import Issue from './pages/Issue';
 import Discover from './pages/Discover';
 import IssueDetail from './pages/IssueDetail';
@@ -17,6 +18,7 @@ function PublicRouter(): React.ReactElement {
 function PrivateRouter(): React.ReactElement {
   return (
     <Switch>
+      <Route path="/projects/new" exact component={NewProject} />
       <Route path="/projects" exact component={Projects} />
       <Route path="/issue" exact component={Issue} />
       <Route path="/discover" exact component={Discover} />
