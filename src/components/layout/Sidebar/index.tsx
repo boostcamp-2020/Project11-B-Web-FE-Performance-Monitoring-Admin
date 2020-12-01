@@ -93,7 +93,7 @@ function Sidebar(): React.ReactElement {
         </Box>
       </Box>
       <Box display="flex" flexDirection="column" pt={2}>
-        <Tab to="/project" activeClassName={style.activeStyle}>
+        <Tab to="/projects" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <ArchiveRoundedIcon />
             <Box px={2}>Projects</Box>
