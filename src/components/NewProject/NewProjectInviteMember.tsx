@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, Button, Chip, TextField, Snackbar, styled } from '@material-ui/core';
 import { Email as EmailIcon } from '@material-ui/icons';
@@ -56,7 +56,7 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
     setInputTextError(false);
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value);
   };
 

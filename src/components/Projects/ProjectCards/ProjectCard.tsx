@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Card, Grid, Typography } from '@material-ui/core';
+import { Box, Card, Grid, Typography, styled } from '@material-ui/core';
 
 interface IProjectCardProps {
   name: string;
@@ -8,12 +8,16 @@ interface IProjectCardProps {
   members: string[];
 }
 
+const CustomCard = styled(Card)({
+  minHeight: '300px',
+});
+
 // TODO: add parameter props: IProjectCardProps
 function ProjectCard(props: IProjectCardProps): React.ReactElement {
   const { name, dsn, owner, members } = props;
   return (
     <Grid item xs={4}>
-      <Card>
+      <CustomCard>
         <Box p={2}>
           <Typography variant="h3" color="primary">
             {name}
@@ -33,7 +37,7 @@ function ProjectCard(props: IProjectCardProps): React.ReactElement {
             ))}
           </Box>
         </Box>
-      </Card>
+      </CustomCard>
     </Grid>
   );
 }
