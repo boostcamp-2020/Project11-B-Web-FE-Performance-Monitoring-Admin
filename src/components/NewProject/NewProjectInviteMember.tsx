@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Box, Button, TextField, Snackbar, styled } from '@material-ui/core';
+import { Box, Button, Chip, TextField, Snackbar, styled } from '@material-ui/core';
+import { Email as EmailIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import isEmail from 'validator/lib/isEmail';
 
@@ -9,6 +10,11 @@ import BackNextButtons from './BackNextButtons';
 const CustomTextField = styled(TextField)({
   width: '300px',
   paddingRight: '10px',
+});
+
+const CustomChip = styled(Chip)({
+  paddingLeft: '5px',
+  margin: '5px',
 });
 
 interface IProps {
@@ -23,6 +29,7 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
   const [inputText, setInputText] = useState('');
   const [alertText, setAlertText] = useState('');
   const [inputTextError, setInputTextError] = useState(false);
+  const [emails, setEmails] = useState([]);
 
   const labelText = 'Email address';
   const inputErrorText = 'Invalid email address';
@@ -54,8 +61,12 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
 
   const handleFinish = () => history.push('/projects');
 
+  const handleEmailDelete = (email: string) => {
+    setEmails((prev) => prev.filter((item) => item !== email));
+  };
+
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" alignItems="flex-start">
       <Box display="flex" flexDirection="row" alignItems="center">
         <CustomTextField
           value={inputText}
@@ -79,6 +90,16 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
       >
         <Alert severity="success">{alertText}</Alert>
       </Snackbar>
+      <Box pt={1}>
+        {emails.map((email) => (
+          <CustomChip
+            key={email}
+            icon={<EmailIcon />}
+            label={email}
+            onDelete={() => handleEmailDelete(email)}
+          />
+        ))}
+      </Box>
       <BackNextButtons rightButtonText="Finish" handleBack={handleBack} handleNext={handleFinish} />
     </Box>
   );
