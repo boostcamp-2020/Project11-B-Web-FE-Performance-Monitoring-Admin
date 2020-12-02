@@ -8,20 +8,7 @@ import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
 import InviteMember from '../components/ProjectDetail/InviteMember';
 
-import { useProject } from './hooks/ProjectDetailHooks';
-
-export interface IUser {
-  uid: number;
-  nickname: string;
-  email: string;
-}
-
-export interface IProject {
-  name: string;
-  description?: string;
-  owner: IUser;
-  users: IUser[];
-}
+import useProject from './hooks/ProjectDetailHooks';
 
 interface MatchParams {
   id: string;

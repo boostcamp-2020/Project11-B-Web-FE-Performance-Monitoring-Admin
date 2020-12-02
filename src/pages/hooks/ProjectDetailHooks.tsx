@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 
-export interface IUser {
+interface IUser {
   uid: number;
   nickname: string;
   email: string;
 }
 
-export interface IProject {
+interface IProject {
   name: string;
   description?: string;
   owner: IUser;
@@ -56,4 +56,4 @@ const useProject = (projectId: string) => {
   };
   return [project, setProjectName, setProjectUsers] as const;
 };
-export { useProject };
+export default useProject;
