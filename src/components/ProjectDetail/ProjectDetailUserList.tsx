@@ -1,115 +1,16 @@
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import { createStyles, lighten, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 
-const headCells: HeadCell[] = [
-  { id: 'nickname', numeric: false, disablePadding: true, label: 'nickname' },
-  { id: 'email', numeric: false, disablePadding: false, label: 'email' },
-];
-
-interface EnhancedTableProps {
-  numSelected: number;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps): React.ReactElement {
-  const { onSelectAllClick, numSelected, rowCount } = props;
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-          >
-            {headCell.label}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    highlight:
-      theme.palette.type === 'light'
-        ? {
-            color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-          }
-        : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
-          },
-    title: {
-      flex: '1 1 100%',
-    },
-  }),
-);
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-  selectedUsers: number[];
-  deleteUsers: (selectedUids: number[]) => void;
-}
-
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps): React.ReactElement => {
-  const classes = useToolbarStyles();
-  const { numSelected, deleteUsers, selectedUsers } = props;
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Users
-        </Typography>
-      )}
-      {numSelected > 0 && (
-        <Tooltip title="Delete" onClick={() => deleteUsers(selectedUsers)}>
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
+import ProjectDetailUserListHead from './ProjectDetailUserListHead';
+import ProjectDetailUserListToolbar from './ProjectDetailUserListToolbar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -143,19 +44,12 @@ interface IUser {
   email: string;
 }
 
-interface HeadCell {
-  id: keyof IUser;
-  disablePadding: boolean;
-  label: string;
-  numeric: boolean;
-}
-
 interface IProps {
   users: IUser[];
   deleteUsers: (selectedUids: number[]) => void;
 }
 
-export default function EnhancedTable(props: IProps): React.ReactElement {
+export default function UserListTable(props: IProps): React.ReactElement {
   const classes = useStyles();
   const { users, deleteUsers } = props;
   const [selected, setSelected] = useState<number[]>([]);
@@ -193,7 +87,7 @@ export default function EnhancedTable(props: IProps): React.ReactElement {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar
+        <ProjectDetailUserListToolbar
           numSelected={selected.length}
           deleteUsers={deleteUserAndReset}
           selectedUsers={selected}
@@ -205,7 +99,7 @@ export default function EnhancedTable(props: IProps): React.ReactElement {
             size="medium"
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
+            <ProjectDetailUserListHead
               numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
               rowCount={users.length}
