@@ -6,6 +6,7 @@ import NewProjectDescInput from '../components/NewProject/NewProjectDescInput';
 import NewProjectConfirm from '../components/NewProject/NewProjectConfirm';
 import NewProjectDSN from '../components/NewProject/NewProjectDSN';
 import NewProjectInviteMember from '../components/NewProject/NewProjectInviteMember';
+import service from '../service';
 
 function NewProject(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
@@ -21,11 +22,18 @@ function NewProject(): React.ReactElement {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleConfirm = () => {
-    handleNext();
-    // TODO
-    // project create API call
-    // set DSN on success
+  const handleCreate = async () => {
+    const project = {
+      name,
+      description: desc,
+    };
+    try {
+      const response = await service.addProject(project);
+      setDsn(response.data.projectId);
+      handleNext();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const stepProps = [
@@ -58,7 +66,7 @@ function NewProject(): React.ReactElement {
           name={name}
           desc={desc}
           handleBack={handleBack}
-          handleCreate={handleNext}
+          handleCreate={handleCreate}
         />
       ),
     },
