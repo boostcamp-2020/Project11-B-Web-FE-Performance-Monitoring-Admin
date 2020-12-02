@@ -4,7 +4,6 @@
  */
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Box, Button, TextField, Snackbar, styled } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import isEmail from 'validator/lib/isEmail';
@@ -15,7 +14,6 @@ const CustomTextField = styled(TextField)({
 });
 
 function NewProjectInviteMember(): React.ReactElement {
-  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState('');
   const [alertText, setAlertText] = useState('');
@@ -48,8 +46,6 @@ function NewProjectInviteMember(): React.ReactElement {
   const handleChange = (event: any) => {
     setInputText(event.target.value);
   };
-
-  const handleFinish = () => history.push('/projects');
 
   return (
     <Box display="flex" flexDirection="column">

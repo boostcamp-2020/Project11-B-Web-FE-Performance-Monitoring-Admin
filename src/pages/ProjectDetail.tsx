@@ -1,10 +1,10 @@
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import _ from 'lodash';
 
-import UserList from '../components/ProjectDetail/UserList';
-import ProjectsHeader from '../components/ProjectDetail/Header';
+import ProjectDetailUserList from '../components/ProjectDetail/ProjectDetailUserList';
+import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader';
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
 import InviteMember from '../components/ProjectDetail/InviteMember';
 
@@ -58,11 +58,11 @@ function ProjectDetail(): React.ReactElement {
   };
   return (
     <Box p={5} display="flex" flexDirection="column">
-      <ProjectsHeader title={project.name} />
+      <ProjectDetailHeader title={project.name} />
       <Box>{project.description}</Box>
       <ProjectUserInfo userName={project.owner.nickname} />
       <Box mt={7}>
-        <UserList users={project.users} deleteUsers={deleteUsers} />
+        <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
       </Box>
       <InviteMember />
     </Box>

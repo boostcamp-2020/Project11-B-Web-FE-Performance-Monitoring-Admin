@@ -167,7 +167,10 @@ export default function EnhancedTable(props: IProps): React.ReactElement {
     }
     setSelected([]);
   };
-
+  const deleteUserAndReset = (selectedUser: number[]) => {
+    deleteUsers(selectedUser);
+    setSelected([]);
+  };
   const handleClick = (event: React.MouseEvent<unknown>, name: number) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: number[] = [];
@@ -192,7 +195,7 @@ export default function EnhancedTable(props: IProps): React.ReactElement {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          deleteUsers={deleteUsers}
+          deleteUsers={deleteUserAndReset}
           selectedUsers={selected}
         />
         <TableContainer>
