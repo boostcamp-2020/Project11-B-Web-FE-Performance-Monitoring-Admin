@@ -20,9 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const isDev: boolean = process.env.NODE_ENV === 'development';
-const OAUTH_URL: string = isDev ? 'http://panopticon-dev.gq/api/auth/github' : '/api/auth/github';
-// const OAUTH_URL: string = isDev ? 'http://localhost:3000/api/auth/github' : '/api/auth/github';
+const OAUTH_URL = '/api/auth/github';
 
 const Login = (): React.ReactElement => {
   window.history.replaceState(null, '', '/login');
