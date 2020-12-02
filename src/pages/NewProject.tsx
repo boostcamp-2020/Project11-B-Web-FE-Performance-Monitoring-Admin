@@ -36,6 +36,14 @@ function NewProject(): React.ReactElement {
     }
   };
 
+  const handleSend = async (emails: string[]) => {
+    await service.inviteMembers({
+      to: emails,
+      project: name,
+      projectId: dsn,
+    });
+  };
+
   const stepProps = [
     {
       label: 'What is your project name?',
@@ -76,7 +84,7 @@ function NewProject(): React.ReactElement {
     },
     {
       label: 'Invite members to your project (Optional)',
-      content: <NewProjectInviteMember handleBack={handleBack} />,
+      content: <NewProjectInviteMember handleBack={handleBack} handleSend={handleSend} />,
     },
   ];
 

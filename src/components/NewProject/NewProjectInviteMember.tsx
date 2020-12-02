@@ -12,6 +12,10 @@ const CustomTextField = styled(TextField)({
   paddingRight: '10px',
 });
 
+const CustomButton = styled(Button)({
+  marginLeft: '10px',
+});
+
 const CustomChip = styled(Chip)({
   paddingLeft: '5px',
   margin: '5px',
@@ -19,17 +23,18 @@ const CustomChip = styled(Chip)({
 
 interface IProps {
   handleBack: () => void;
+  handleSend: (emails: string[]) => Promise<void>;
 }
 
 function NewProjectInviteMember(props: IProps): React.ReactElement {
-  const { handleBack } = props;
+  const { handleBack, handleSend } = props;
 
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [inputText, setInputText] = useState('');
   const [alertText, setAlertText] = useState('');
   const [inputTextError, setInputTextError] = useState(false);
-  const [emails, setEmails] = useState([]);
+  const [emails, setEmails] = useState([] as string[]);
 
   const labelText = 'Email address';
   const inputErrorText = 'Invalid email address';
@@ -41,22 +46,30 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
     setOpen(false);
   };
 
-  const handleSend = () => {
+  const handleAdd = () => {
     if (!isEmail(inputText)) {
       setInputTextError(true);
       return;
     }
-    // TODO
-    // make email inviation API call
-    // on success response proceed
-    setAlertText(`Sent invitation to ${inputText}`);
-    setOpen(true);
+    setEmails((prev) => [...prev, inputText]);
     setInputText('');
     setInputTextError(false);
   };
 
   const handleChange = (event: any) => {
     setInputText(event.target.value);
+  };
+
+  const handleSendClick = async () => {
+    if (inputText !== '') handleAdd();
+    try {
+      await handleSend(emails);
+      setAlertText(`Sent invitation to ${emails.length} member${emails.length > 1 ? 's' : ''}`);
+      setOpen(true);
+      setEmails([]);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleFinish = () => history.push('/projects');
@@ -75,9 +88,12 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
           label={labelText}
           onChange={handleChange}
         />
-        <Button onClick={handleSend} color="primary" variant="contained">
+        <CustomButton onClick={handleAdd} color="primary" variant="contained">
+          Add
+        </CustomButton>
+        <CustomButton onClick={handleSendClick} color="primary" variant="contained">
           Send
-        </Button>
+        </CustomButton>
       </Box>
       <Snackbar
         open={open}

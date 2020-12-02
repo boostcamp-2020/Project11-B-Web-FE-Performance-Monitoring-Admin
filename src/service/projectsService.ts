@@ -10,9 +10,16 @@ interface IProject {
   description: string;
 }
 
+interface IInvite {
+  to: string[];
+  project: string;
+  projectId: string;
+}
+
 export interface IResponse {
   // getProjects: () => Promise<AxiosResponse>;
   addProject: (project: IProject) => Promise<AxiosResponse>;
+  inviteMembers: (invite: IInvite) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {
@@ -25,8 +32,13 @@ export default (apiRequest: AxiosInstance): IResponse => {
     return apiRequest.post(`/api/project`, project);
   };
 
+  const inviteMembers = (invite: IInvite) => {
+    return apiRequest.post('/api/invite', invite);
+  };
+
   return {
     // getProjects,
     addProject,
+    inviteMembers,
   };
 };
