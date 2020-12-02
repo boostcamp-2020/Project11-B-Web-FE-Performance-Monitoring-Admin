@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { createStyles, lighten, makeStyles, Theme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -26,7 +26,7 @@ interface EnhancedTableProps {
   rowCount: number;
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
+function EnhancedTableHead(props: EnhancedTableProps): React.ReactElement {
   const { onSelectAllClick, numSelected, rowCount } = props;
 
   return (
@@ -46,7 +46,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
           >
-            <TableCell>{headCell.label}</TableCell>
+            {headCell.label}
           </TableCell>
         ))}
       </TableRow>
@@ -78,11 +78,13 @@ const useToolbarStyles = makeStyles((theme: Theme) =>
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  selectedUsers: number[];
+  deleteUsers: (selectedUids: number[]) => void;
 }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+const EnhancedTableToolbar = (props: EnhancedTableToolbarProps): React.ReactElement => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, deleteUsers, selectedUsers } = props;
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -99,7 +101,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         </Typography>
       )}
       {numSelected > 0 && (
-        <Tooltip title="Delete">
+        <Tooltip title="Delete" onClick={() => deleteUsers(selectedUsers)}>
           <IconButton aria-label="delete">
             <DeleteIcon />
           </IconButton>
@@ -150,26 +152,25 @@ interface HeadCell {
 
 interface IProps {
   users: IUser[];
+  deleteUsers: (selectedUids: number[]) => void;
 }
 
 export default function EnhancedTable(props: IProps): React.ReactElement {
   const classes = useStyles();
-  const { users } = props;
-  const [selected, setSelected] = React.useState<string[]>([]);
-
+  const { users, deleteUsers } = props;
+  const [selected, setSelected] = useState<number[]>([]);
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.nickname);
+      const newSelecteds = users.map((n) => n.uid);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (event: React.MouseEvent<unknown>, name: number) => {
     const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
-
+    let newSelected: number[] = [];
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -185,12 +186,15 @@ export default function EnhancedTable(props: IProps): React.ReactElement {
     setSelected(newSelected);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
+  const isSelected = (name: number) => selected.indexOf(name) !== -1;
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          deleteUsers={deleteUsers}
+          selectedUsers={selected}
+        />
         <TableContainer>
           <Table
             className={classes.table}
@@ -205,17 +209,17 @@ export default function EnhancedTable(props: IProps): React.ReactElement {
             />
             <TableBody>
               {users.map((row, index) => {
-                const isItemSelected = isSelected(row.nickname);
+                const isItemSelected = isSelected(row.uid);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.nickname)}
+                    onClick={(event) => handleClick(event, row.uid)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.nickname}
+                    key={row.uid}
                     selected={isItemSelected}
                   >
                     <TableCell padding="checkbox">

@@ -1,7 +1,11 @@
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
+import _ from 'lodash';
+
 import UserList from '../components/ProjectDetail/UserList';
+import ProjectsHeader from '../components/Projects/ProjectsHeader';
+import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
 
 export interface IUser {
   uid: number;
@@ -35,15 +39,30 @@ interface MatchParams {
 function ProjectDetail(): React.ReactElement {
   const match = useRouteMatch<MatchParams>('/project/:id');
   const projectId = match?.params.id;
-  const [project, setProject] = useState(initialData);
   /**
    * @TODO
    * projectID로 데이터 받아오기
    */
-
+  const [project, setProject] = useState(initialData);
+  const deleteUsers = (selectedUids: number[]): void => {
+    setProject(() => {
+      const newProject = _.cloneDeep(project);
+      newProject.users = newProject.users.filter((user) => !selectedUids.includes(user.uid));
+      /**
+       * @TODO
+       * 서버로 API 요청보내서 사용자 정보 지우기
+       */
+      return newProject;
+    });
+  };
   return (
-    <Box>
-      <UserList users={project.users} />
+    <Box p={5} display="flex" flexDirection="column">
+      <ProjectsHeader />
+      <Box>{project.description}</Box>
+      <ProjectUserInfo />
+      <Box>
+        <UserList users={project.users} deleteUsers={deleteUsers} />
+      </Box>
     </Box>
   );
 }
