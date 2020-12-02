@@ -38,6 +38,7 @@
     "@types/validator": "^13.1.0",
     "axios": "^0.21.0",
     "billboard.js": "^2.1.4",
+    "clipboard-polyfill": "^3.0.1",
     "clsx": "^1.1.1",
     "eslint-import-resolver-typescript": "^2.3.0",
     "http-proxy-middleware": "^1.0.6",
