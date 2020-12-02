@@ -19,7 +19,7 @@ function NewProjectDescInput(props: IProps): React.ReactElement {
   const labelText = 'Project description';
   const [inputText, setInputText] = useState('');
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value);
   };
 
