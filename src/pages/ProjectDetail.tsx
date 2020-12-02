@@ -57,10 +57,10 @@ function ProjectDetail(): React.ReactElement {
   };
   return (
     <Box p={5} display="flex" flexDirection="column">
-      <ProjectsHeader />
+      <ProjectsHeader title={project.name} />
       <Box>{project.description}</Box>
-      <ProjectUserInfo />
-      <Box>
+      <ProjectUserInfo userName={project.owner.nickname} />
+      <Box mt={7}>
         <UserList users={project.users} deleteUsers={deleteUsers} />
       </Box>
     </Box>
