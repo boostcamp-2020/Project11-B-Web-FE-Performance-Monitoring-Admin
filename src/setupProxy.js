@@ -5,7 +5,10 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:4000',
+      // 개발 서버
+      target: 'http://panopticon-dev.gq',
+      // 로컬 서버
+      // target: 'http://localhost:4000',
       changeOrigin: true,
     }),
   );
