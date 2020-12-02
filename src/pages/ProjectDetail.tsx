@@ -41,7 +41,11 @@ function ProjectDetail(): React.ReactElement {
    * projectID로 데이터 받아오기
    */
 
-  return <div>프로젝트 이슈입니다</div>;
+  return (
+    <Box>
+      <UserList users={project.users} />
+    </Box>
+  );
 }
 
 export default ProjectDetail;
