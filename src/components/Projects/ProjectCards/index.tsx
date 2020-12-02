@@ -18,6 +18,7 @@ function ProjectCards(): React.ReactElement {
       <Grid container spacing={3}>
         {projectsProps.map((props) => (
           <ProjectCard
+            key={props.dsn}
             name={props.name}
             dsn={props.dsn}
             owner={props.owner}

@@ -30,7 +30,7 @@ function NewProjectDescInput(props: IProps): React.ReactElement {
 
   useEffect(() => {
     setInputText(desc);
-  }, []);
+  }, [desc]);
 
   return (
     <Box pt={1} display="flex" flexDirection="column">

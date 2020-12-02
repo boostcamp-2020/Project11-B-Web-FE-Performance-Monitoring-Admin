@@ -31,7 +31,7 @@ function NewProjectNameInput(props: IProps): React.ReactElement {
 
   useEffect(() => {
     setInputText(name);
-  }, []);
+  }, [name]);
 
   return (
     <Box pt={1} display="flex" flexDirection="column">
