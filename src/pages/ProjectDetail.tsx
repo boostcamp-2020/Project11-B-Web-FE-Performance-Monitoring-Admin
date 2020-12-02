@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import _ from 'lodash';
@@ -38,6 +38,8 @@ interface MatchParams {
 }
 
 function ProjectDetail(): React.ReactElement {
+  const [isEditing, setIsEditing] = useState(false);
+  const [titleInput, setTitleInput] = useState('');
   const match = useRouteMatch<MatchParams>('/project/:id');
   const projectId = match?.params.id;
   /**
@@ -45,6 +47,29 @@ function ProjectDetail(): React.ReactElement {
    * projectID로 데이터 받아오기
    */
   const [project, setProject] = useState(initialData);
+  const startEdit = () => {
+    setTitleInput(() => project.name);
+    setIsEditing(true);
+  };
+  const endEdit = () => {
+    setTitleInput(() => '');
+    setIsEditing(false);
+  };
+  const changeTitle = () => {
+    /**
+     * @TODO
+     * 서버에 project name 변경하기
+     */
+    setProject(() => {
+      const newProject = _.cloneDeep(project);
+      newProject.name = titleInput;
+      return newProject;
+    });
+    endEdit();
+  };
+  const titleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleInput(() => target.value);
+  };
   const deleteUsers = (selectedUids: number[]): void => {
     setProject(() => {
       const newProject = _.cloneDeep(project);
@@ -58,7 +83,35 @@ function ProjectDetail(): React.ReactElement {
   };
   return (
     <Box p={5} display="flex" flexDirection="column">
-      <ProjectDetailHeader title={project.name} />
+      <Box display="flex" flexDirection="row" alignItems="center">
+        {isEditing ? (
+          <>
+            <TextField
+              id="standard-basic"
+              value={titleInput}
+              onChange={titleInputChange}
+              inputProps={{ style: { fontSize: 30, fontWeight: 'bold' } }}
+            />
+            <Box ml={5}>
+              <Button variant="outlined" color="primary" size="small" onClick={changeTitle}>
+                Submit
+              </Button>
+              <Button variant="outlined" color="secondary" size="small" onClick={endEdit}>
+                Cancel
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <ProjectDetailHeader title={project.name} />
+            <Box ml={5}>
+              <Button variant="outlined" color="primary" size="small" onClick={startEdit}>
+                Edit
+              </Button>
+            </Box>
+          </>
+        )}
+      </Box>
       <Box>{project.description}</Box>
       <ProjectUserInfo userName={project.owner.nickname} />
       <Box mt={7}>
