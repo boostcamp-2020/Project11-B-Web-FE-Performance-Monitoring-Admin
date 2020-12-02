@@ -19,7 +19,7 @@ function MainLayout(): React.ReactElement {
   const classes = useStyle();
   const cookieExists = getCookieByKey('token');
   return cookieExists ? (
-    <div>
+    <div className={classes.root}>
       <Sidebar />
       <Box className={classes.w100}>
         <PrivateRouter />

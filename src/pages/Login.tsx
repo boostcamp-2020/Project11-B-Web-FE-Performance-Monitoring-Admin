@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const isDev: boolean = process.env.NODE_ENV === 'development';
-const oauthURL: string = isDev ? 'http://panopticon-dev.gq/api/auth/github' : '/api/auth/github';
-// const oauthURL: string = isDev ? 'http://localhost:3000/api/auth/github' : '/api/auth/github';
+const OAUTH_URL: string = isDev ? 'http://panopticon-dev.gq/api/auth/github' : '/api/auth/github';
+// const OAUTH_URL: string = isDev ? 'http://localhost:3000/api/auth/github' : '/api/auth/github';
 
 const Login = (): React.ReactElement => {
   window.history.replaceState(null, '', '/login');
@@ -39,7 +39,7 @@ const Login = (): React.ReactElement => {
       <img src={PanopticonLogo} alt="logo" />
       <Button variant="contained" color="default" className={classes.button}>
         <GitHubIcon fontSize="inherit" className={classes.icon} />
-        <a href={oauthURL}>Login With Github</a>
+        <a href={OAUTH_URL}>Login With Github</a>
       </Button>
     </Grid>
   );
