@@ -4,8 +4,9 @@ import { useRouteMatch } from 'react-router-dom';
 import _ from 'lodash';
 
 import UserList from '../components/ProjectDetail/UserList';
-import ProjectsHeader from '../components/Projects/ProjectsHeader';
+import ProjectsHeader from '../components/ProjectDetail/Header';
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
+import InviteMember from '../components/ProjectDetail/InviteMember';
 
 export interface IUser {
   uid: number;
@@ -63,6 +64,7 @@ function ProjectDetail(): React.ReactElement {
       <Box mt={7}>
         <UserList users={project.users} deleteUsers={deleteUsers} />
       </Box>
+      <InviteMember />
     </Box>
   );
 }
