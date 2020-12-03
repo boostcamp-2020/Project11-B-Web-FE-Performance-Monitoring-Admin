@@ -28,11 +28,15 @@ const useProject = (projectId: string) => {
     })();
   }, []);
 
-  const setProjectName = (name: string) => {
-    /**
-     * @TODO
-     * 서버에 project name 변경하기
-     */
+  const setProjectName = async (name: string) => {
+    const result = await service.updateProjectName(projectId, { name });
+    if (result.data !== 'OK') {
+      /**
+       * @TODO
+       * 요청 실패할 경우 어떻게 처리
+       */
+      return;
+    }
     setProject(() => {
       const newProject: IProject = _.cloneDeep(project) as IProject;
       newProject.name = name;
