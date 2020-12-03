@@ -22,6 +22,12 @@ export interface IResponse {
   inviteMembers: (invite: IInvite) => Promise<AxiosResponse>;
 }
 
+const headers = {
+  headers: {
+    jwt: localStorage.getItem('token'),
+  },
+};
+
 export default (apiRequest: AxiosInstance): IResponse => {
   // TODO
   // const getProjects = (userType: string) => {
@@ -29,11 +35,11 @@ export default (apiRequest: AxiosInstance): IResponse => {
   // };
 
   const addProject = (project: IProject) => {
-    return apiRequest.post(`/api/project`, project);
+    return apiRequest.post(`/api/project`, project, headers);
   };
 
   const inviteMembers = (invite: IInvite) => {
-    return apiRequest.post('/api/invite', invite);
+    return apiRequest.post('/api/invite', invite, headers);
   };
 
   return {
