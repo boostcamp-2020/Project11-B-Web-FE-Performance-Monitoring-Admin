@@ -4,7 +4,7 @@ import service from '../service';
 
 interface IUser {
   projects: [];
-  _id: string;
+  _id: number;
   uid: number;
   email: string | null;
   nickname: string;
@@ -29,28 +29,18 @@ const useProject = (projectId: string) => {
   }, []);
 
   const setProjectName = async (name: string) => {
-    const result = await service.updateProjectName(projectId, { name });
-    if (result.data !== 'OK') {
-      /**
-       * @TODO
-       * 요청 실패할 경우 어떻게 처리
-       */
-      return;
-    }
+    await service.updateProjectName(projectId, { name });
     setProject(() => {
       const newProject: IProject = _.cloneDeep(project) as IProject;
       newProject.name = name;
       return newProject;
     });
   };
-  const setProjectUsers = (selectedUids: number[]) => {
+  const setProjectUsers = async (selectedIds: number[]) => {
+    await service.deleteProjectUsers(projectId, { userIds: selectedIds });
     setProject(() => {
       const newProject = _.cloneDeep(project) as IProject;
-      newProject.users = newProject.users.filter((user) => !selectedUids.includes(user.uid));
-      /**
-       * @TODO
-       * 서버로 API 요청보내서 사용자 정보 지우기
-       */
+      newProject.users = newProject.users.filter((user) => !selectedIds.includes(user._id));
       return newProject;
     });
   };
