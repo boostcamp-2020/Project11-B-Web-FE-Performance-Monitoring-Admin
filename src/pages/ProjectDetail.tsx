@@ -43,8 +43,8 @@ function ProjectDetail(): React.ReactElement {
     setTitleInput(() => '');
     setIsEditing(false);
   };
-  const changeTitle = () => {
-    setProjectName(titleInput);
+  const changeTitle = async () => {
+    await setProjectName(titleInput);
     endEdit();
   };
   const titleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
