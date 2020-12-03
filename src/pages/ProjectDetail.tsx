@@ -8,7 +8,7 @@ import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
 import InviteMember from '../components/ProjectDetail/InviteMember';
 
-import useProject from './hooks/ProjectDetailHooks';
+import useProject from '../hooks/ProjectDetailHooks';
 
 interface MatchParams {
   id: string;
