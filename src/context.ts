@@ -1,10 +1,13 @@
 import { createContext } from 'react';
 
-const UserContext = createContext({
+interface IUserContext {
   user: {
-    nickname: '',
-    token: '',
-  },
-});
+    nickname?: string;
+    token?: string;
+  };
+  setUser?(state: any): void;
+}
+
+const UserContext = createContext({} as IUserContext);
 
 export default UserContext;
