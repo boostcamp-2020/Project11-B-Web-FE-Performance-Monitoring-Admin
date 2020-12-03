@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -87,7 +88,7 @@ export default function UserListTable(props: IProps): React.ReactElement {
 
   const isSelected = (name: number) => selected.indexOf(name) !== -1;
   return (
-    <div className={classes.root}>
+    <Box mt={7} className={classes.root}>
       <Paper className={classes.paper}>
         <ProjectDetailUserListToolbar
           numSelected={selected.length}
@@ -138,6 +139,6 @@ export default function UserListTable(props: IProps): React.ReactElement {
           </Table>
         </TableContainer>
       </Paper>
-    </div>
+    </Box>
   );
 }
