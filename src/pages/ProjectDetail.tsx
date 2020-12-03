@@ -1,5 +1,5 @@
-import { Box, Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import Box from '@material-ui/core/Box';
+import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -23,8 +23,6 @@ function ProjectDetail(): React.ReactElement {
   const projectId = match?.params.id as string;
 
   const [project, setProjectName, setProjectUsers] = useProject(projectId as string);
-  const [isEditing, setIsEditing] = useState(false);
-  const [titleInput, setTitleInput] = useState('');
 
   const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
 
@@ -38,21 +36,6 @@ function ProjectDetail(): React.ReactElement {
     });
   };
 
-  const startEdit = (name: string) => {
-    setTitleInput(() => name);
-    setIsEditing(true);
-  };
-  const endEdit = () => {
-    setTitleInput(() => '');
-    setIsEditing(false);
-  };
-  const changeTitle = async () => {
-    await setProjectName(titleInput);
-    endEdit();
-  };
-  const titleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleInput(() => target.value);
-  };
   const deleteUsers = (selectedUids: number[]): void => {
     setProjectUsers(selectedUids);
   };
@@ -61,40 +44,7 @@ function ProjectDetail(): React.ReactElement {
     <>
       {project !== undefined ? (
         <Box p={5} display="flex" flexDirection="column">
-          <Box display="flex" flexDirection="row" alignItems="center">
-            {isEditing ? (
-              <>
-                <TextField
-                  id="standard-basic"
-                  value={titleInput}
-                  onChange={titleInputChange}
-                  inputProps={{ style: { fontSize: 30, fontWeight: 'bold' } }}
-                />
-                <Box ml={5}>
-                  <Button variant="outlined" color="primary" size="small" onClick={changeTitle}>
-                    Submit
-                  </Button>
-                  <Button variant="outlined" color="secondary" size="small" onClick={endEdit}>
-                    Cancel
-                  </Button>
-                </Box>
-              </>
-            ) : (
-              <>
-                <ProjectDetailHeader title={project.name} />
-                <Box ml={5}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    size="small"
-                    onClick={() => startEdit(project.name)}
-                  >
-                    Edit
-                  </Button>
-                </Box>
-              </>
-            )}
-          </Box>
+          <ProjectDetailHeader title={project.name} setProjectName={setProjectName} />
           <Box>{project.description}</Box>
           <ProjectDetailDialog dsn={dsn} />
           <ProjectUserInfo userName={project.owner} />
