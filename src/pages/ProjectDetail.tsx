@@ -9,6 +9,7 @@ import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
 import InviteMember from '../components/NewProject/InviteMember';
 import ProjectDetailDialog from '../components/ProjectDetail/ProjectDetailDialog';
+import ProjectDetailDelete from '../components/ProjectDetail/ProjectDetailDelete';
 
 import useProject from '../hooks/ProjectDetailHooks';
 
@@ -50,6 +51,7 @@ function ProjectDetail(): React.ReactElement {
           <ProjectUserInfo userName={project.owner} />
           <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
           <InviteMember handleSend={handleSend} />
+          <ProjectDetailDelete title={project.name} projectId={project._id} />
         </Box>
       ) : (
         <Box mt={20} display="flex" flexDirection="column" alignItems="center">
