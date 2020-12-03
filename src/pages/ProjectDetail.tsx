@@ -8,6 +8,7 @@ import ProjectDetailUserList from '../components/ProjectDetail/ProjectDetailUser
 import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader';
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
 import InviteMember from '../components/NewProject/InviteMember';
+import ProjectDetailDialog from '../components/ProjectDetail/ProjectDetailDialog';
 
 import useProject from '../hooks/ProjectDetailHooks';
 
@@ -25,8 +26,9 @@ function ProjectDetail(): React.ReactElement {
   const [isEditing, setIsEditing] = useState(false);
   const [titleInput, setTitleInput] = useState('');
 
+  const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
+
   const handleSend = async (emails: string[]) => {
-    const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
     if (!project) return;
     const name = project.name as string;
     await service.inviteMembers({
@@ -94,10 +96,9 @@ function ProjectDetail(): React.ReactElement {
             )}
           </Box>
           <Box>{project.description}</Box>
+          <ProjectDetailDialog dsn={dsn} />
           <ProjectUserInfo userName={project.owner} />
-          <Box mt={7}>
-            <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
-          </Box>
+          <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
           <InviteMember handleSend={handleSend} />
         </Box>
       ) : (
