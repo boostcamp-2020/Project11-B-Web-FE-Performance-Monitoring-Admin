@@ -87,7 +87,11 @@ const Login = (): React.ReactElement => {
       intervalRef.current = window.setInterval(async () => {
         try {
           const currentUrl = externalWindow.location.search;
-          const { code } = qs.parse(currentUrl, { ignoreQueryPrefix: true });
+          const { code, error } = qs.parse(currentUrl, { ignoreQueryPrefix: true });
+          if (error) {
+            externalWindow.close();
+            clearTimer();
+          }
           if (!code) return;
           clearTimer();
           const { data } = await service.login(code as string);

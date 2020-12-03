@@ -1,26 +1,20 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const headers = {
-  headers: {
-    jwt: localStorage.getItem('token'),
-  },
-};
-
 export interface Irequest {
   getIssue: () => Promise<AxiosRequestConfig>;
 }
 export default (
   apiRequest: AxiosInstance,
 ): {
-  getIssue: (id: string) => Promise<AxiosResponse>;
-  getIssues: (query: string) => Promise<AxiosResponse>;
+  getIssue: (id: string, token: string) => Promise<AxiosResponse>;
+  getIssues: (query: string, token: string) => Promise<AxiosResponse>;
 } => {
-  const getIssue = (id: string) => {
-    return apiRequest.get(`/api/issue/${id}`, headers);
+  const getIssue = (id: string, token: string) => {
+    return apiRequest.get(`/api/issue/${id}`, { headers: { jwt: token } });
   };
 
-  const getIssues = (query: string) => {
-    return apiRequest.get(`/api/issues${query}`, headers);
+  const getIssues = (query: string, token: string) => {
+    return apiRequest.get(`/api/issues${query}`, { headers: { jwt: token } });
   };
 
   return {

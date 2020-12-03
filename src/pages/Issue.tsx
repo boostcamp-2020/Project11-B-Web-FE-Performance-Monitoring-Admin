@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import { Box, Checkbox, Button, ButtonGroup, IconButton } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -8,11 +8,13 @@ import qs from 'qs';
 import IssueTimeChart from '../components/IssueTimeChart';
 import IssueListItem from '../components/IssueListItem';
 import service from '../service';
+import UserContext from '../context';
 
 function Issue(): React.ReactElement {
   const [issues, setIssues] = useState<IssueType[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
+  const { user } = useContext(UserContext);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -21,7 +23,7 @@ function Issue(): React.ReactElement {
   useEffect(() => {
     (async () => {
       const query = qs.stringify({ page }, { addQueryPrefix: true });
-      const res = await service.getIssues(query);
+      const res = await service.getIssues(query, user.token as string);
       setTotalPage(res.data.metaData[0].totalPage);
       setIssues(res.data.data);
     })();

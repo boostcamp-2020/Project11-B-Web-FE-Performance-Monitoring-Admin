@@ -6,10 +6,10 @@ export interface Irequest {
 export default (
   apiRequest: AxiosInstance,
 ): {
-  getStatsData: (query: string) => Promise<AxiosResponse>;
+  getStatsData: (query: string, token: string) => Promise<AxiosResponse>;
 } => {
-  const getStatsData = (query: string) => {
-    return apiRequest.get(`/api/stats${query}`);
+  const getStatsData = (query: string, token: string) => {
+    return apiRequest.get(`/api/stats${query}`, { headers: { jwt: token } });
   };
   return {
     getStatsData,
