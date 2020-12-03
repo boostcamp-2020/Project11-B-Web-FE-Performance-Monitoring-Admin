@@ -32,6 +32,7 @@ export default (apiRequest: AxiosInstance): IResponse => {
   };
 
   const getProjects = (userType?: string) => {
+    if (userType === undefined) return apiRequest.get('/api/projects');
     const query = userType && makeQueryString({ userType });
     return apiRequest.get(`/api/projects${query}`);
   };
