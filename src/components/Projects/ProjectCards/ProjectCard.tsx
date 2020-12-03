@@ -22,10 +22,7 @@ function ProjectCard(props: IProjectCardProps): React.ReactElement {
       <CustomCard>
         <Box p={2}>
           <Typography variant="h3" color="primary">
-            <
-            
-            
-            to="/project/12345">{name}</Link>
+            <Link to="/project/12345">{name}</Link>
           </Typography>
           <Box pt={2}>
             <Typography variant="h4">DSN</Typography>
