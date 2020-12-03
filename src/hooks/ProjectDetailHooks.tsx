@@ -1,51 +1,47 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import _ from 'lodash';
+import service from '../service';
 
 interface IUser {
+  projects: [];
+  _id: string;
   uid: number;
+  email: string | null;
   nickname: string;
-  email: string;
 }
 
-interface IProject {
-  name: string;
-  description?: string;
-  owner: IUser;
+export interface IProject {
   users: IUser[];
+  _id: string;
+  name: string;
+  description: string;
+  owner: string;
 }
-
-const initialData: IProject = {
-  name: 'Panopticon',
-  description: '부스트캠프 11조 B팀 입니다.',
-  owner: { uid: 0, nickname: 'boostcamp', email: 'boostcamp.connect.or.kr' },
-  users: [
-    { uid: 1, nickname: 'juyoungpark718', email: 'junsushin4546@gmail.com' },
-    { uid: 2, nickname: 'junsushin-dev', email: 'junsushin-dev@gmail.com' },
-    { uid: 3, nickname: 'saeeng', email: 'saeeng@gmail.com' },
-    { uid: 4, nickname: 'EarlyHail', email: 'hojin5633@gmail.com' },
-  ],
-};
 
 const useProject = (projectId: string) => {
-  /**
-   * @TODO
-   * projectID로 데이터 받아오기
-   */
-  const [project, setProject] = useState(initialData);
+  const [project, setProject] = useState<IProject>();
+
+  useEffect(() => {
+    (async () => {
+      const newProject = await service.getProject(projectId);
+      setProject(newProject.data);
+    })();
+  }, []);
+
   const setProjectName = (name: string) => {
     /**
      * @TODO
      * 서버에 project name 변경하기
      */
     setProject(() => {
-      const newProject = _.cloneDeep(project);
+      const newProject: IProject = _.cloneDeep(project) as IProject;
       newProject.name = name;
       return newProject;
     });
   };
   const setProjectUsers = (selectedUids: number[]) => {
     setProject(() => {
-      const newProject = _.cloneDeep(project);
+      const newProject = _.cloneDeep(project) as IProject;
       newProject.users = newProject.users.filter((user) => !selectedUids.includes(user.uid));
       /**
        * @TODO

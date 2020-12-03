@@ -39,9 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IUser {
+  projects: [];
+  _id: string;
   uid: number;
+  email: string | null;
   nickname: string;
-  email: string;
 }
 
 interface IProps {
