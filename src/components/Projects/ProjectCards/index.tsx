@@ -3,20 +3,32 @@ import { Box, Grid } from '@material-ui/core';
 
 import ProjectCard from './ProjectCard';
 
-const testProps = {
-  name: 'MyProject',
-  dsn: 'panopticon.gq/api/errors/MyProject',
-  owner: 'junsushin-dev',
-  members: ['saeeng', 'juyoungpark', 'EarlyHail'],
-};
-
-const projectsProps = [testProps, testProps, testProps];
+const projects = [
+  {
+    name: 'MyProject1',
+    dsn: 'panopticon.gq/api/errors/MyProject1',
+    owner: 'junsushin-dev',
+    members: [],
+  },
+  {
+    name: 'MyProject2',
+    dsn: 'panopticon.gq/api/errors/MyProject2',
+    owner: 'junsushin-dev',
+    members: ['saeeng', 'juyoungpark', 'EarlyHail'],
+  },
+  {
+    name: 'MyProject3',
+    dsn: 'panopticon.gq/api/errors/MyProject3',
+    owner: 'saeeng',
+    members: ['juyoungpark', 'EarlyHail'],
+  },
+];
 
 function ProjectCards(): React.ReactElement {
   return (
     <Box pt={2}>
       <Grid container spacing={3}>
-        {projectsProps.map((props) => (
+        {projects.map((props) => (
           <ProjectCard
             key={props.dsn}
             name={props.name}
