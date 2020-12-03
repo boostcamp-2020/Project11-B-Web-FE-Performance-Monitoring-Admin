@@ -9,14 +9,10 @@ interface IProps {
 
 function ProjectHeader(props: IProps): React.ReactElement {
   const { title } = props;
-  const createButtonText = 'Create Project';
 
   return (
     <Box display="flex" flexDirection="row" justifyContent="space-between">
       <Typography variant="h1">{title}</Typography>
-      <Button startIcon={<ControlPointIcon />} variant="contained" color="primary">
-        <Link to="/projects/new">{createButtonText}</Link>
-      </Button>
     </Box>
   );
 }

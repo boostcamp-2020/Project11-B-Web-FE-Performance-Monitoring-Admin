@@ -6,10 +6,12 @@ import ProjectsUserInfo from '../components/Projects/ProjectsUserInfo';
 import ProjectCards from '../components/Projects/ProjectCards';
 
 function Projects(): React.ReactElement {
+  const title = 'project';
+  const userName = 'Junsu Shin';
   return (
     <Box p={5} display="flex" flexDirection="column">
-      <ProjectsHeader />
-      <ProjectsUserInfo />
+      <ProjectsHeader title={title} />
+      <ProjectsUserInfo userName={userName} />
       <ProjectCards />
     </Box>
   );

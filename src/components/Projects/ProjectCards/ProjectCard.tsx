@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Box, Card, Grid, Typography, styled } from '@material-ui/core';
 
 interface IProjectCardProps {
@@ -15,12 +16,16 @@ const CustomCard = styled(Card)({
 // TODO: add parameter props: IProjectCardProps
 function ProjectCard(props: IProjectCardProps): React.ReactElement {
   const { name, dsn, owner, members } = props;
+  // 임시 값입니다.
   return (
     <Grid item xs={4}>
       <CustomCard>
         <Box p={2}>
           <Typography variant="h3" color="primary">
-            {name}
+            <
+            
+            
+            to="/project/12345">{name}</Link>
           </Typography>
           <Box pt={2}>
             <Typography variant="h4">DSN</Typography>
