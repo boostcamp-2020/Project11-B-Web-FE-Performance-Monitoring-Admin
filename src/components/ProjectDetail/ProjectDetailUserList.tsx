@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IUser {
   projects: [];
-  _id: string;
+  _id: number;
   uid: number;
   email: string | null;
   nickname: string;
@@ -48,7 +48,7 @@ interface IUser {
 
 interface IProps {
   users: IUser[];
-  deleteUsers: (selectedUids: number[]) => void;
+  deleteUsers: (selectedIds: number[]) => void;
 }
 
 export default function UserListTable(props: IProps): React.ReactElement {
@@ -57,7 +57,7 @@ export default function UserListTable(props: IProps): React.ReactElement {
   const [selected, setSelected] = useState<number[]>([]);
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.uid);
+      const newSelecteds = users.map((user) => user._id);
       setSelected(newSelecteds);
       return;
     }
@@ -108,17 +108,17 @@ export default function UserListTable(props: IProps): React.ReactElement {
             />
             <TableBody>
               {users.map((row, index) => {
-                const isItemSelected = isSelected(row.uid);
+                const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.uid)}
+                    onClick={(event) => handleClick(event, row._id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.uid}
+                    key={row._id}
                     selected={isItemSelected}
                   >
                     <TableCell padding="checkbox">
