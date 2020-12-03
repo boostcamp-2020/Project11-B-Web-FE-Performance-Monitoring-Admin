@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory, NavLink } from 'react-router-dom';
 import { Box, Avatar } from '@material-ui/core';
 import { makeStyles, useTheme, Theme, createStyles, styled } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
-import { NavLink } from 'react-router-dom';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArchiveRoundedIcon from '@material-ui/icons/ArchiveRounded';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
 import useStyle from './styles';
+import UserContext from '../../../context';
 
 const drawerWidth = 240;
 
@@ -84,7 +85,8 @@ function Sidebar(): React.ReactElement {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-
+  const { user, setUser } = useContext(UserContext);
+  const history = useHistory();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -92,8 +94,17 @@ function Sidebar(): React.ReactElement {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const handleSingOut = () => {
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('token');
+    if (setUser) {
+      setUser({ nickname: undefined, token: undefined });
+      history.push('/');
+    }
+  };
 
   const style = useStyle();
+
   return (
     <Drawer
       className={classes.drawer}
@@ -148,12 +159,11 @@ function Sidebar(): React.ReactElement {
               className={style.profileMenuBtn}
               color="white"
             >
-              JuyoungPark
-              <KeyboardArrowDownIcon />
+              {user.nickname}
+              <Box onClick={handleSingOut} pl={1}>
+                <ExitToAppIcon />
+              </Box>
             </Box>
-          </Box>
-          <Box component="div" color="white" textOverflow="ellipsis" overflow="hidden">
-            juyoung7018.park@gmail.com
           </Box>
         </Box>
       </Box>
