@@ -1,27 +1,17 @@
 import { Box, Button, TextField } from '@material-ui/core';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import _ from 'lodash';
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ProjectDetailUserList from '../components/ProjectDetail/ProjectDetailUserList';
 import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader';
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
-import InviteMember from '../components/ProjectDetail/InviteMember';
+import InviteMember from '../components/NewProject/InviteMember';
 
-import useProject, { IProject } from '../hooks/ProjectDetailHooks';
+import useProject from '../hooks/ProjectDetailHooks';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      '& > * + *': {
-        marginLeft: theme.spacing(2),
-      },
-    },
-  }),
-);
+import service from '../service';
 
 interface MatchParams {
   id: string;
@@ -34,6 +24,17 @@ function ProjectDetail(): React.ReactElement {
   const [project, setProjectName, setProjectUsers] = useProject(projectId as string);
   const [isEditing, setIsEditing] = useState(false);
   const [titleInput, setTitleInput] = useState('');
+
+  const handleSend = async (emails: string[]) => {
+    const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
+    if (!project) return;
+    const name = project.name as string;
+    await service.inviteMembers({
+      to: emails,
+      project: name,
+      projectId: dsn,
+    });
+  };
 
   const startEdit = (name: string) => {
     setTitleInput(() => name);
@@ -97,7 +98,7 @@ function ProjectDetail(): React.ReactElement {
           <Box mt={7}>
             <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
           </Box>
-          <InviteMember />
+          <InviteMember handleSend={handleSend} />
         </Box>
       ) : (
         <Box mt={20} display="flex" flexDirection="column" alignItems="center">
