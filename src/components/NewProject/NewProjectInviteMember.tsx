@@ -7,7 +7,7 @@ import isEmail from 'validator/lib/isEmail';
 
 import BackNextButtons from './BackNextButtons';
 
-const CustomTextField = styled(TextField)({
+const EmailInput = styled(TextField)({
   width: '300px',
   paddingRight: '10px',
 });
@@ -16,7 +16,7 @@ const CustomButton = styled(Button)({
   marginLeft: '10px',
 });
 
-const CustomChip = styled(Chip)({
+const EmailChip = styled(Chip)({
   paddingLeft: '5px',
   margin: '5px',
 });
@@ -81,7 +81,7 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
   return (
     <Box display="flex" flexDirection="column" alignItems="flex-start">
       <Box display="flex" flexDirection="row" alignItems="center">
-        <CustomTextField
+        <EmailInput
           value={inputText}
           error={inputTextError}
           helperText={inputTextError ? inputErrorText : undefined}
@@ -108,7 +108,7 @@ function NewProjectInviteMember(props: IProps): React.ReactElement {
       </Snackbar>
       <Box pt={1}>
         {emails.map((email) => (
-          <CustomChip
+          <EmailChip
             key={email}
             icon={<EmailIcon />}
             label={email}
