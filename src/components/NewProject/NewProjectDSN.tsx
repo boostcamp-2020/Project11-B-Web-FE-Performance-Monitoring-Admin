@@ -4,6 +4,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { Box, Button, Snackbar, IconButton, Tooltip, Typography, styled } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
+import * as clipboard from "clipboard-polyfill/text";
 
 import BackNextButtons from './BackNextButtons';
 
@@ -36,7 +37,7 @@ function NewProjectDSN(props: IProps): React.ReactElement {
   const alertMessage = 'DSN copied to clipboard';
 
   const handleClick = () => {
-    navigator.clipboard.writeText(dsn);
+    clipboard.writeText(dsn);
     setOpen(true);
   };
 
