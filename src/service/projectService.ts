@@ -12,12 +12,14 @@ export interface IRequest {
   getProject: () => Promise<AxiosRequestConfig>;
   updateProjectName: () => Promise<AxiosRequestConfig>;
   deleteProjectUsers: () => Promise<AxiosRequestConfig>;
+  deleteProject: () => Promise<AxiosRequestConfig>;
 }
 
 export interface IResponse {
   getProject: (projectId: string) => Promise<AxiosResponse>;
   updateProjectName: (projectId: string, name: IName) => Promise<AxiosResponse>;
   deleteProjectUsers: (projectId: string, name: IUsers) => Promise<AxiosResponse>;
+  deleteProject: (projectId: string) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {
@@ -34,10 +36,14 @@ export default (apiRequest: AxiosInstance): IResponse => {
   const deleteProjectUsers = (projectId: string, users: IUsers) => {
     return apiRequest.put(`/api/project/${projectId}/users`, users);
   };
+  const deleteProject = (projectId: string) => {
+    return apiRequest.delete(`/api/project/${projectId}`);
+  };
 
   return {
     getProject,
     updateProjectName,
     deleteProjectUsers,
+    deleteProject,
   };
 };
