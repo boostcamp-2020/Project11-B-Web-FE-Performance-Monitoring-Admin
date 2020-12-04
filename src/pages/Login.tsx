@@ -55,7 +55,7 @@ const Login = (): React.ReactElement => {
   const [externalWindow, setExternalWindow] = useState<Window | null>();
   const intervalRef = useRef<number>();
   const history = useHistory();
-
+  const { location } = history;
   const clearTimer = () => {
     window.clearInterval(intervalRef.current);
   };
@@ -98,14 +98,18 @@ const Login = (): React.ReactElement => {
           if (!data.token || !data.nickname) {
             history.replace('/');
           } else {
+            externalWindow.close();
             const { nickname, token } = data;
             localStorage.setItem('token', token);
             localStorage.setItem('nickname', nickname);
-            if (setUser) {
-              setUser({ nickname, token });
+            if (location.state) {
+              history.go(-1);
+            } else {
+              if (setUser) {
+                setUser({ nickname, token });
+              }
+              history.replace('/projects');
             }
-            history.replace('/projects');
-            externalWindow.close();
           }
           // eslint-disable-next-line no-empty
         } catch (e) {
