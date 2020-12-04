@@ -10,7 +10,9 @@ apiAxios.interceptors.request.use((config) => {
   /**
    * @Todo token or session header insert
    */
-  return config;
+  const newConfig = { ...config };
+  newConfig.headers.jwt = window.localStorage.getItem('token');
+  return newConfig;
 });
 
 const checkStatusOkay = (status: number) => {

@@ -47,7 +47,7 @@ function IssueDetail(): React.ReactElement {
   const { user } = useContext(UserContext);
   useEffect(() => {
     (async () => {
-      const res = await service.getIssue(match?.params.id || '', user.token as string);
+      const res = await service.getIssue(match?.params.id || '');
       setIssue(res.data);
     })();
   }, [match?.params.id]);

@@ -19,8 +19,8 @@ interface IInvite {
 
 export interface IResponse {
   getProjects: (userType?: string) => Promise<AxiosResponse>;
-  addProject: (project: IProject, token: string) => Promise<AxiosResponse>;
-  inviteMembers: (invite: IInvite, token: string) => Promise<AxiosResponse>;
+  addProject: (project: IProject) => Promise<AxiosResponse>;
+  inviteMembers: (invite: IInvite) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {
@@ -37,12 +37,12 @@ export default (apiRequest: AxiosInstance): IResponse => {
     return apiRequest.get(`/api/projects${query}`);
   };
 
-  const addProject = (project: IProject, token: string) => {
-    return apiRequest.post(`/api/project`, project, { headers: { jwt: token } });
+  const addProject = (project: IProject) => {
+    return apiRequest.post(`/api/project`, project);
   };
 
-  const inviteMembers = (invite: IInvite, token: string) => {
-    return apiRequest.post('/api/invite', invite, { headers: { jwt: token } });
+  const inviteMembers = (invite: IInvite) => {
+    return apiRequest.post('/api/invite', invite);
   };
 
   return {

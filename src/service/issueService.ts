@@ -6,15 +6,15 @@ export interface Irequest {
 export default (
   apiRequest: AxiosInstance,
 ): {
-  getIssue: (id: string, token: string) => Promise<AxiosResponse>;
-  getIssues: (query: string, token: string) => Promise<AxiosResponse>;
+  getIssue: (id: string) => Promise<AxiosResponse>;
+  getIssues: (query: string) => Promise<AxiosResponse>;
 } => {
-  const getIssue = (id: string, token: string) => {
-    return apiRequest.get(`/api/issue/${id}`, { headers: { jwt: token } });
+  const getIssue = (id: string) => {
+    return apiRequest.get(`/api/issue/${id}`);
   };
 
-  const getIssues = (query: string, token: string) => {
-    return apiRequest.get(`/api/issues${query}`, { headers: { jwt: token } });
+  const getIssues = (query: string) => {
+    return apiRequest.get(`/api/issues${query}`);
   };
 
   return {

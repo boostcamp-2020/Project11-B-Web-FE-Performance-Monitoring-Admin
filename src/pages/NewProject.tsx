@@ -29,7 +29,7 @@ function NewProject(): React.ReactElement {
       description: desc,
     };
     try {
-      const response = await service.addProject(project, user.token as string);
+      const response = await service.addProject(project);
       setDsn(response.data.projectId);
       handleNext();
     } catch (e) {
@@ -38,14 +38,11 @@ function NewProject(): React.ReactElement {
   };
 
   const handleSend = async (emails: string[]) => {
-    await service.inviteMembers(
-      {
-        to: emails,
-        project: name,
-        projectId: dsn,
-      },
-      user.token as string,
-    );
+    await service.inviteMembers({
+      to: emails,
+      project: name,
+      projectId: dsn,
+    });
   };
 
   const stepProps = [
