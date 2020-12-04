@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useContext } from 'react';
 import bb, { line, zoom } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
 import qs from 'qs';
-import service from '../../service';
-import UserContext from '../../context';
+import service from '../../../service';
+import UserContext from '../../../context';
 // ```json
 // type: "recent"
 // period: "1d" // 1y, 1M, 1d, 1h
