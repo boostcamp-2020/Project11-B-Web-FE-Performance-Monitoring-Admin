@@ -48,7 +48,7 @@ function ProjectDetail(): React.ReactElement {
           <ProjectDetailHeader title={project.name} setProjectName={setProjectName} />
           <Box>{project.description}</Box>
           <ProjectDetailDialog dsn={dsn} />
-          <ProjectUserInfo userName={project.owner} />
+          <ProjectUserInfo userName={project.owner.nickname} />
           <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
           <InviteMember handleSend={handleSend} />
           <ProjectDetailDelete title={project.name} projectId={project._id} />
