@@ -51,7 +51,6 @@ const Login = (): React.ReactElement => {
       ? process.env.REACT_APP_GITHUB_OAUTH_DEV_CLIENT_ID
       : process.env.REACT_APP_GITHUB_OAUTH_CLIENT_ID
   }&scope=user:email`;
-  console.log(OAUTH_URL);
 
   const [externalWindow, setExternalWindow] = useState<Window | null>();
   const intervalRef = useRef<number>();
