@@ -12,7 +12,7 @@ function ProjectCards(): React.ReactElement {
       const response = await service.getProjects();
       setProjects(response.data.projects);
     })();
-  });
+  }, []);
 
   return (
     <Box pt={2}>
