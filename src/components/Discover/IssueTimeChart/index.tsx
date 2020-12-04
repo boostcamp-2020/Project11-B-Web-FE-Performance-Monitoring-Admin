@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import bb, { line, zoom } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
 import qs from 'qs';
-import service from '../../service';
+import service from '../../../service';
 // ```json
 // type: "recent"
 // period: "1d" // 1y, 1M, 1d, 1h
