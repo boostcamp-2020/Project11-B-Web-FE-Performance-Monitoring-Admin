@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -39,14 +40,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface IUser {
+  projects: [];
+  _id: number;
   uid: number;
+  email: string | null;
   nickname: string;
-  email: string;
 }
 
 interface IProps {
   users: IUser[];
-  deleteUsers: (selectedUids: number[]) => void;
+  deleteUsers: (selectedIds: number[]) => void;
 }
 
 export default function UserListTable(props: IProps): React.ReactElement {
@@ -55,7 +58,7 @@ export default function UserListTable(props: IProps): React.ReactElement {
   const [selected, setSelected] = useState<number[]>([]);
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = users.map((n) => n.uid);
+      const newSelecteds = users.map((user) => user._id);
       setSelected(newSelecteds);
       return;
     }
@@ -85,7 +88,7 @@ export default function UserListTable(props: IProps): React.ReactElement {
 
   const isSelected = (name: number) => selected.indexOf(name) !== -1;
   return (
-    <div className={classes.root}>
+    <Box mt={7} className={classes.root}>
       <Paper className={classes.paper}>
         <ProjectDetailUserListToolbar
           numSelected={selected.length}
@@ -106,17 +109,17 @@ export default function UserListTable(props: IProps): React.ReactElement {
             />
             <TableBody>
               {users.map((row, index) => {
-                const isItemSelected = isSelected(row.uid);
+                const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.uid)}
+                    onClick={(event) => handleClick(event, row._id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.uid}
+                    key={row._id}
                     selected={isItemSelected}
                   >
                     <TableCell padding="checkbox">
@@ -136,6 +139,6 @@ export default function UserListTable(props: IProps): React.ReactElement {
           </Table>
         </TableContainer>
       </Paper>
-    </div>
+    </Box>
   );
 }

@@ -1,14 +1,19 @@
-import { Box, Button, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import Box from '@material-ui/core/Box';
+import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import _ from 'lodash';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ProjectDetailUserList from '../components/ProjectDetail/ProjectDetailUserList';
 import ProjectDetailHeader from '../components/ProjectDetail/ProjectDetailHeader';
 import ProjectUserInfo from '../components/Projects/ProjectsUserInfo';
-import InviteMember from '../components/ProjectDetail/InviteMember';
+import InviteMember from '../components/NewProject/InviteMember';
+import ProjectDetailDialog from '../components/ProjectDetail/ProjectDetailDialog';
+import ProjectDetailDelete from '../components/ProjectDetail/ProjectDetailDelete';
 
-import useProject from './hooks/ProjectDetailHooks';
+import useProject from '../hooks/ProjectDetailHooks';
+
+import service from '../service';
 
 interface MatchParams {
   id: string;
@@ -16,69 +21,44 @@ interface MatchParams {
 
 function ProjectDetail(): React.ReactElement {
   const match = useRouteMatch<MatchParams>('/project/:id');
-  const projectId = match?.params.id;
+  const projectId = match?.params.id as string;
 
   const [project, setProjectName, setProjectUsers] = useProject(projectId as string);
-  const [isEditing, setIsEditing] = useState(false);
-  const [titleInput, setTitleInput] = useState('');
 
-  const startEdit = () => {
-    setTitleInput(() => project.name);
-    setIsEditing(true);
+  const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
+
+  const handleSend = async (emails: string[]) => {
+    if (!project) return;
+    const name = project.name as string;
+    await service.inviteMembers({
+      to: emails,
+      project: name,
+      projectId: dsn,
+    });
   };
-  const endEdit = () => {
-    setTitleInput(() => '');
-    setIsEditing(false);
-  };
-  const changeTitle = () => {
-    setProjectName(titleInput);
-    endEdit();
-  };
-  const titleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleInput(() => target.value);
-  };
+
   const deleteUsers = (selectedUids: number[]): void => {
     setProjectUsers(selectedUids);
   };
 
   return (
-    <Box p={5} display="flex" flexDirection="column">
-      <Box display="flex" flexDirection="row" alignItems="center">
-        {isEditing ? (
-          <>
-            <TextField
-              id="standard-basic"
-              value={titleInput}
-              onChange={titleInputChange}
-              inputProps={{ style: { fontSize: 30, fontWeight: 'bold' } }}
-            />
-            <Box ml={5}>
-              <Button variant="outlined" color="primary" size="small" onClick={changeTitle}>
-                Submit
-              </Button>
-              <Button variant="outlined" color="secondary" size="small" onClick={endEdit}>
-                Cancel
-              </Button>
-            </Box>
-          </>
-        ) : (
-          <>
-            <ProjectDetailHeader title={project.name} />
-            <Box ml={5}>
-              <Button variant="outlined" color="primary" size="small" onClick={startEdit}>
-                Edit
-              </Button>
-            </Box>
-          </>
-        )}
-      </Box>
-      <Box>{project.description}</Box>
-      <ProjectUserInfo userName={project.owner.nickname} />
-      <Box mt={7}>
-        <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
-      </Box>
-      <InviteMember />
-    </Box>
+    <>
+      {project !== undefined ? (
+        <Box p={5} display="flex" flexDirection="column">
+          <ProjectDetailHeader title={project.name} setProjectName={setProjectName} />
+          <Box>{project.description}</Box>
+          <ProjectDetailDialog dsn={dsn} />
+          <ProjectUserInfo userName={project.owner} />
+          <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
+          <InviteMember handleSend={handleSend} />
+          <ProjectDetailDelete title={project.name} projectId={project._id} />
+        </Box>
+      ) : (
+        <Box mt={20} display="flex" flexDirection="column" alignItems="center">
+          <CircularProgress size="12rem" />
+        </Box>
+      )}
+    </>
   );
 }
 
