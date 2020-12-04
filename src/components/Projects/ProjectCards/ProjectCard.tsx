@@ -30,7 +30,7 @@ function ProjectCard(props: IProjectCardProps): React.ReactElement {
       <CustomCard>
         <Box display="flex" flexDirection="column" p={2}>
           <Typography variant="h3" color="primary">
-            <Link to="/project/12345">{name}</Link>
+            <Link to={`/project/${_id}`}>{name}</Link>
           </Typography>
           <Box pt={2}>
             <Typography variant="h4">DSN</Typography>

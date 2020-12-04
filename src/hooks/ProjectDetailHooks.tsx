@@ -15,7 +15,7 @@ export interface IProject {
   _id: string;
   name: string;
   description: string;
-  owner: string;
+  owner: IUser;
 }
 
 const useProject = (projectId: string) => {
