@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
@@ -12,7 +12,7 @@ import IssueDetail from './pages/IssueDetail';
 function PublicRouter(): React.ReactElement {
   return (
     <Switch>
-      <Route path="/login" exact component={Login} />
+      <Route path="/" exact component={Login} />
     </Switch>
   );
 }
@@ -26,6 +26,9 @@ function PrivateRouter(): React.ReactElement {
       <Route path="/issue" exact component={Issue} />
       <Route path="/discover" exact component={Discover} />
       <Route path="/issue/:id" exact component={IssueDetail} />
+      <Route path="/">
+        <Redirect to="/projects" />
+      </Route>
     </Switch>
   );
 }

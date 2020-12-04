@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Sidebar from '../components/layout/Sidebar';
-import Header from '../components/layout/Header';
-import { PrivateRouter } from '../Router';
-import getCookieByKey from '../utils/getCookie';
-import Login from '../pages/Login';
+import { PrivateRouter, PublicRouter } from '../Router';
+import UserContext from '../context';
 
 const useStyle = makeStyles({
   root: {
@@ -17,8 +15,8 @@ const useStyle = makeStyles({
 });
 function MainLayout(): React.ReactElement {
   const classes = useStyle();
-  const cookieExists = getCookieByKey('token');
-  return cookieExists ? (
+  const { user } = useContext(UserContext);
+  return user.token ? (
     <div className={classes.root}>
       <Sidebar />
       <Box className={classes.w100}>
@@ -27,7 +25,7 @@ function MainLayout(): React.ReactElement {
     </div>
   ) : (
     <div>
-      <Login />
+      <PublicRouter />
     </div>
   );
 }
