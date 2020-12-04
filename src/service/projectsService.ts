@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import * as qs from 'qs';
 
 export interface IRequest {
   getProjects: () => Promise<AxiosRequestConfig>;
@@ -17,16 +18,24 @@ interface IInvite {
 }
 
 export interface IResponse {
-  // getProjects: () => Promise<AxiosResponse>;
+  getProjects: (userType?: string) => Promise<AxiosResponse>;
   addProject: (project: IProject) => Promise<AxiosResponse>;
   inviteMembers: (invite: IInvite) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {
-  // TODO
-  // const getProjects = (userType: string) => {
-  //   return apiRequest.get(`/api/projects`);
-  // };
+  const makeQueryString = (params: Record<string, string>): string => {
+    if (params === {}) {
+      return '';
+    }
+    return `?${qs.stringify(params)}`;
+  };
+
+  const getProjects = (userType?: string) => {
+    if (userType === undefined) return apiRequest.get('/api/projects');
+    const query = userType && makeQueryString({ userType });
+    return apiRequest.get(`/api/projects${query}`);
+  };
 
   const addProject = (project: IProject) => {
     return apiRequest.post(`/api/project`, project);
@@ -37,7 +46,7 @@ export default (apiRequest: AxiosInstance): IResponse => {
   };
 
   return {
-    // getProjects,
+    getProjects,
     addProject,
     inviteMembers,
   };

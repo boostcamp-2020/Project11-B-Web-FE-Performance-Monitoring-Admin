@@ -2,40 +2,48 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Card, Grid, Typography, styled } from '@material-ui/core';
 
-interface IProjectCardProps {
+interface IUser {
+  _id: string;
+  uid: number;
+  nickname: string;
+  email: string;
+}
+export interface IProjectCardProps {
+  _id: string;
   name: string;
-  dsn: string;
-  owner: string;
-  members: string[];
+  owner: IUser;
+  users: IUser[];
 }
 
 const CustomCard = styled(Card)({
   minHeight: '300px',
 });
 
-// TODO: add parameter props: IProjectCardProps
 function ProjectCard(props: IProjectCardProps): React.ReactElement {
-  const { name, dsn, owner, members } = props;
-  // 임시 값입니다.
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const { _id, name, owner, users } = props;
+
+  const dsn = `http://panopticon.gq/api/error/${_id}`;
+
   return (
     <Grid item xs={4}>
       <CustomCard>
-        <Box p={2}>
+        <Box display="flex" flexDirection="column" p={2}>
           <Typography variant="h3" color="primary">
             <Link to="/project/12345">{name}</Link>
           </Typography>
           <Box pt={2}>
             <Typography variant="h4">DSN</Typography>
-            <Typography>{dsn}</Typography>
+            <Typography style={{ wordWrap: 'break-word' }}>{dsn}</Typography>
           </Box>
           <Box pt={2}>
             <Typography variant="h4">Owner</Typography>
-            <Typography>{owner}</Typography>
+            <Typography>{owner.nickname}</Typography>
           </Box>
           <Box pt={2}>
-            <Typography variant="h4">Members</Typography>
-            {members.map((member) => (
-              <Typography>{member}</Typography>
+            <Typography variant="h4">Users</Typography>
+            {users.map(({ nickname }) => (
+              <Typography key={nickname}>{nickname}</Typography>
             ))}
           </Box>
         </Box>

@@ -1,40 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@material-ui/core';
 
-import ProjectCard from './ProjectCard';
-
-const projects = [
-  {
-    name: 'MyProject1',
-    dsn: 'panopticon.gq/api/errors/MyProject1',
-    owner: 'junsushin-dev',
-    members: [],
-  },
-  {
-    name: 'MyProject2',
-    dsn: 'panopticon.gq/api/errors/MyProject2',
-    owner: 'junsushin-dev',
-    members: ['saeeng', 'juyoungpark', 'EarlyHail'],
-  },
-  {
-    name: 'MyProject3',
-    dsn: 'panopticon.gq/api/errors/MyProject3',
-    owner: 'saeeng',
-    members: ['juyoungpark', 'EarlyHail'],
-  },
-];
+import ProjectCard, { IProjectCardProps } from './ProjectCard';
+import service from '../../../service';
 
 function ProjectCards(): React.ReactElement {
+  const [projects, setProjects] = useState<IProjectCardProps[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await service.getProjects();
+      setProjects(response.data.projects);
+    })();
+  });
+
   return (
     <Box pt={2}>
       <Grid container spacing={3}>
         {projects.map((props) => (
           <ProjectCard
-            key={props.dsn}
+            key={props._id}
+            _id={props._id}
             name={props.name}
-            dsn={props.dsn}
             owner={props.owner}
-            members={props.members}
+            users={props.users}
           />
         ))}
       </Grid>
