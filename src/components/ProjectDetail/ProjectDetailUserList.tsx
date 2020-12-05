@@ -88,7 +88,7 @@ export default function UserListTable(props: IProps): React.ReactElement {
 
   const isSelected = (name: number) => selected.indexOf(name) !== -1;
   return (
-    <Box mt={7} className={classes.root}>
+    <Box mt={3} className={classes.root}>
       <Paper className={classes.paper}>
         <ProjectDetailUserListToolbar
           numSelected={selected.length}

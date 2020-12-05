@@ -45,8 +45,11 @@ function ProjectDetail(): React.ReactElement {
     <>
       {project !== undefined ? (
         <Box p={5} display="flex" flexDirection="column">
-          <ProjectDetailHeader title={project.name} setProjectName={setProjectName} />
-          <Box>{project.description}</Box>
+          <ProjectDetailHeader
+            title={project.name}
+            desc={project.description}
+            setProjectName={setProjectName}
+          />
           <ProjectDetailDialog dsn={dsn} />
           <ProjectUserInfo userName={project.owner.nickname} />
           <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
