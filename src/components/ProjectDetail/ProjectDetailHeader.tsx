@@ -63,12 +63,7 @@ function ProjectHeader(props: IProps): React.ReactElement {
               <Typography variant="h1">{title}</Typography>
             </Box>
             <Box ml={5}>
-              <Button
-                variant="outlined"
-                color="primary"
-                size="small"
-                onClick={() => startEdit(title)}
-              >
+              <Button color="primary" size="small" onClick={() => startEdit(title)}>
                 Edit
               </Button>
             </Box>

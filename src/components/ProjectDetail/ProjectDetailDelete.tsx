@@ -37,7 +37,7 @@ export default function ProjectDetailDelete(props: IProps): React.ReactElement {
   return (
     <>
       <form noValidate autoComplete="off">
-        <Box mt={10} display="flex" flexDirection="column" alignItems="start">
+        <Box display="flex" flexDirection="column" alignItems="start">
           {showDelete ? (
             <Box display="flex" alignItems="flex-end">
               <TextField
