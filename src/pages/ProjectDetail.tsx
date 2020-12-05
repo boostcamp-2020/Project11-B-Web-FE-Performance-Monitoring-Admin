@@ -24,7 +24,9 @@ function ProjectDetail(): React.ReactElement {
   const match = useRouteMatch<MatchParams>('/project/:id');
   const projectId = match?.params.id as string;
 
-  const [project, setProjectName, setProjectUsers] = useProject(projectId as string);
+  const [project, setProjectName, setProjectUsers, setProjectOwner] = useProject(
+    projectId as string,
+  );
 
   const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
 
@@ -56,9 +58,9 @@ function ProjectDetail(): React.ReactElement {
           <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
           <InviteMember handleSend={handleSend} />
           <ProjectDetailChangeOwner
-            projectId={project._id}
             users={project.users}
             owner={project.owner}
+            setProjectOwner={setProjectOwner}
           />
           <ProjectDetailDelete title={project.name} projectId={project._id} />
         </Box>

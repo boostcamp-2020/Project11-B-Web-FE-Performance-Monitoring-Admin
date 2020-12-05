@@ -16,13 +16,13 @@ const CustomSelect = styled(Select)({
 });
 
 interface IProps {
-  projectId: string;
   owner: IUser;
   users: IUser[];
+  setProjectOwner: (originUserId: string, targetUserId: string) => Promise<void>;
 }
 
 function ProjectsUserInfo(props: IProps): React.ReactElement {
-  const { projectId, owner, users } = props;
+  const { owner, users, setProjectOwner } = props;
   const { user: globalUser } = useContext(UserContext);
   const [changing, setChanging] = useState(false);
   const [targetUserName, setTargetUserName] = useState('');
@@ -45,11 +45,7 @@ function ProjectsUserInfo(props: IProps): React.ReactElement {
     const targetUser = users.find((user) => user.nickname === targetUserName);
     if (targetUser === undefined) return;
     const targetUserId = targetUser._id;
-    const result = await service.updateProjectOwner(projectId, { originUserId, targetUserId });
-    /**
-     * @Todo
-     * 상태 변경
-     */
+    await setProjectOwner(originUserId, targetUserId); // const result = await service.updateProjectOwner(projectId, { originUserId, targetUserId });
   };
 
   return (

@@ -36,6 +36,7 @@ const useProject = (projectId: string) => {
       return newProject;
     });
   };
+
   const setProjectUsers = async (selectedIds: string[]) => {
     await service.deleteProjectUsers(projectId, { userIds: selectedIds });
     setProject(() => {
@@ -44,6 +45,15 @@ const useProject = (projectId: string) => {
       return newProject;
     });
   };
-  return [project, setProjectName, setProjectUsers] as const;
+  const setProjectOwner = async (originUserId: string, targetUserId: string) => {
+    await service.updateProjectOwner(projectId, { originUserId, targetUserId });
+    const res = await service.getUser(targetUserId);
+    setProject(() => {
+      const newProject: IProject = _.cloneDeep(project) as IProject;
+      newProject.owner = res.data;
+      return newProject;
+    });
+  };
+  return [project, setProjectName, setProjectUsers, setProjectOwner] as const;
 };
 export default useProject;
