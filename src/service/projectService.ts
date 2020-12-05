@@ -4,13 +4,13 @@ interface IName {
   name: string;
 }
 
-interface IUsers {
-  userIds: number[];
+interface IUserIds {
+  userIds: string[];
 }
 
-interface IUserIds {
-  originUserId: number;
-  targetUserId: number;
+interface IUserUpdateIds {
+  originUserId: string;
+  targetUserId: string;
 }
 
 export interface IRequest {
@@ -24,8 +24,8 @@ export interface IRequest {
 export interface IResponse {
   getProject: (projectId: string) => Promise<AxiosResponse>;
   updateProjectName: (projectId: string, name: IName) => Promise<AxiosResponse>;
-  updateProjectOwner: (projectId: string, userIds: IUserIds) => Promise<AxiosResponse>;
-  deleteProjectUsers: (projectId: string, name: IUsers) => Promise<AxiosResponse>;
+  updateProjectOwner: (projectId: string, userIds: IUserUpdateIds) => Promise<AxiosResponse>;
+  deleteProjectUsers: (projectId: string, name: IUserIds) => Promise<AxiosResponse>;
   deleteProject: (projectId: string) => Promise<AxiosResponse>;
 }
 
@@ -40,10 +40,10 @@ export default (apiRequest: AxiosInstance): IResponse => {
   const updateProjectName = (projectId: string, name: IName) => {
     return apiRequest.put(`/api/project/name/${projectId}`, name);
   };
-  const updateProjectOwner = (projectId: string, userIds: IUserIds) => {
+  const updateProjectOwner = (projectId: string, userIds: IUserUpdateIds) => {
     return apiRequest.put(`/api/project/${projectId}/user`, userIds);
   };
-  const deleteProjectUsers = (projectId: string, users: IUsers) => {
+  const deleteProjectUsers = (projectId: string, users: IUserIds) => {
     return apiRequest.put(`/api/project/${projectId}/users`, users);
   };
   const deleteProject = (projectId: string) => {

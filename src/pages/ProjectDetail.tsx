@@ -38,7 +38,7 @@ function ProjectDetail(): React.ReactElement {
     });
   };
 
-  const deleteUsers = (selectedUids: number[]): void => {
+  const deleteUsers = (selectedUids: string[]): void => {
     setProjectUsers(selectedUids);
   };
 

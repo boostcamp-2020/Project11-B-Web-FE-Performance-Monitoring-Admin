@@ -7,19 +7,13 @@ import SaveIcon from '@material-ui/icons/Save';
 import UserContext from '../../context';
 import service from '../../service';
 
+import { IUser } from '../../hooks/ProjectDetailHooks';
+
 const CustomSelect = styled(Select)({
   margin: '0px',
   minWidth: '100px',
   padding: '0 7px',
 });
-
-interface IUser {
-  projects: [];
-  _id: number;
-  uid: number;
-  email: string | null;
-  nickname: string;
-}
 
 interface IProps {
   projectId: string;
@@ -52,7 +46,10 @@ function ProjectsUserInfo(props: IProps): React.ReactElement {
     if (targetUser === undefined) return;
     const targetUserId = targetUser._id;
     const result = await service.updateProjectOwner(projectId, { originUserId, targetUserId });
-    console.log(result);
+    /**
+     * @Todo
+     * 상태 변경
+     */
   };
 
   return (
