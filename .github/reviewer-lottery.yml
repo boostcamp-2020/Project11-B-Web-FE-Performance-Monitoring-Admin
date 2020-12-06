@@ -1,0 +1,8 @@
+groups:
+  - name: devs # name of the group
+    reviewers: 4 # how many reviewers do you want to assign?
+    usernames: # github usernames of the reviewers
+      - junsushin-dev
+      - saeeng
+      - EarlyHail
+      - juyoungpark718
