@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@material-ui/core';
 
+import Progress from '../../common/Progress';
 import CrimeHeader from './CrimeHeader';
 import CrimeTags from './CrimeTags';
 import CrimeStack from './CrimeStack';
@@ -62,7 +63,9 @@ function CrimeView(props: IProps): React.ReactElement {
     })();
   }, [crimeId]);
 
-  return (
+  return crime === undefined ? (
+    <Progress />
+  ) : (
     <Box>
       <CrimeHeader />
       <CrimeTags />
