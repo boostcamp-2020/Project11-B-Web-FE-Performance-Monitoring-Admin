@@ -100,6 +100,9 @@ function CrimeView(props: IProps): React.ReactElement {
       />
       <CrimeTags className={classes.titleBox} crime={crime} />
       <CrimeStack className={classes.titleBox} crime={crime} />
+      {getTagDetailContents(crime).map((item) => (
+        <TagDetail className={classes.titleBox} title={item.title} contents={item.contents} />
+      ))}
     </Box>
   );
 }
