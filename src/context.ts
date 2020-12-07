@@ -5,7 +5,7 @@ interface IUserContext {
     nickname?: string;
     token?: string;
   };
-  setUser?(state: any): void;
+  setUser(state: any): void;
 }
 
 const UserContext = createContext({} as IUserContext);

@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
+import service from '../service';
 import UserContext from '../context';
 
-function InviteProject() {
+function InviteProject(): React.ReactElement {
   const history = useHistory();
+  const { setUser } = useContext(UserContext);
   const {
     location: { search },
   } = history;
@@ -13,13 +15,14 @@ function InviteProject() {
     (async () => {
       const nickname = localStorage.getItem('nickname');
       const token = localStorage.getItem('token');
-      console.log(key, nickname, token);
       if (key && nickname && token) {
-        const res = await fetch(`http://localhost:4000/api/accept?key=${key}`, {
-          method: 'GET',
-          headers: { jwt: token },
+        const encodeKey = encodeURIComponent(key as string);
+        await service.acceptInvitation(encodeKey);
+        setUser({
+          nickname,
+          token,
         });
-        console.log(res);
+        history.push('/projects');
       } else {
         history.push(`/`, { key });
       }
