@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash';
 import service from '../service';
 
-interface IUser {
+export interface IUser {
   projects: [];
-  _id: number;
+  _id: string;
   uid: number;
   email: string | null;
   nickname: string;
@@ -36,7 +36,8 @@ const useProject = (projectId: string) => {
       return newProject;
     });
   };
-  const setProjectUsers = async (selectedIds: number[]) => {
+
+  const setProjectUsers = async (selectedIds: string[]) => {
     await service.deleteProjectUsers(projectId, { userIds: selectedIds });
     setProject(() => {
       const newProject = _.cloneDeep(project) as IProject;
@@ -44,6 +45,15 @@ const useProject = (projectId: string) => {
       return newProject;
     });
   };
-  return [project, setProjectName, setProjectUsers] as const;
+  const setProjectOwner = async (originUserId: string, targetUserId: string) => {
+    await service.updateProjectOwner(projectId, { originUserId, targetUserId });
+    const res = await service.getUser(targetUserId);
+    setProject(() => {
+      const newProject: IProject = _.cloneDeep(project) as IProject;
+      newProject.owner = res.data;
+      return newProject;
+    });
+  };
+  return [project, setProjectName, setProjectUsers, setProjectOwner] as const;
 };
 export default useProject;

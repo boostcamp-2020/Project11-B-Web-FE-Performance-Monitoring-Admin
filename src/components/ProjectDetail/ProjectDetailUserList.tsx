@@ -13,6 +13,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ProjectDetailUserListHead from './ProjectDetailUserListHead';
 import ProjectDetailUserListToolbar from './ProjectDetailUserListToolbar';
 
+import { IUser } from '../../hooks/ProjectDetailHooks';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -39,23 +41,15 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface IUser {
-  projects: [];
-  _id: number;
-  uid: number;
-  email: string | null;
-  nickname: string;
-}
-
 interface IProps {
   users: IUser[];
-  deleteUsers: (selectedIds: number[]) => void;
+  deleteUsers: (selectedIds: string[]) => void;
 }
 
 export default function UserListTable(props: IProps): React.ReactElement {
   const classes = useStyles();
   const { users, deleteUsers } = props;
-  const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelecteds = users.map((user) => user._id);
@@ -64,13 +58,13 @@ export default function UserListTable(props: IProps): React.ReactElement {
     }
     setSelected([]);
   };
-  const deleteUserAndReset = (selectedUser: number[]) => {
+  const deleteUserAndReset = (selectedUser: string[]) => {
     deleteUsers(selectedUser);
     setSelected([]);
   };
-  const handleClick = (event: React.MouseEvent<unknown>, name: number) => {
+  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
-    let newSelected: number[] = [];
+    let newSelected: string[] = [];
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -86,9 +80,9 @@ export default function UserListTable(props: IProps): React.ReactElement {
     setSelected(newSelected);
   };
 
-  const isSelected = (name: number) => selected.indexOf(name) !== -1;
+  const isSelected = (name: string) => selected.indexOf(name) !== -1;
   return (
-    <Box mt={7} className={classes.root}>
+    <Box mt={3} className={classes.root}>
       <Paper className={classes.paper}>
         <ProjectDetailUserListToolbar
           numSelected={selected.length}

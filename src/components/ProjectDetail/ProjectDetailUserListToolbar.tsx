@@ -9,8 +9,8 @@ import Typography from '@material-ui/core/Typography';
 
 interface ProjectDetailUserListToolbarProps {
   numSelected: number;
-  selectedUsers: number[];
-  deleteUsers: (selectedUids: number[]) => void;
+  selectedUsers: string[];
+  deleteUsers: (selectedUids: string[]) => void;
 }
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
