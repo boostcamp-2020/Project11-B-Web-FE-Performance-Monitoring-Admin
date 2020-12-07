@@ -6,8 +6,11 @@ import { AccessTime } from '@material-ui/icons';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import timeAgo from '../../../utils/timeAgo';
-import { IProps } from '../issueTypes';
+import { IssueType } from '../../../types';
 
+export interface IProps {
+  issue: IssueType;
+}
 const StyledLink = styled(Link)({
   fontSize: '16px',
   color: '#4877CF',
@@ -28,37 +31,40 @@ const useStyle = makeStyles({
 
 function IssueListItem(props: IProps): React.ReactElement {
   const { issue } = props;
+  const issueData = issue._id;
+  const issueStat = issue._stat[0];
+  const userSet = new Set([...issueStat.userIps]);
   const styles = useStyle();
   return (
     <Box display="flex" fontSize="small" px={3} py={1} className={styles.issueItem}>
       <Box>
         <Box display="flex" gridGap={10}>
-          <StyledLink to={`/issue/${issue._id}`}>{issue.type}</StyledLink>
-          <Box>{`${issue.stack.function}(${issue.stack.filename}) `}</Box>
+          <StyledLink to={`/issue/${issueData._id}`}>{issueData.type}</StyledLink>
+          <Box>{`${issueData.stack.function}(${issueData.stack.filename}) `}</Box>
         </Box>
-        <Box fontSize="14px">{issue.message}</Box>
+        <Box fontSize="14px">{issueData.message}</Box>
         <Box display="flex">
           <Box mr={1}>
             <FontAwesomeIcon size="lg" icon={faJs} color="#f0db4f" />
           </Box>
-          <Box mr={1}>{issue.project[0].name}</Box>
+          <Box mr={1}>{issueData.project[0].name}</Box>
           <Box display="flex" fontSize="small" color="textSecondary">
             <Box>
               <AccessTime fontSize="inherit" />
             </Box>
-            <span> {timeAgo(issue.errors[0].occuredAt)}</span>
+            <span> {timeAgo(issueData.lastError.occuredAt)}</span>
           </Box>
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-around" minWidth="300px" alignItems="center">
         <Box>
           <Typography variant="h3" color="primary">
-            {issue.errorIds.length}
+            {issueData.errorIds.length}
           </Typography>
         </Box>
         <Box>
           <Typography variant="h3" color="primary">
-            {issue.errorIds.length}
+            {userSet.size}
           </Typography>
         </Box>
       </Box>

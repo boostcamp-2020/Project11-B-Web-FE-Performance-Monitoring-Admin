@@ -47,8 +47,7 @@ function IssueToolbar(): React.ReactElement {
         </Box>
         <Box display="flex" alignItems="center">
           <Typography variant="h4" color="textSecondary">
-            {' '}
-            Assignee
+            Users
           </Typography>
         </Box>
       </Box>
