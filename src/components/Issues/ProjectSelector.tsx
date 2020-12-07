@@ -16,14 +16,15 @@ import { IProjectCardProps } from '../../types';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: { width: '100%', height: '50px' },
+    root: { width: '100%', margin: '16px 0px' },
     formControl: {
       minWidth: 120,
       maxWidth: '33%',
-      height: '100%',
     },
+    select: { height: '80px' },
     chips: { height: '100%', display: 'flex', flexWrap: 'wrap' },
     chip: {
+      height: '40px',
       margin: 2,
     },
   }),
@@ -48,9 +49,10 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
   }, []);
   return (
     <Box className={classes.root}>
-      <FormControl variant="filled" fullWidth className={classes.formControl}>
-        {/* <InputLabel id="demo-mutiple-chip-label">SELECTED PROJECT</InputLabel> */}
+      <FormControl variant="outlined" size="medium" fullWidth className={classes.formControl}>
+        <InputLabel id="demo-mutiple-chip-label">SELECTED PROJECT</InputLabel>
         <Select
+          className={classes.select}
           placeholder="SELECTED PROJECT"
           variant="filled"
           labelId="demo-mutiple-chip-label"
@@ -62,7 +64,7 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
           renderValue={(selected) => (
             <div className={classes.chips}>
               {(selected as IProjectCardProps[]).map((value) => (
-                <Chip key={value._id} label={value.name} className={classes.chip} />
+                <Chip color="primary" key={value._id} label={value.name} className={classes.chip} />
               ))}
             </div>
           )}
