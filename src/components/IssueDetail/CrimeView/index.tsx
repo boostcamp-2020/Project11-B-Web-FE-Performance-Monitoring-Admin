@@ -49,12 +49,18 @@ interface IProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    crimePropertyBox: {
+    horizontalBox: {
       padding: '32px',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+      borderBottom: '1px solid #E2DEE6',
+    },
+    titleBox: {
+      padding: '32px',
+      display: 'flex',
+      flexDirection: 'column',
       borderBottom: '1px solid #E2DEE6',
     },
   }),
@@ -100,14 +106,19 @@ function CrimeView(props: IProps): React.ReactElement {
   ) : (
     <Box>
       <CrimeHeader
-        className={classes.crimePropertyBox}
+        className={classes.horizontalBox}
         crimeId={crime._id}
         occuredAt={crime.occuredAt}
         handleBack={handleBack}
         handleNext={handleNext}
       />
-      <CrimeTags className={classes.crimePropertyBox} tags={getTags(crime)} />
-      <CrimeStack />
+      <CrimeTags className={classes.titleBox} tags={getTags(crime)} />
+      <CrimeStack
+        className={classes.titleBox}
+        type={crime.type}
+        message={crime.message}
+        stack={crime.stack}
+      />
       {/* <TagDetail title="USER" content={} />
       <TagDetail title="BROWSER" content={} />
       <TagDetail title="OPERATING SYSTEM" content={} /> */}
