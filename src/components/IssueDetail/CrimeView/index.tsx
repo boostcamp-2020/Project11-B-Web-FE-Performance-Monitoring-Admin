@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box } from '@material-ui/core';
+import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
 
 import Progress from '../../common/Progress';
 import CrimeHeader from './CrimeHeader';
@@ -46,28 +46,53 @@ interface IProps {
   errorIds: string[];
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    crimePropertyBox: {
+      padding: '32px',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      borderBottom: '1px solid #E2DEE6',
+    },
+  }),
+);
+
 function CrimeView(props: IProps): React.ReactElement {
+  const classes = useStyles();
   const { issueId, errorIds } = props;
-  const [crimeId, setCrimeId] = useState('');
+  const [crimeIndex, setCrimeIndex] = useState(0);
   const [crime, setCrime] = useState<ICrime>();
 
   useEffect(() => {
-    const [firstErrorId] = errorIds;
-    setCrimeId(firstErrorId);
-  }, [errorIds]);
-
-  useEffect(() => {
+    if (errorIds.length === 0) return;
     (async () => {
+      const crimeId = errorIds[crimeIndex];
       const res = await service.getCrime(crimeId);
       setCrime(res);
     })();
-  }, [crimeId]);
+  }, [crimeIndex, errorIds]);
+
+  const handleBack = () => {
+    setCrimeIndex((prevIndex) => prevIndex - 1);
+  };
+
+  const handleNext = () => {
+    setCrimeIndex((prevIndex) => prevIndex + 1);
+  };
 
   return crime === undefined ? (
     <Progress />
   ) : (
     <Box>
-      <CrimeHeader />
+      <CrimeHeader
+        className={classes.crimePropertyBox}
+        crimeId={crime._id}
+        occuredAt={crime.occuredAt}
+        handleBack={handleBack}
+        handleNext={handleNext}
+      />
       <CrimeTags />
       <CrimeStack />
       {/* <TagDetail title="USER" content={} />
