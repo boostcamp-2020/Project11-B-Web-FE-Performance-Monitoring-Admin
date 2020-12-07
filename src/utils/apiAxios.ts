@@ -23,16 +23,14 @@ const checkStatusOkay = (status: number) => {
 apiAxios.interceptors.response.use(
   (response) => {
     // 응답 데이터를 가공
-    if (response.status === 400) throw new Error('====TYPE ERROR ====');
-    if (response.status === 401) throw new Error('==== UNAUTHORIZED ==');
-    if (response.status === 500) throw new Error('==== SERVER ERROR ====');
-    if (!checkStatusOkay(response.status)) throw new Error('==== UNKNOWN ERROR ====');
     return response;
   },
   (error) => {
     // 오류 응답을 처리
-    // ...
-    return Promise.reject(error);
+    if (error.response.status === 400) throw new Error('==== TYPE ERROR ====');
+    if (error.response.status === 401) throw new Error('==== UNAUTHORIZED ====');
+    if (error.response.status === 500) throw new Error('==== SERVER ERROR ====');
+    throw new Error('==== UNKNOWN ERROR ====');
   },
 );
 
