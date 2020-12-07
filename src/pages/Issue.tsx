@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import IssueTable from '../components/Issues/IssueTable';
 import IssueHeader from '../components/Issues/IssuesHeader';
 import ProjectSelector from '../components/Issues/ProjectSelector';
-import Page from '../components/layout/Page';
 import { IProjectCardProps } from '../types';
 
 function Issue(): React.ReactElement {

@@ -1,28 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
-import { Box, FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 import qs from 'querystring';
 import IssueToolbar from './IssueToolbar';
 import IssueListItem from './IssueListItem';
 import service from '../../../service';
 import { IssueType, IProjectCardProps } from '../../../types';
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    formControl: {
-      minWidth: 120,
-      maxWidth: 300,
-    },
-    chips: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    chip: {
-      margin: 2,
-    },
-  }),
-);
 interface ITableProps {
   selectedProject: IProjectCardProps[];
 }
@@ -36,7 +20,6 @@ function IssueTable(props: ITableProps): React.ReactElement {
   };
 
   useEffect(() => {
-    // if (!selectedProject) return;
     (async () => {
       const query = `?${qs.stringify({
         page,

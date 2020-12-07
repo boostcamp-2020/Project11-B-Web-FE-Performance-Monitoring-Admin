@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import Tag from '../components/Tag';
 import Stack from '../components/Stack';
 import service from '../service';
-import UserContext from '../context';
 
 interface IStack {
   _id: string;
@@ -44,7 +43,6 @@ interface MatchParams {
 function IssueDetail(): React.ReactElement {
   const [issue, setIssue] = useState<IssueType>();
   const match = useRouteMatch<MatchParams>('/issue/:id');
-  const { user } = useContext(UserContext);
   useEffect(() => {
     (async () => {
       const res = await service.getIssue(match?.params.id || '');
