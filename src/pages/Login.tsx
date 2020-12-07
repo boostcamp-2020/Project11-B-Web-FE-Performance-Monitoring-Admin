@@ -16,15 +16,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '20px',
   },
   button: {
-    backgroundColor: 'black',
+    backgroundColor: '#3A3A3A',
     margin: theme.spacing(4),
     textTransform: 'none',
     fontSize: '20px',
     color: 'white',
     fontWeight: 600,
     '&:hover': {
-      backgroundColor: 'white',
-      color: 'black',
+      backgroundColor: '#000000',
+      color: 'white',
     },
   },
   icon: {
