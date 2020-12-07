@@ -70,8 +70,8 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
           )}
         >
           {projects.map((project) => (
-            <MenuItem key={project._id} value={project as any}>
-              {project.name} {project._id}
+            <MenuItem className={classes.select} key={project._id} value={project as any}>
+              {project.name} : {`[${project._id}]`}
             </MenuItem>
           ))}
         </Select>
