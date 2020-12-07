@@ -12,10 +12,10 @@ function InviteProject(): React.ReactElement {
   } = history;
   const { key } = qs.parse(search, { ignoreQueryPrefix: true });
   useEffect(() => {
-    (async () => {
-      const nickname = localStorage.getItem('nickname');
-      const token = localStorage.getItem('token');
-      if (key && nickname && token) {
+    const nickname = localStorage.getItem('nickname');
+    const token = localStorage.getItem('token');
+    if (key && nickname && token) {
+      (async () => {
         const encodeKey = encodeURIComponent(key as string);
         await service.acceptInvitation(encodeKey);
         setUser({
@@ -23,10 +23,10 @@ function InviteProject(): React.ReactElement {
           token,
         });
         history.push('/projects');
-      } else {
-        history.push(`/`, { key });
-      }
-    })();
+      })();
+    } else {
+      history.push(`/`, { key });
+    }
   });
 
   return <></>;
