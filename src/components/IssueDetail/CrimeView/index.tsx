@@ -7,6 +7,7 @@ import CrimeTags from './CrimeTags';
 import CrimeStack from './CrimeStack';
 import TagDetail from './TagDetail';
 
+import dropIPv6SubnetMask from '../../../utils/dropSubnetMask';
 import service from '../../../service';
 
 interface IStack {
@@ -82,6 +83,18 @@ function CrimeView(props: IProps): React.ReactElement {
     setCrimeIndex((prevIndex) => prevIndex + 1);
   };
 
+  const getTags = (curr: ICrime) => {
+    const { browser, os, url, ip } = curr.meta;
+    return [
+      { name: 'browser.name', content: browser.name },
+      { name: 'browser', content: `${browser.name} ${browser.version}` },
+      { name: 'os.name', content: os.name },
+      { name: 'os', content: `${os.name} ${os.version}` },
+      { name: 'url', content: url },
+      { name: 'ip', content: dropIPv6SubnetMask(ip) },
+    ];
+  };
+
   return crime === undefined ? (
     <Progress />
   ) : (
@@ -93,7 +106,7 @@ function CrimeView(props: IProps): React.ReactElement {
         handleBack={handleBack}
         handleNext={handleNext}
       />
-      <CrimeTags />
+      <CrimeTags className={classes.crimePropertyBox} tags={getTags(crime)} />
       <CrimeStack />
       {/* <TagDetail title="USER" content={} />
       <TagDetail title="BROWSER" content={} />
