@@ -5,6 +5,7 @@ import BackNextButtons from './BackNextButtons';
 
 const CustomTextField = styled(TextField)({
   maxWidth: '500px',
+  paddingBottom: '20px',
 });
 
 interface IProps {

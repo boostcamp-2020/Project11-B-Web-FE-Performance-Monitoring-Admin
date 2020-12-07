@@ -3,11 +3,11 @@ import { Box, Button, Chip, TextField, Snackbar, styled } from '@material-ui/cor
 import { Email as EmailIcon } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 import isEmail from 'validator/lib/isEmail';
-import BackNextButtons from './BackNextButtons';
 
 const EmailInput = styled(TextField)({
   width: '300px',
   paddingRight: '10px',
+  paddingBottom: '10px',
 });
 
 const CustomButton = styled(Button)({

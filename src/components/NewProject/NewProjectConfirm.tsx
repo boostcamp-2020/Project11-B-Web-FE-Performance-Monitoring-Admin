@@ -13,6 +13,7 @@ interface IProps {
 const CustomPaper = styled(Paper)({
   maxWidth: '500px',
   padding: '15px',
+  marginBottom: '20px',
 });
 
 function NewProjectConfirm(props: IProps): React.ReactElement {
