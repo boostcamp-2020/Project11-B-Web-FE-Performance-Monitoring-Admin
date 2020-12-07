@@ -36,6 +36,9 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
     (async () => {
       const projectRespone = await service.getProjects();
       setProjects(projectRespone.data.projects);
+      if (!selectedProject[0]) {
+        setSelectedProject([projectRespone.data.projects[0]]);
+      }
     })();
   }, []);
   return (
