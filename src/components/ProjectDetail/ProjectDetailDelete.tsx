@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
+import { Box, Button, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
 
 import service from '../../service';
 
@@ -17,6 +14,15 @@ interface IProps {
 export default function ProjectDetailDelete(props: IProps): React.ReactElement {
   const { title, projectId }: IProps = props;
   const [inputTitle, setInputTitle] = useState('');
+  const [showDelete, setShowDelete] = useState(false);
+
+  const startDeleting = () => {
+    setShowDelete(true);
+  };
+  const cancelDeleting = () => {
+    setInputTitle('');
+    setShowDelete(false);
+  };
 
   const history = useHistory();
 
@@ -29,29 +35,45 @@ export default function ProjectDetailDelete(props: IProps): React.ReactElement {
   };
 
   return (
-    <form noValidate autoComplete="off">
-      <Box display="flex" mt={10} alignItems="flex-end">
-        <TextField
-          error
-          id="standard-error"
-          label="Project Name"
-          defaultValue="Hello World"
-          value={inputTitle}
-          onChange={onChange}
-        />
-        {inputTitle === title && (
-          <Box ml={5}>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<DeleteIcon />}
-              onClick={deleteProject}
-            >
-              Delete
-            </Button>
-          </Box>
-        )}
-      </Box>
-    </form>
+    <>
+      <form noValidate autoComplete="off">
+        <Box display="flex" flexDirection="column" alignItems="start">
+          {showDelete ? (
+            <Box display="flex" alignItems="flex-end">
+              <TextField
+                error
+                id="standard-error"
+                label="Project Name"
+                value={inputTitle}
+                onChange={onChange}
+              />
+              {inputTitle === title && (
+                <Box ml={2}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                    onClick={deleteProject}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              )}
+              <Box ml={2}>
+                <Button variant="contained" color="primary" onClick={cancelDeleting}>
+                  Cancel
+                </Button>
+              </Box>
+            </Box>
+          ) : (
+            <Box mt={2}>
+              <Button color="secondary" size="large" onClick={startDeleting}>
+                Delete Project
+              </Button>
+            </Box>
+          )}
+        </Box>
+      </form>
+    </>
   );
 }
