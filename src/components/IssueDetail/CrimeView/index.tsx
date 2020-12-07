@@ -47,6 +47,20 @@ interface IProps {
 
 function CrimeView(props: IProps): React.ReactElement {
   const { issueId, errorIds } = props;
+  const [crimeId, setCrimeId] = useState('');
+  const [crime, setCrime] = useState<ICrime>();
+
+  useEffect(() => {
+    const [firstErrorId] = errorIds;
+    setCrimeId(firstErrorId);
+  }, [errorIds]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await service.getCrime(crimeId);
+      setCrime(res);
+    })();
+  }, [crimeId]);
 
   return (
     <Box>
