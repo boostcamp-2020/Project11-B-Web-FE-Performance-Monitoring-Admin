@@ -60,3 +60,16 @@ export interface IssueType {
   };
   _stat: any;
 }
+
+export interface IUser {
+  _id: string;
+  uid: number;
+  nickname: string;
+  email: string;
+}
+export interface IProjectCardProps {
+  _id: string;
+  name: string;
+  owner: IUser;
+  users: IUser[];
+}
