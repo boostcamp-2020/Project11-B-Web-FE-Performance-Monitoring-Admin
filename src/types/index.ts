@@ -3,11 +3,16 @@ export interface MatchParams {
 }
 
 export interface IProject {
+  _id: string;
+  users: [];
   name: string;
+  description: string;
+  owner: string;
+  __v?: any;
 }
 
 export interface IStack {
-  _id: string;
+  _id?: string;
   columnNo: string;
   lineNo: string;
   function: string;
@@ -16,6 +21,8 @@ export interface IStack {
 
 export interface IError {
   _id: string;
+  message: string;
+  type: string;
   meta: {
     browser: {
       name: string;
@@ -28,7 +35,13 @@ export interface IError {
     url: string;
     ip: string;
   };
+  stack: IStack[];
   occuredAt: string;
+  sdk: {
+    name: string;
+    version: string;
+  };
+  __v?: any;
 }
 
 export interface IssueType {
@@ -40,24 +53,13 @@ export interface IssueType {
     errorIds: string[];
     lastError: IError;
     stack: IStack;
-    occuredAt: Date;
-    sdk: {
+    occuredAt?: Date;
+    sdk?: {
       name: string;
       version: string;
     };
-    meta: {
-      broswer: {
-        name: string;
-        version: string;
-      };
-      os: {
-        name: string;
-        version: string;
-      };
-      url: string;
-      ip: string;
-    };
   };
+
   _stat: any;
 }
 
