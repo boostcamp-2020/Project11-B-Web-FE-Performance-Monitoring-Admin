@@ -31,12 +31,12 @@ function ProjectDetail(): React.ReactElement {
   const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
 
   const handleSend = async (emails: string[]) => {
-    if (!project) return;
+    if (project === undefined) return;
     const name = project.name as string;
     await service.inviteMembers({
       to: emails,
       project: name,
-      projectId: dsn,
+      projectId: project._id,
     });
   };
 
