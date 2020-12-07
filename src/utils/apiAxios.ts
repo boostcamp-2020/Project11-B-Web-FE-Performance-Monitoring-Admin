@@ -1,4 +1,5 @@
 import axios from 'axios';
+import logoutUser from './logoutUser';
 
 const apiAxios = axios.create({
   baseURL: '/',
@@ -15,10 +16,6 @@ apiAxios.interceptors.request.use((config) => {
   return newConfig;
 });
 
-const checkStatusOkay = (status: number) => {
-  return status.toString(10).charAt(0) === '2';
-};
-
 // 응답 인터셉터 추가
 apiAxios.interceptors.response.use(
   (response) => {
@@ -27,8 +24,11 @@ apiAxios.interceptors.response.use(
   },
   (error) => {
     // 오류 응답을 처리
-    if (error.response.status === 400) throw new Error('==== TYPE ERROR ====');
-    if (error.response.status === 401) throw new Error('==== UNAUTHORIZED ====');
+    if (error.response.status === 400) throw new Error('====TYPE ERROR ====');
+    if (error.response.status === 401) {
+      logoutUser();
+      return;
+    }
     if (error.response.status === 500) throw new Error('==== SERVER ERROR ====');
     throw new Error('==== UNKNOWN ERROR ====');
   },
