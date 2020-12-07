@@ -1,24 +1,17 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 
+import { ICrime } from './types';
 import Stack from '../../Stack';
 
-interface IStack {
-  _id: string;
-  columnNo: string;
-  lineNo: string;
-  function: string;
-  filename: string;
-}
 interface IProps {
-  type: string;
-  message: string;
   className: string;
-  stack: IStack[];
+  crime: ICrime;
 }
 
 function CrimeStack(props: IProps): React.ReactElement {
-  const { className, type, message, stack } = props;
+  const { className, crime } = props;
+  const { type, message, stack } = crime;
   const title = 'STACK';
 
   return (

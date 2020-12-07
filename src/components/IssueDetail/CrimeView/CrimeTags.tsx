@@ -1,7 +1,9 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 
+import { ICrime } from './types';
 import Tag from '../../Tag';
+import dropIPv6SubnetMask from '../../../utils/dropSubnetMask';
 
 interface ITagContent {
   name: string;
@@ -9,24 +11,34 @@ interface ITagContent {
 }
 interface IProps {
   className: string;
-  tags: ITagContent[];
+  crime: ICrime;
 }
 
 function CrimeTags(props: IProps): React.ReactElement {
-  const { className, tags } = props;
+  const { className, crime } = props;
   const title = 'TAGS';
+
+  const getTags = (curr: ICrime) => {
+    const { browser, os, url, ip } = curr.meta;
+    return [
+      { name: 'browser.name', content: browser.name },
+      { name: 'browser', content: `${browser.name} ${browser.version}` },
+      { name: 'os.name', content: os.name },
+      { name: 'os', content: `${os.name} ${os.version}` },
+      { name: 'url', content: url },
+      { name: 'ip', content: dropIPv6SubnetMask(ip) },
+    ];
+  };
 
   return (
     <Box className={className}>
-      <Box display="flex" flexDirection="column">
-        <Typography variant="h4" color="primary">
-          {title}
-        </Typography>
-        <Box pt={2} display="flex" flexWrap="wrap" gridGap={10}>
-          {tags.map((tag: ITagContent) => (
-            <Tag key={tag.name} name={tag.name} content={tag.content} />
-          ))}
-        </Box>
+      <Typography variant="h4" color="primary">
+        {title}
+      </Typography>
+      <Box pt={2} display="flex" flexWrap="wrap" gridGap={10}>
+        {getTags(crime).map((tag: ITagContent) => (
+          <Tag key={tag.name} name={tag.name} content={tag.content} />
+        ))}
       </Box>
     </Box>
   );

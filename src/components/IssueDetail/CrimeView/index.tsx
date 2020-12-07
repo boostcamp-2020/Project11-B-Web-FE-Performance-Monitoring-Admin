@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
 
+import { ICrime } from './types';
 import Progress from '../../common/Progress';
 import CrimeHeader from './CrimeHeader';
 import CrimeTags from './CrimeTags';
@@ -10,40 +11,7 @@ import TagDetail from './TagDetail';
 import dropIPv6SubnetMask from '../../../utils/dropSubnetMask';
 import service from '../../../service';
 
-interface IStack {
-  _id: string;
-  columnNo: string;
-  lineNo: string;
-  function: string;
-  filename: string;
-}
-
-interface ICrime {
-  _id: string;
-  meta: {
-    browser: {
-      name: string;
-      version: string;
-    };
-    os: {
-      name: string;
-      version: string;
-    };
-    url: string;
-    ip: string;
-  };
-  message: string;
-  type: string;
-  stack: IStack[];
-  occuredAt: string;
-  sdk: {
-    name: string;
-    version: string;
-  };
-}
-
 interface IProps {
-  issueId: string;
   errorIds: string[];
 }
 
@@ -68,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function CrimeView(props: IProps): React.ReactElement {
   const classes = useStyles();
-  const { issueId, errorIds } = props;
+  const { errorIds } = props;
   const [crimeIndex, setCrimeIndex] = useState(0);
   const [crime, setCrime] = useState<ICrime>();
 
@@ -89,15 +57,34 @@ function CrimeView(props: IProps): React.ReactElement {
     setCrimeIndex((prevIndex) => prevIndex + 1);
   };
 
-  const getTags = (curr: ICrime) => {
-    const { browser, os, url, ip } = curr.meta;
+  const getTagDetailContents = (curr: ICrime) => {
+    const { browser, os, ip } = curr.meta;
     return [
-      { name: 'browser.name', content: browser.name },
-      { name: 'browser', content: `${browser.name} ${browser.version}` },
-      { name: 'os.name', content: os.name },
-      { name: 'os', content: `${os.name} ${os.version}` },
-      { name: 'url', content: url },
-      { name: 'ip', content: dropIPv6SubnetMask(ip) },
+      {
+        title: 'USER',
+        contents: [{ label: 'IP Address', content: dropIPv6SubnetMask(ip) }],
+      },
+      {
+        title: 'BROWSER',
+        contents: [
+          { label: 'Name', content: browser.name },
+          { label: 'Version', content: browser.version },
+        ],
+      },
+      {
+        title: 'OPERATING SYSTEM',
+        contents: [
+          { label: 'Name', content: os.name },
+          { label: 'Version', content: os.version },
+        ],
+      },
+      {
+        title: 'SDK',
+        contents: [
+          { label: 'Name', content: curr.sdk.name },
+          { label: 'Version', content: curr.sdk.version },
+        ],
+      },
     ];
   };
 
@@ -107,21 +94,12 @@ function CrimeView(props: IProps): React.ReactElement {
     <Box>
       <CrimeHeader
         className={classes.horizontalBox}
-        crimeId={crime._id}
-        occuredAt={crime.occuredAt}
+        crime={crime}
         handleBack={handleBack}
         handleNext={handleNext}
       />
-      <CrimeTags className={classes.titleBox} tags={getTags(crime)} />
-      <CrimeStack
-        className={classes.titleBox}
-        type={crime.type}
-        message={crime.message}
-        stack={crime.stack}
-      />
-      {/* <TagDetail title="USER" content={} />
-      <TagDetail title="BROWSER" content={} />
-      <TagDetail title="OPERATING SYSTEM" content={} /> */}
+      <CrimeTags className={classes.titleBox} crime={crime} />
+      <CrimeStack className={classes.titleBox} crime={crime} />
     </Box>
   );
 }
