@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { Box } from '@material-ui/core';
-import Tag from '../components/Tag';
-import Stack from '../components/Stack';
+import { Box, Typography, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
+
 import service from '../service';
 
 import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
@@ -21,12 +20,7 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-    >
+    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`}>
       {value === index && (
         <Box p={3}>
           <Typography>{children}</Typography>
@@ -102,12 +96,9 @@ function IssueDetail(): React.ReactElement {
   const [issue, setIssue] = useState<IssueType>();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const match = useRouteMatch<MatchParams>('/issue/:id');
-<<<<<<< HEAD
   const handleChangeTab = (event: React.ChangeEvent<any>, newValue: number) => {
     setTabIndex(newValue);
   };
-=======
->>>>>>> feature/issueList
   useEffect(() => {
     (async () => {
       // const res = await service.getIssue(match?.params.id || '');
@@ -122,15 +113,15 @@ function IssueDetail(): React.ReactElement {
           {issue && <IssueDetailHeader issue={issue} />}
         </Grid>
         <Grid item xs={12}>
-          <AppBar position="static">
-            <Tabs value={tabIndex} onChange={handleChangeTab}>
-              <Tab label="Item One" id="tab-0" />
-              <Tab label="Item Two" id="tab-1" />
-              <Tab label="Item Three" id="tab-2" />
+          <AppBar color="transparent" position="static">
+            <Tabs indicatorColor="primary" value={tabIndex} onChange={handleChangeTab}>
+              <Tab label="DETAILS" id="tab-0" />
+              <Tab label="EVENTS" id="tab-1" />
+              <Tab label="TAGS" id="tab-2" />
             </Tabs>
           </AppBar>
           <TabPanel value={tabIndex} index={0}>
-            Item One
+            DETAILS
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
             EVENTS

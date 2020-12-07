@@ -27,13 +27,23 @@ function IssueDetailHeader(props: IProps): React.ReactElement {
   const userSet = new Set([...issueStat.userIps]);
   const styles = useStyle();
   return (
-    <Box display="flex" fontSize="large" width="100%" px={3} py={1} className={styles.issueItem}>
+    <Box
+      display="flex"
+      fontSize="large"
+      width="100%"
+      px={4}
+      pr={10}
+      py={4}
+      className={styles.issueItem}
+    >
       <Box>
         <Box display="flex" gridGap={10}>
           <Typography variant="h2">{issueData.type}</Typography>
           <Box>{`${issueData.stack.function}(${issueData.stack.filename}) `}</Box>
         </Box>
-        <Box fontSize="14px">{issueData.message}</Box>
+        <Box fontSize="14px">
+          <Typography variant="subtitle1">{issueData.message}</Typography>
+        </Box>
         <Box display="flex">
           <Box mr={1}>
             <FontAwesomeIcon size="lg" icon={faJs} color="#f0db4f" />
@@ -41,14 +51,12 @@ function IssueDetailHeader(props: IProps): React.ReactElement {
           <Box mr={1}>{issueData.project[0].name}</Box>
         </Box>
       </Box>
-      <Box display="flex" justifyContent="space-around" minWidth="300px" alignItems="center">
-        <Box>
-          <Typography variant="h3" color="primary">
-            {issueData.errorIds.length}
-          </Typography>
+      <Box display="flex" minWidth="300px" alignItems="center">
+        <Box mr={1}>
+          <StatBox name="EVENTS" color="primary.main" count={issueData.errorIds.length} />
         </Box>
-        <Box>
-          <StatBox name="USERS" count={userSet.size} />
+        <Box mr={1}>
+          <StatBox name="USERS" color="primary.main" count={userSet.size} />
         </Box>
       </Box>
     </Box>
