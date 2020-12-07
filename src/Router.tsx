@@ -15,6 +15,9 @@ function PublicRouter(): React.ReactElement {
     <Switch>
       <Route path="/" exact component={Login} />
       <Route path="/accept" component={InviteProject} />
+      <Route path="*">
+        <Redirect to="/" />
+      </Route>
     </Switch>
   );
 }
