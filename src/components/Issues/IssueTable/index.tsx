@@ -45,7 +45,7 @@ function IssueTable(props: ITableProps): React.ReactElement {
         }),
       })}`;
       const res = await service.getIssues(query);
-      if (!res.data.data) {
+      if (res.data.data === undefined) {
         setTotalPage(0);
         setIssues([]);
         return;
