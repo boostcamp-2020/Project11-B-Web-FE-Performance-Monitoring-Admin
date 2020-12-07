@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Typography,
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  Input,
-  Chip,
-  MenuItem,
-} from '@material-ui/core';
+import { Box, FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import service from '../../service';
@@ -50,17 +41,15 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
   return (
     <Box className={classes.root}>
       <FormControl variant="outlined" size="medium" fullWidth className={classes.formControl}>
-        <InputLabel id="demo-mutiple-chip-label">SELECTED PROJECT</InputLabel>
+        <InputLabel>SELECTED PROJECT</InputLabel>
         <Select
           className={classes.select}
           placeholder="SELECTED PROJECT"
           variant="filled"
-          labelId="demo-mutiple-chip-label"
-          id="demo-mutiple-chip"
           multiple
           value={selectedProject}
           onChange={handleSelectChange}
-          input={<Input id="select-multiple-chip" />}
+          input={<Input />}
           renderValue={(selected) => (
             <div className={classes.chips}>
               {(selected as IProjectCardProps[]).map((value) => (

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { Box, AppBar, Tabs, Tab, Typography, Grid } from '@material-ui/core';
-
+import { Box } from '@material-ui/core';
+import Tag from '../components/Tag';
+import Stack from '../components/Stack';
 import service from '../service';
 
 import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
@@ -101,9 +102,12 @@ function IssueDetail(): React.ReactElement {
   const [issue, setIssue] = useState<IssueType>();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const match = useRouteMatch<MatchParams>('/issue/:id');
+<<<<<<< HEAD
   const handleChangeTab = (event: React.ChangeEvent<any>, newValue: number) => {
     setTabIndex(newValue);
   };
+=======
+>>>>>>> feature/issueList
   useEffect(() => {
     (async () => {
       // const res = await service.getIssue(match?.params.id || '');
