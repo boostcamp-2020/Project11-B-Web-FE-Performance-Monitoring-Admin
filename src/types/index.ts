@@ -1,3 +1,8 @@
+export interface IUserLocalStorage {
+  nickname?: string;
+  token?: string;
+}
+
 export interface MatchParams {
   id: string;
 }

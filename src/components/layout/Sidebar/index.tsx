@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, NavLink } from 'react-router-dom';
 import { Box, Avatar } from '@material-ui/core';
 import { makeStyles, useTheme, Theme, createStyles, styled } from '@material-ui/core/styles';
@@ -12,8 +13,9 @@ import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
+import { RootState } from '../../../modules';
 import useStyle from './styles';
-import UserContext from '../../../context';
+import { unsetUser } from '../../../modules/user';
 
 const drawerWidth = 240;
 
@@ -85,7 +87,9 @@ function Sidebar(): React.ReactElement {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
-  const { user, setUser } = useContext(UserContext);
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
   const history = useHistory();
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -97,8 +101,8 @@ function Sidebar(): React.ReactElement {
   const handleSingOut = () => {
     localStorage.removeItem('nickname');
     localStorage.removeItem('token');
-    if (setUser) {
-      setUser({ nickname: undefined, token: undefined });
+    if (unsetUser) {
+      dispatch(unsetUser());
       history.push('/');
     }
   };
