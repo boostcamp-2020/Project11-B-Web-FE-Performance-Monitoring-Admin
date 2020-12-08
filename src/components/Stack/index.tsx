@@ -2,13 +2,7 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-interface IStack {
-  _id: string;
-  columnNo: string;
-  lineNo: string;
-  function: string;
-  filename: string;
-}
+import { IStack } from '../../types';
 
 interface IProps {
   stack: IStack;
