@@ -74,11 +74,11 @@ const issueDummy = {
       },
     },
 
-    crimeIds: [''],
+    crimeIds: [],
   },
   _stat: [
     {
-      userIps: [''],
+      userIps: [],
     },
   ],
 };

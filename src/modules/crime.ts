@@ -8,10 +8,14 @@ const SET_CRIME = 'crime/SET_CRIME' as const;
 
 const setCrimeAction = (newCrime: ICrime) => ({ type: SET_CRIME, crime: newCrime });
 
-export const setCrime = (crimeId: string) => async (dispatch: Dispatch): Promise<void> => {
+export const setCrime = (crimeId: string, setIsFetching: (flag: boolean) => void) => async (
+  dispatch: Dispatch,
+): Promise<void> => {
+  setIsFetching(true);
   const res = await service.getCrime(crimeId);
   const newCrime: ICrime = res.data;
   dispatch(setCrimeAction(newCrime));
+  setIsFetching(false);
 };
 
 type CrimeAction = ReturnType<typeof setCrimeAction>;

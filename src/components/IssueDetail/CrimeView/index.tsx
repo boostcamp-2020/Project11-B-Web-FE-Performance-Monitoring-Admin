@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
 
-import { ICrime } from './types';
+import { useSelector, useDispatch } from 'react-redux';
+import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { RootState } from '../../../modules';
+import { setCrime } from '../../../modules/crime';
+
+import { ICrime } from '../../../types';
 import Progress from '../../common/Progress';
 import CrimeHeader from './CrimeHeader';
 import CrimeTags from './CrimeTags';
@@ -36,20 +40,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function CrimeView(props: IProps): React.ReactElement {
   const classes = useStyles();
+  const crime = useSelector((state: RootState) => state.crime);
   const { crimeIds } = props;
   const [crimeIndex, setCrimeIndex] = useState(0);
-  const [crime, setCrime] = useState<ICrime>();
+  const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
     if (crimeIds.length === 0) return;
-    (async () => {
-      const crimeId = crimeIds[crimeIndex];
-      setIsFetching(true);
-      const { data } = await service.getCrime(crimeId);
-      setCrime(data);
-      setIsFetching(false);
-    })();
+    const crimeId = crimeIds[crimeIndex];
+    dispatch(setCrime(crimeId, setIsFetching));
   }, [crimeIndex, crimeIds]);
 
   const handleBack = () => {
