@@ -28,7 +28,7 @@ function ProjectDetail(): React.ReactElement {
     projectId as string,
   );
 
-  const dsn = `http://panopticon.gq/api/errors/${project?._id}`;
+  const dsn = `http://panopticon.gq/api/crime/${project?._id}`;
 
   const handleSend = async (emails: string[]) => {
     if (project === undefined) return;
