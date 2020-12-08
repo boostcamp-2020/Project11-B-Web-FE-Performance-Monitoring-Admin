@@ -10,7 +10,7 @@ import qs from 'qs';
 import { useDispatch } from 'react-redux';
 import PanopticonLogo from '../image/panopticon.png';
 import service from '../service';
-import { setUser } from '../modules/user';
+import { loginUser } from '../modules/user';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -107,8 +107,8 @@ const Login = (): React.ReactElement => {
             if (location.state) {
               history.go(-1);
             } else {
-              if (setUser) {
-                dispatch(setUser(nickname, token));
+              if (loginUser) {
+                dispatch(loginUser(nickname, token));
               }
               history.replace('/projects');
             }

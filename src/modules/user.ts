@@ -2,17 +2,17 @@ import { Dispatch } from 'redux';
 import { IUserLocalStorage } from '../types';
 import service from '../service';
 
-const SET_USER = 'user/SET_USER' as const;
-const UNSET_USER = 'user/UNSET_USER' as const;
+const LOGIN_USER = 'user/LOGIN_USER' as const;
+const LOGOUT_USER = 'user/LOGOUT_USER' as const;
 
-export const setUser = (nickname: string, token: string) => ({
-  type: SET_USER,
+export const loginUser = (nickname: string, token: string) => ({
+  type: LOGIN_USER,
   nickname,
   token,
 });
 
-export const unsetUser = () => ({
-  type: UNSET_USER,
+export const logoutUser = () => ({
+  type: LOGOUT_USER,
 });
 
 export const acceptInvitation = (
@@ -22,11 +22,11 @@ export const acceptInvitation = (
   history: any,
 ) => async (dispatch: Dispatch): Promise<void> => {
   await service.acceptInvitation(encodeKey);
-  dispatch(setUser(nickname, token));
+  dispatch(loginUser(nickname, token));
   history.push('/projects');
 };
 
-type UserAction = ReturnType<typeof setUser> | ReturnType<typeof unsetUser>;
+type UserAction = ReturnType<typeof loginUser> | ReturnType<typeof logoutUser>;
 
 const initialState = {
   nickname: undefined,
@@ -35,14 +35,14 @@ const initialState = {
 
 function crime(state: IUserLocalStorage = initialState, action: UserAction): IUserLocalStorage {
   switch (action.type) {
-    case SET_USER: {
+    case LOGIN_USER: {
       return {
         ...state,
         nickname: action.nickname,
         token: action.token,
       };
     }
-    case UNSET_USER: {
+    case LOGOUT_USER: {
       return {
         ...state,
         nickname: undefined,

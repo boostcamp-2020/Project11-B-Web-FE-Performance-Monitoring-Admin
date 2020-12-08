@@ -15,7 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
 import { RootState } from '../../../modules';
 import useStyle from './styles';
-import { unsetUser } from '../../../modules/user';
+import { logoutUser } from '../../../modules/user';
 
 const drawerWidth = 240;
 
@@ -101,8 +101,8 @@ function Sidebar(): React.ReactElement {
   const handleSingOut = () => {
     localStorage.removeItem('nickname');
     localStorage.removeItem('token');
-    if (unsetUser) {
-      dispatch(unsetUser());
+    if (logoutUser) {
+      dispatch(logoutUser());
       history.push('/');
     }
   };
