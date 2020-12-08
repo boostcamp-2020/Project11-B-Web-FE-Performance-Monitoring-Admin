@@ -1,20 +1,20 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { Box } from '@material-ui/core';
 import IssueTable from '../components/Issues/IssueTable';
 import IssueHeader from '../components/Issues/IssuesHeader';
-import Page from '../components/layout/Page';
+import ProjectSelector from '../components/Issues/ProjectSelector';
+import { IProjectCardProps } from '../types';
 
 function Issue(): React.ReactElement {
+  const [selectedProject, setSelectedProject] = useState<IProjectCardProps[]>([]);
   return (
-    <Page title="issue">
-      <>
-        <Box padding={3}>
-          <IssueHeader />
-          <IssueTable />
-        </Box>
-      </>
-    </Page>
+    <>
+      <ProjectSelector selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+      <Box padding={3}>
+        <IssueHeader />
+        <IssueTable selectedProject={selectedProject} />
+      </Box>
+    </>
   );
 }
 
