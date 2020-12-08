@@ -35,7 +35,11 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
   useEffect(() => {
     (async () => {
       const projectRespone = await service.getProjects();
+      if (projectRespone.data.projects[0] === undefined) return;
       setProjects(projectRespone.data.projects);
+      if (!selectedProject[0]) {
+        setSelectedProject([projectRespone.data.projects[0]]);
+      }
     })();
   }, []);
   return (

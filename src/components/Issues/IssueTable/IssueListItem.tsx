@@ -6,10 +6,10 @@ import { AccessTime } from '@material-ui/icons';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import timeAgo from '../../../utils/timeAgo';
-import { IssueType } from '../../../types';
+import { IIssue } from '../../../types';
 
 export interface IProps {
-  issue: IssueType;
+  issue: IIssue;
 }
 const StyledLink = styled(Link)({
   fontSize: '16px',
@@ -52,14 +52,14 @@ function IssueListItem(props: IProps): React.ReactElement {
             <Box>
               <AccessTime fontSize="inherit" />
             </Box>
-            <span> {timeAgo(issueData.lastError.occuredAt)}</span>
+            <span> {timeAgo(issueData.lastCrime.occuredAt)}</span>
           </Box>
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-around" minWidth="300px" alignItems="center">
         <Box>
           <Typography variant="h3" color="primary">
-            {issueData.errorIds.length}
+            {issueData.crimeIds.length}
           </Typography>
         </Box>
         <Box>

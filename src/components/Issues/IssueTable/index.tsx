@@ -5,13 +5,13 @@ import qs from 'querystring';
 import IssueToolbar from './IssueToolbar';
 import IssueListItem from './IssueListItem';
 import service from '../../../service';
-import { IssueType, IProjectCardProps } from '../../../types';
+import { IIssue, IProjectCardProps } from '../../../types';
 
 interface ITableProps {
   selectedProject: IProjectCardProps[];
 }
 function IssueTable(props: ITableProps): React.ReactElement {
-  const [issues, setIssues] = useState<IssueType[]>([]);
+  const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
   const { selectedProject } = props;
