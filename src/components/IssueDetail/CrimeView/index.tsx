@@ -39,13 +39,16 @@ function CrimeView(props: IProps): React.ReactElement {
   const { crimeIds } = props;
   const [crimeIndex, setCrimeIndex] = useState(0);
   const [crime, setCrime] = useState<ICrime>();
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   useEffect(() => {
     if (crimeIds.length === 0) return;
     (async () => {
       const crimeId = crimeIds[crimeIndex];
+      setIsFetching(true);
       const { data } = await service.getCrime(crimeId);
       setCrime(data);
+      setIsFetching(false);
     })();
   }, [crimeIndex, crimeIds]);
 
@@ -100,11 +103,22 @@ function CrimeView(props: IProps): React.ReactElement {
         handleBack={handleBack}
         handleNext={handleNext}
       />
-      <CrimeTags className={classes.titleBox} crime={crime} />
-      <CrimeStack className={classes.titleBox} crime={crime} />
-      {getTagDetailContents(crime).map((item) => (
-        <TagDetail className={classes.titleBox} title={item.title} contents={item.contents} />
-      ))}
+      {isFetching ? (
+        <Progress />
+      ) : (
+        <Box>
+          <CrimeTags className={classes.titleBox} crime={crime} />
+          <CrimeStack className={classes.titleBox} crime={crime} />
+          {getTagDetailContents(crime).map((item) => (
+            <TagDetail
+              key={item.title}
+              className={classes.titleBox}
+              title={item.title}
+              contents={item.contents}
+            />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }

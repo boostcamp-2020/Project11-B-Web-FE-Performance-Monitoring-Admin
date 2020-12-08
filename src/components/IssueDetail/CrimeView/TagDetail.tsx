@@ -27,7 +27,7 @@ function TagDetail(props: IProps): React.ReactElement {
       <Box mt={2} display="flex" flexDirection="column" gridGap="5">
         <Grid container direction="column" spacing={1}>
           {contents.map((item) => (
-            <Grid container item>
+            <Grid container item key={item.label}>
               <Grid item xs={3}>
                 <Typography>{item.label}</Typography>
               </Grid>
