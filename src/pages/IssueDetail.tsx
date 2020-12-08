@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
-
-import service from '../service';
+import { RootState } from '../modules';
 
 import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
 import CrimeView from '../components/IssueDetail/CrimeView';
-import { IIssue } from '../types';
+import { setIssue } from '../modules/issue';
 
 import Crimes from '../components/IssueDetail/Crimes';
 
@@ -30,18 +30,15 @@ function TabPanel(props: TabPanelProps) {
 }
 
 function IssueDetail(): React.ReactElement {
-  const [issue, setIssue] = useState<IIssue>();
+  const issue = useSelector((state: RootState) => state.issue);
+  const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const match = useRouteMatch<MatchParams>('/issue/:id');
   const handleChangeTab = (event: React.ChangeEvent<any>, newValue: number) => {
     setTabIndex(newValue);
   };
   useEffect(() => {
-    (async () => {
-      const res = await service.getIssue(match?.params.id || '');
-      setIssue(res.data);
-      // setIssue(temp);
-    })();
+    dispatch(setIssue(match?.params.id || ''));
   }, [match?.params.id]);
   const issueId = issue?._id._id;
   return (
