@@ -45,7 +45,7 @@ function ProjectsUserInfo(props: IProps): React.ReactElement {
     const targetUser = users.find((user) => user.nickname === targetUserName);
     if (targetUser === undefined) return;
     const targetUserId = targetUser._id;
-    await setProjectOwner(originUserId, targetUserId); // const result = await service.updateProjectOwner(projectId, { originUserId, targetUserId });
+    await setProjectOwner(originUserId, targetUserId);
   };
 
   return (
@@ -57,6 +57,7 @@ function ProjectsUserInfo(props: IProps): React.ReactElement {
             size="large"
             onClick={() => startChangeOwner()}
             style={{ textTransform: 'none' }}
+            disabled={users.length === 0}
           >
             Change Owner
           </Button>
