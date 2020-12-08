@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Box, Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 
 import NewProjectNameInput from '../components/NewProject/NewProjectNameInput';
@@ -7,14 +7,13 @@ import NewProjectConfirm from '../components/NewProject/NewProjectConfirm';
 import NewProjectDSN from '../components/NewProject/NewProjectDSN';
 import NewProjectInviteMember from '../components/NewProject/NewProjectInviteMember';
 import service from '../service';
-import UserContext from '../context';
 
 function NewProject(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [dsn, setDsn] = useState('http://panopticon.gq/api/errors/mydsn123');
-  const { user } = useContext(UserContext);
+  const [dsn, setDsn] = useState('http://panopticon.gq/api/crime/mydsn123');
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -30,7 +29,7 @@ function NewProject(): React.ReactElement {
     };
     try {
       const response = await service.addProject(project);
-      setDsn(response.data.projectId);
+      setDsn(`http://panopticon.gq/api/crime/${response.data.projectId}`);
       handleNext();
     } catch (e) {
       console.log(e);
