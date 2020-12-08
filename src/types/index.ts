@@ -75,3 +75,10 @@ export interface IProjectCardProps {
   owner: IUser;
   users: IUser[];
 }
+
+export interface ICrimesMeta {
+  total: number;
+  totalPage: number;
+  pageNum: number;
+  countPerPage: number;
+}

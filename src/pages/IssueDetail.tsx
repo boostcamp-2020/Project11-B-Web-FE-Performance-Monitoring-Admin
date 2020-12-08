@@ -8,6 +8,8 @@ import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
 import CrimeView from '../components/IssueDetail/CrimeView';
 import { IIssue } from '../types';
 
+import Crimes from '../components/IssueDetail/Crimes';
+
 interface MatchParams {
   id: string;
 }
@@ -41,6 +43,7 @@ function IssueDetail(): React.ReactElement {
       // setIssue(temp);
     })();
   }, [match?.params.id]);
+  const issueId = issue?._id._id;
   return (
     <Box flexGrow={1}>
       <Grid container>
@@ -59,7 +62,7 @@ function IssueDetail(): React.ReactElement {
             {issue && <CrimeView crimeIds={issue._id.crimeIds} />}
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
-            EVENTS
+            <Crimes issueId={issueId} />
           </TabPanel>
           <TabPanel value={tabIndex} index={2}>
             TAGS
