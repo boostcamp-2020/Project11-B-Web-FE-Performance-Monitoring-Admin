@@ -3,7 +3,7 @@ import { Box, Typography } from '@material-ui/core';
 
 import { ICrime } from './types';
 import Tag from '../../Tag';
-import dropIPv6SubnetMask from '../../../utils/dropSubnetMask';
+import { convertIP } from '../../../utils/convertIP';
 
 interface ITagContent {
   name: string;
@@ -26,7 +26,7 @@ function CrimeTags(props: IProps): React.ReactElement {
       { name: 'os.name', content: os.name },
       { name: 'os', content: `${os.name} ${os.version}` },
       { name: 'url', content: url },
-      { name: 'ip', content: dropIPv6SubnetMask(ip) },
+      { name: 'ip', content: convertIP(ip) },
     ];
   };
 

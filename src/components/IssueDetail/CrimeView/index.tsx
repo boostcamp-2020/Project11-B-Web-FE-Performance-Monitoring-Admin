@@ -8,7 +8,7 @@ import CrimeTags from './CrimeTags';
 import CrimeStack from './CrimeStack';
 import TagDetail from './TagDetail';
 
-import dropIPv6SubnetMask from '../../../utils/dropSubnetMask';
+import { convertIP } from '../../../utils/convertIP';
 import service from '../../../service';
 
 interface IProps {
@@ -44,8 +44,8 @@ function CrimeView(props: IProps): React.ReactElement {
     if (errorIds.length === 0) return;
     (async () => {
       const crimeId = errorIds[crimeIndex];
-      const res = await service.getCrime(crimeId);
-      setCrime(res);
+      const { data } = await service.getCrime(crimeId);
+      setCrime(data);
     })();
   }, [crimeIndex, errorIds]);
 
@@ -62,7 +62,7 @@ function CrimeView(props: IProps): React.ReactElement {
     return [
       {
         title: 'USER',
-        contents: [{ label: 'IP Address', content: dropIPv6SubnetMask(ip) }],
+        contents: [{ label: 'IP Address', content: convertIP(ip) }],
       },
       {
         title: 'BROWSER',
