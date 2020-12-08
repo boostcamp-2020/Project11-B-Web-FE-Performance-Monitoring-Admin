@@ -19,7 +19,7 @@ export interface IStack {
   filename: string;
 }
 
-export interface IError {
+export interface ICrime {
   _id: string;
   message: string;
   type: string;
@@ -50,8 +50,8 @@ export interface IIssue {
     message: string;
     type: string;
     project: IProject[];
-    errorIds: string[];
-    lastError: IError;
+    crimeIds: string[];
+    lastCrime: ICrime;
     stack: IStack;
     occuredAt?: Date;
     sdk?: {

@@ -52,14 +52,14 @@ function IssueListItem(props: IProps): React.ReactElement {
             <Box>
               <AccessTime fontSize="inherit" />
             </Box>
-            <span> {timeAgo(issueData.lastError.occuredAt)}</span>
+            <span> {timeAgo(issueData.lastCrime.occuredAt)}</span>
           </Box>
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-around" minWidth="300px" alignItems="center">
         <Box>
           <Typography variant="h3" color="primary">
-            {issueData.errorIds.length}
+            {issueData.crimeIds.length}
           </Typography>
         </Box>
         <Box>

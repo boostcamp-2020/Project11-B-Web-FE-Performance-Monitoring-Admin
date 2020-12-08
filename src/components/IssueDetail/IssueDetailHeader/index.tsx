@@ -53,7 +53,7 @@ function IssueDetailHeader(props: IProps): React.ReactElement {
       </Box>
       <Box display="flex" minWidth="300px" alignItems="center">
         <Box mr={1}>
-          <StatBox name="EVENTS" color="primary.main" count={issueData.errorIds.length} />
+          <StatBox name="EVENTS" color="primary.main" count={issueData.crimeIds.length} />
         </Box>
         <Box mr={1}>
           <StatBox name="USERS" color="primary.main" count={userSet.size} />

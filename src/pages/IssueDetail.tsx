@@ -30,68 +30,68 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const temp: IIssue = {
-  _id: {
-    _id: '5fcdd8bb17a95f43cebeb767',
-    type: '이슈 2번',
-    message: '이슈 4번',
-    stack: {
-      columnNo: '81',
-      lineNo: '110',
-      function: 'occurError()',
-      filename: 'index.js',
-    },
+// const temp: IIssue = {
+//   _id: {
+//     _id: '5fcdd8bb17a95f43cebeb767',
+//     type: '이슈 2번',
+//     message: '이슈 4번',
+//     stack: {
+//       columnNo: '81',
+//       lineNo: '110',
+//       function: 'occurError()',
+//       filename: 'index.js',
+//     },
 
-    lastError: {
-      _id: '5fcdd8bb9f2d55a7501975af',
-      meta: {
-        browser: {
-          name: 'fire-fox2222222222',
-          version: 'recent',
-        },
-        os: {
-          name: 'windows10',
-          version: '1909',
-        },
-        url: '유저 url 3번',
-        ip: 'localhost:4000',
-      },
-      message: '이슈 4번',
-      type: '이슈 2번',
-      stack: [
-        {
-          _id: '5fcdd8bb9f2d55a7501975b0',
-          columnNo: '81',
-          lineNo: '110',
-          function: 'occurError()',
-          filename: 'index.js',
-        },
-      ],
-      occuredAt: '2020-11-26T09:09:30.000Z',
-      sdk: {
-        name: 'panopticon',
-        version: '1.0.0',
-      },
-      __v: 0,
-    },
-    project: [
-      {
-        _id: '5fcd0ec89f2d55a75019756e',
-        users: [],
-        name: '테스트용',
-        description: '123',
-        owner: '5fc7205838d1839a9b191373',
-        __v: 0,
-      },
-    ],
-    errorIds: ['5fcdd8bb9f2d55a7501975af', '5fcdd8bd9f2d55a7501975b1'],
-  },
-  _stat: [
-    {
-      userIps: ['localhost:4000', 'localhost:4000'],
-    },
-  ],
-};
+//     lastError: {
+//       _id: '5fcdd8bb9f2d55a7501975af',
+//       meta: {
+//         browser: {
+//           name: 'fire-fox2222222222',
+//           version: 'recent',
+//         },
+//         os: {
+//           name: 'windows10',
+//           version: '1909',
+//         },
+//         url: '유저 url 3번',
+//         ip: 'localhost:4000',
+//       },
+//       message: '이슈 4번',
+//       type: '이슈 2번',
+//       stack: [
+//         {
+//           _id: '5fcdd8bb9f2d55a7501975b0',
+//           columnNo: '81',
+//           lineNo: '110',
+//           function: 'occurError()',
+//           filename: 'index.js',
+//         },
+//       ],
+//       occuredAt: '2020-11-26T09:09:30.000Z',
+//       sdk: {
+//         name: 'panopticon',
+//         version: '1.0.0',
+//       },
+//       __v: 0,
+//     },
+//     project: [
+//       {
+//         _id: '5fcd0ec89f2d55a75019756e',
+//         users: [],
+//         name: '테스트용',
+//         description: '123',
+//         owner: '5fc7205838d1839a9b191373',
+//         __v: 0,
+//       },
+//     ],
+//     errorIds: ['5fcdd8bb9f2d55a7501975af', '5fcdd8bd9f2d55a7501975b1'],
+//   },
+//   _stat: [
+//     {
+//       userIps: ['localhost:4000', 'localhost:4000'],
+//     },
+//   ],
+// };
 function IssueDetail(): React.ReactElement {
   const [issue, setIssue] = useState<IIssue>();
   const [tabIndex, setTabIndex] = useState<number>(0);
@@ -101,9 +101,10 @@ function IssueDetail(): React.ReactElement {
   };
   useEffect(() => {
     (async () => {
-      // const res = await service.getIssue(match?.params.id || '');
-      // setIssue(res.data);
-      setIssue(temp);
+      const res = await service.getIssue(match?.params.id || '');
+      console.log(res.data);
+      setIssue(res.data);
+      // setIssue(temp);
     })();
   }, [match?.params.id]);
   return (
