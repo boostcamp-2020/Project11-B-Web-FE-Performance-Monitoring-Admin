@@ -4,7 +4,7 @@ export interface MatchParams {
 
 export interface IProject {
   _id: string;
-  users: [];
+  users: string[];
   name: string;
   description: string;
   owner: string;
