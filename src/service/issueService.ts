@@ -8,6 +8,7 @@ export default (
 ): {
   getIssue: (id: string) => Promise<AxiosResponse>;
   getIssues: (query: string) => Promise<AxiosResponse>;
+  getCrime: (id: string) => Promise<AxiosResponse>;
 } => {
   const getIssue = (id: string) => {
     return apiRequest.get(`/api/issue/${id}`);
@@ -17,8 +18,13 @@ export default (
     return apiRequest.get(`/api/issues${query}`);
   };
 
+  const getCrime = (id: string) => {
+    return apiRequest.get(`/api/crime/${id}`);
+  };
+
   return {
     getIssue,
     getIssues,
+    getCrime,
   };
 };
