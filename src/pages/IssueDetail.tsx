@@ -33,6 +33,20 @@ function IssueDetail(): React.ReactElement {
   const issue = useSelector((state: RootState) => state.issue);
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState<number>(0);
+
+  const [crimeIndex, setCrimeIndex] = useState(0);
+  const handleBack = () => {
+    setCrimeIndex((prevIndex) => prevIndex - 1);
+  };
+  const handleNext = () => {
+    setCrimeIndex((prevIndex: number) => prevIndex + 1);
+  };
+  const setCrimeById = (crimeId: string) => {
+    const targetCrimeIndex = issue._id.crimeIds.indexOf(crimeId);
+    setCrimeIndex(targetCrimeIndex);
+    setTabIndex(0);
+  };
+
   const match = useRouteMatch<MatchParams>('/issue/:id');
   const handleChangeTab = (event: React.ChangeEvent<any>, newValue: number) => {
     setTabIndex(newValue);
@@ -56,10 +70,17 @@ function IssueDetail(): React.ReactElement {
             </Tabs>
           </AppBar>
           <TabPanel value={tabIndex} index={0}>
-            {issue && <CrimeView crimeIds={issue._id.crimeIds} />}
+            {issue && (
+              <CrimeView
+                crimeIds={issue._id.crimeIds}
+                crimeIndex={crimeIndex}
+                handleBack={handleBack}
+                handleNext={handleNext}
+              />
+            )}
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
-            <Crimes issueId={issueId} />
+            <Crimes issueId={issueId} setCrimeById={setCrimeById} />
           </TabPanel>
           <TabPanel value={tabIndex} index={2}>
             TAGS

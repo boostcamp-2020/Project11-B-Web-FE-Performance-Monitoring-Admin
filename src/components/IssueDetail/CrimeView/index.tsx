@@ -17,6 +17,9 @@ import service from '../../../service';
 
 interface IProps {
   crimeIds: string[];
+  crimeIndex: number;
+  handleBack: () => void;
+  handleNext: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,8 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function CrimeView(props: IProps): React.ReactElement {
   const classes = useStyles();
   const crime = useSelector((state: RootState) => state.crime);
-  const { crimeIds } = props;
-  const [crimeIndex, setCrimeIndex] = useState(0);
+  const { crimeIds, crimeIndex, handleNext, handleBack } = props;
   const dispatch = useDispatch();
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -51,14 +53,6 @@ function CrimeView(props: IProps): React.ReactElement {
     const crimeId = crimeIds[crimeIndex];
     dispatch(setCrime(crimeId, setIsFetching));
   }, [crimeIndex, crimeIds]);
-
-  const handleBack = () => {
-    setCrimeIndex((prevIndex) => prevIndex - 1);
-  };
-
-  const handleNext = () => {
-    setCrimeIndex((prevIndex) => prevIndex + 1);
-  };
 
   const getTagDetailContents = (curr: ICrime) => {
     const { browser, os, ip } = curr.meta;
