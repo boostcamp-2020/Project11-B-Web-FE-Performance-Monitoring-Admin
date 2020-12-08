@@ -30,11 +30,27 @@ function ShareCharts(): React.ReactElement {
       };
     };
 
+    const getTopNEtc = (issues: { _id: string; count: number }[], topN: number) => {
+      if (issues.length <= topN) {
+        return issues;
+      }
+      const topNs = issues.slice(0, topN);
+      const rest = issues.slice(topN);
+      const etcCount = rest.reduce((acc, curr) => acc + curr.count, 0);
+      const etc = {
+        _id: 'dummyId',
+        type: 'etc',
+        message: 'Other',
+        count: etcCount,
+      };
+      return [...topNs, etc];
+    };
+
     return [
       {
         title: 'Shares by Issue',
-        columns: columnsData.issue.map((issue: any) => ({
-          name: `${issue.type}: ${issue.message}`,
+        columns: getTopNEtc(columnsData.issue, 3).map((issue: any) => ({
+          name: issue.type === 'etc' ? issue.message : `${issue.type}: ${issue.message}`,
           values: [issue.count],
         })),
       },
