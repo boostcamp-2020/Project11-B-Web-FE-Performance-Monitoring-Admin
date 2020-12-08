@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import bb, { pie } from 'billboard.js';
 
 interface IColumn {
-  label: string;
+  name: string;
   values: number[];
 }
 
@@ -14,7 +14,7 @@ function PieChart(props: IProps): React.ReactElement {
   const { columns } = props;
   const chartDiv = useRef(null);
 
-  const flatColumns = columns.map((column) => [column.label, ...column.values]);
+  const flatColumns = columns.map((column) => [column.name, ...column.values]);
 
   useEffect(() => {
     bb.generate({
