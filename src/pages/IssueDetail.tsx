@@ -5,7 +5,7 @@ import { Box, Typography, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 import service from '../service';
 
 import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
-import { IssueType } from '../types';
+import { IIssue } from '../types';
 
 interface MatchParams {
   id: string;
@@ -30,7 +30,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const temp: IssueType = {
+const temp: IIssue = {
   _id: {
     _id: '5fcdd8bb17a95f43cebeb767',
     type: '이슈 2번',
@@ -93,7 +93,7 @@ const temp: IssueType = {
   ],
 };
 function IssueDetail(): React.ReactElement {
-  const [issue, setIssue] = useState<IssueType>();
+  const [issue, setIssue] = useState<IIssue>();
   const [tabIndex, setTabIndex] = useState<number>(0);
   const match = useRouteMatch<MatchParams>('/issue/:id');
   const handleChangeTab = (event: React.ChangeEvent<any>, newValue: number) => {

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { styled, makeStyles } from '@material-ui/core/styles';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IssueType } from '../../types';
+import { IIssue } from '../../types';
 
 const useStyle = makeStyles({
   root: {

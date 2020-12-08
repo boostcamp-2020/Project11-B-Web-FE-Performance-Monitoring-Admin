@@ -44,7 +44,7 @@ export interface IError {
   __v?: any;
 }
 
-export interface IssueType {
+export interface IIssue {
   _id: {
     _id: string;
     message: string;

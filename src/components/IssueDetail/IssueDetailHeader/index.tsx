@@ -3,11 +3,11 @@ import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IssueType } from '../../../types';
+import { IIssue } from '../../../types';
 import StatBox from './StatBox';
 
 export interface IProps {
-  issue: IssueType;
+  issue: IIssue;
 }
 
 const useStyle = makeStyles({

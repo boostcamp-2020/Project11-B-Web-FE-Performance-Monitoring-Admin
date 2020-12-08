@@ -6,10 +6,10 @@ import { AccessTime } from '@material-ui/icons';
 import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import timeAgo from '../../../utils/timeAgo';
-import { IssueType } from '../../../types';
+import { IIssue } from '../../../types';
 
 export interface IProps {
-  issue: IssueType;
+  issue: IIssue;
 }
 const StyledLink = styled(Link)({
   fontSize: '16px',
