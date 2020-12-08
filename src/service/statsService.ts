@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import qs from 'querystring';
 
 interface ISharesDataRequest {
   projectIds: string[];
@@ -20,64 +21,15 @@ export default (
   };
   // sample query : ?projectId=myproject1&projectId=myproject2&type=recent&period=1w
   const getSharesData = async (req: ISharesDataRequest) => {
-    /*
-     * @TODO: Piechart API 연동
-     * return apiRequest.get(`/api/stats${query}`);
-     * */
-    return {
-      issues: [
-        {
-          _id: '5fcee6a717a95f43cee1b1ce',
-          message: 'something is wrong6',
-          type: 'ReferenceError',
-          count: '1',
-        },
-        {
-          _id: '5fcee89b17a95f43cee20374',
-          message: 'Hello',
-          type: 'EvalError',
-          count: '14',
-        },
-      ],
-      browsers: [
-        {
-          name: 'Firefox',
-          count: '3',
-        },
-        {
-          name: 'Chrome',
-          count: '14',
-        },
-      ],
-      types: [
-        {
-          name: 'SyntaxError',
-          count: '5',
-        },
-        {
-          name: 'TypeError',
-          count: '7',
-        },
-        {
-          name: 'ReferenceError',
-          count: '20',
-        },
-      ],
-      urls: [
-        {
-          name: 'http://panopticon.gq/projects',
-          count: '5',
-        },
-        {
-          name: 'http://panopticon.gq/issue',
-          count: '18',
-        },
-        {
-          name: 'http://panopticon.gq/discover',
-          count: '35',
-        },
-      ],
-    };
+    const { projectIds, type, period } = req;
+
+    const query = `?${qs.stringify({
+      projectId: projectIds,
+      type,
+      period,
+    })}`;
+
+    return apiRequest.get(`/api/stats/shares${query}`);
   };
   return {
     getStatsData,

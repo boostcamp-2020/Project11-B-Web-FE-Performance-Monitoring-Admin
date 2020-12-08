@@ -18,7 +18,7 @@ function ShareCharts(): React.ReactElement {
         type: 'recent',
         period: '1w',
       });
-      setColumns(res);
+      setColumns(res.data);
     })();
   }, [projectIds]);
 
