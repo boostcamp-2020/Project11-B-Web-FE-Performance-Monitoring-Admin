@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Grid } from '@material-ui/core';
 import bb, { pie } from 'billboard.js';
 
 interface IColumn {
@@ -22,11 +23,18 @@ function PieChart(props: IProps): React.ReactElement {
         columns: flatColumns,
         type: pie(),
       },
+      pie: {
+        padding: 1,
+      },
       bindto: chartDiv.current,
     });
-  });
+  }, [columns, flatColumns]);
 
-  return <div ref={chartDiv} />;
+  return (
+    <Grid item xs={6}>
+      <div ref={chartDiv} />
+    </Grid>
+  );
 }
 
 export default PieChart;
