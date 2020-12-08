@@ -5,7 +5,7 @@ import service from '../service';
 const LOGIN_USER = 'user/LOGIN_USER' as const;
 const LOGOUT_USER = 'user/LOGOUT_USER' as const;
 
-export const loginUser = (nickname: string, token: string) => ({
+export const loginUser = (nickname: string | undefined, token: string | undefined) => ({
   type: LOGIN_USER,
   nickname,
   token,
