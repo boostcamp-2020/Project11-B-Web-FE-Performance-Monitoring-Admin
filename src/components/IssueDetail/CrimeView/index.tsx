@@ -95,6 +95,8 @@ function CrimeView(props: IProps): React.ReactElement {
       <CrimeHeader
         className={classes.horizontalBox}
         crime={crime}
+        disableBack={crimeIndex === 0}
+        disableNext={crimeIndex === crimeIds.length - 1}
         handleBack={handleBack}
         handleNext={handleNext}
       />
