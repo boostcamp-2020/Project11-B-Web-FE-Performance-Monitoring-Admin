@@ -14,7 +14,7 @@ export const setIssue = (issueId: string) => async (dispatch: Dispatch): Promise
   dispatch(setIssueAction(newIssue));
 };
 
-type CounterAction = ReturnType<typeof setIssueAction>;
+type IssueAction = ReturnType<typeof setIssueAction>;
 
 /**
  * @TODO
@@ -83,7 +83,7 @@ const issueDummy = {
   ],
 };
 
-function issue(state: IIssue = issueDummy, action: CounterAction): IIssue {
+function issue(state: IIssue = issueDummy, action: IssueAction): IIssue {
   switch (action.type) {
     case SET_ISSUE: {
       const newIssue: IIssue = action.issue;
