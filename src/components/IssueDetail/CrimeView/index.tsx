@@ -12,7 +12,7 @@ import { convertIP } from '../../../utils/convertIP';
 import service from '../../../service';
 
 interface IProps {
-  errorIds: string[];
+  crimeIds: string[];
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,18 +36,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function CrimeView(props: IProps): React.ReactElement {
   const classes = useStyles();
-  const { errorIds } = props;
+  const { crimeIds } = props;
   const [crimeIndex, setCrimeIndex] = useState(0);
   const [crime, setCrime] = useState<ICrime>();
 
   useEffect(() => {
-    if (errorIds.length === 0) return;
+    if (crimeIds.length === 0) return;
     (async () => {
-      const crimeId = errorIds[crimeIndex];
+      const crimeId = crimeIds[crimeIndex];
       const { data } = await service.getCrime(crimeId);
       setCrime(data);
     })();
-  }, [crimeIndex, errorIds]);
+  }, [crimeIndex, crimeIds]);
 
   const handleBack = () => {
     setCrimeIndex((prevIndex) => prevIndex - 1);
