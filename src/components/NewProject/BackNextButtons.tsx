@@ -10,10 +10,6 @@ interface IProps {
   handleNext: () => void;
 }
 
-const CustomButtonGroup = styled(ButtonGroup)({
-  paddingTop: '20px',
-});
-
 function BackNextButtons(props: IProps): React.ReactElement {
   const {
     leftButtonText,
@@ -25,14 +21,14 @@ function BackNextButtons(props: IProps): React.ReactElement {
   } = props;
 
   return (
-    <CustomButtonGroup>
+    <ButtonGroup>
       <Button onClick={handleBack} disabled={disableBack}>
         {leftButtonText}
       </Button>
       <Button onClick={handleNext} disabled={disableNext} variant="contained" color="primary">
         {rightButtonText}
       </Button>
-    </CustomButtonGroup>
+    </ButtonGroup>
   );
 }
 
