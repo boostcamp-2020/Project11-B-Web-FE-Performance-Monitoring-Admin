@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 
 import service from '../../../service';
-import { ICrimesMeta } from '../../../types';
+import { ICrime, ICrimesMeta } from '../../../types';
 
 const TableHeadCell = styled(TableCell)({
   fontSize: '16px',
@@ -32,9 +32,13 @@ interface IProps {
   issueId: string | undefined;
 }
 
+interface ICrimeObj {
+  crimes: ICrime;
+}
+
 function Crimes(props: IProps): React.ReactElement {
   const { issueId } = props;
-  const [crimes, setCrimes] = useState<any[]>([]);
+  const [crimes, setCrimes] = useState<ICrimeObj[]>([]);
   const [meta, setMeta] = useState<ICrimesMeta>();
   const [pageNum, setPageNum] = useState<number>(1);
 
@@ -64,17 +68,17 @@ function Crimes(props: IProps): React.ReactElement {
             </TableRow>
           </TableHead>
           <TableBody>
-            {crimes.map((crime) => (
-              <TableRow key={crime.crimes._id}>
+            {crimes.map(({ crimes: crime }) => (
+              <TableRow key={crime._id}>
                 <TableBodyCell scope="row">
                   <BoldTypography color="primary">
-                    {new Date(crime.crimes.occuredAt).toLocaleString()}
+                    {new Date(crime.occuredAt).toLocaleString()}
                   </BoldTypography>
                 </TableBodyCell>
-                <TableBodyCell align="right">{crime.crimes.type}</TableBodyCell>
-                <TableBodyCell align="right">{crime.crimes.message}</TableBodyCell>
-                <TableBodyCell align="right">{crime.crimes.meta.browser.name}</TableBodyCell>
-                <TableBodyCell align="right">{crime.crimes.meta.os.name}</TableBodyCell>
+                <TableBodyCell align="right">{crime.type}</TableBodyCell>
+                <TableBodyCell align="right">{crime.message}</TableBodyCell>
+                <TableBodyCell align="right">{crime.meta.browser.name}</TableBodyCell>
+                <TableBodyCell align="right">{crime.meta.os.name}</TableBodyCell>
               </TableRow>
             ))}
           </TableBody>
