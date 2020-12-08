@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
+import { Box, styled } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { styled } from '@material-ui/core';
-
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 
@@ -55,8 +54,8 @@ function Crimes(props: IProps): React.ReactElement {
   }, [issueId, pageNum]);
 
   return (
-    <>
-      <TableContainer component="span">
+    <div>
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
@@ -84,8 +83,10 @@ function Crimes(props: IProps): React.ReactElement {
           </TableBody>
         </Table>
       </TableContainer>
-      <Pagination count={meta?.totalPage} page={pageNum} onChange={changePage} />
-    </>
+      <Box display="flex" justifyContent="center" pt={2}>
+        <Pagination count={meta?.totalPage} page={pageNum} onChange={changePage} />
+      </Box>
+    </div>
   );
 }
 
