@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useRouteMatch } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 import { RootState } from '../modules';
 
 import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
 import CrimeView from '../components/IssueDetail/CrimeView';
-import { setIssue } from '../modules/issue';
 
 import Crimes from '../components/IssueDetail/Crimes';
 
-interface MatchParams {
-  id: string;
-}
+import useProject from '../hooks/CrimeIndexHooks';
+
 interface TabPanelProps {
   children: React.ReactNode;
   index: any;
@@ -31,29 +28,15 @@ function TabPanel(props: TabPanelProps) {
 
 function IssueDetail(): React.ReactElement {
   const issue = useSelector((state: RootState) => state.issue);
-  const dispatch = useDispatch();
-  const [tabIndex, setTabIndex] = useState<number>(0);
+  const [
+    tabIndex,
+    crimeIndex,
+    handleBack,
+    handleNext,
+    setCrimeById,
+    handleChangeTab,
+  ] = useProject();
 
-  const [crimeIndex, setCrimeIndex] = useState(0);
-  const handleBack = () => {
-    setCrimeIndex((prevIndex) => prevIndex - 1);
-  };
-  const handleNext = () => {
-    setCrimeIndex((prevIndex: number) => prevIndex + 1);
-  };
-  const setCrimeById = (crimeId: string) => {
-    const targetCrimeIndex = issue._id.crimeIds.indexOf(crimeId);
-    setCrimeIndex(targetCrimeIndex);
-    setTabIndex(0);
-  };
-
-  const match = useRouteMatch<MatchParams>('/issue/:id');
-  const handleChangeTab = (event: React.ChangeEvent<any>, newValue: number) => {
-    setTabIndex(newValue);
-  };
-  useEffect(() => {
-    dispatch(setIssue(match?.params.id || ''));
-  }, [match?.params.id]);
   const issueId = issue?._id._id;
   return (
     <Box flexGrow={1}>
@@ -80,7 +63,7 @@ function IssueDetail(): React.ReactElement {
             )}
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
-            <Crimes issueId={issueId} setCrimeById={setCrimeById} />
+            {issue && <Crimes issueId={issueId} setCrimeById={setCrimeById} />}
           </TabPanel>
           <TabPanel value={tabIndex} index={2}>
             TAGS
