@@ -6,7 +6,7 @@ import Progress from '../../common/Progress';
 import service from '../../../service';
 
 // Redux 또는 Context API로 받아온다고 가정
-const projectIds = ['5fcee77589e63a7cc85560da'];
+const projectIds = ['5fcf7c6d70fc246340a7c37e'];
 
 function ShareCharts(): React.ReactElement {
   const [columns, setColumns] = useState<any>();
@@ -33,22 +33,22 @@ function ShareCharts(): React.ReactElement {
     return [
       {
         title: 'Shares by Issue',
-        columns: columnsData.issues.map((issue: any) => ({
+        columns: columnsData.issue.map((issue: any) => ({
           name: `${issue.type}: ${issue.message}`,
           values: [issue.count],
         })),
       },
       {
         title: 'Shares by Browser',
-        columns: columnsData.browsers.map(mapNameValues),
+        columns: columnsData.browser.map(mapNameValues),
       },
       {
         title: 'Shares by OS',
-        columns: columnsData.types.map(mapNameValues),
+        columns: columnsData.os.map(mapNameValues),
       },
       {
         title: 'Shares by URL',
-        columns: columnsData.urls.map(mapNameValues),
+        columns: columnsData.url.map(mapNameValues),
       },
     ];
   };
