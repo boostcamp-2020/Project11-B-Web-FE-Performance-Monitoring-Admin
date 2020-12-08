@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import { Box, Typography, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
+import { Box, Grid, Tabs, Tab, AppBar } from '@material-ui/core';
 
 import service from '../service';
 
 import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
+import CrimeView from '../components/IssueDetail/CrimeView';
 import { IIssue } from '../types';
 
 interface MatchParams {
@@ -21,11 +22,7 @@ function TabPanel(props: TabPanelProps) {
 
   return (
     <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`}>
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box>{children}</Box>}
     </div>
   );
 }
@@ -59,7 +56,7 @@ function IssueDetail(): React.ReactElement {
             </Tabs>
           </AppBar>
           <TabPanel value={tabIndex} index={0}>
-            DETAILS
+            {issue && <CrimeView crimeIds={issue._id.crimeIds} />}
           </TabPanel>
           <TabPanel value={tabIndex} index={1}>
             EVENTS
