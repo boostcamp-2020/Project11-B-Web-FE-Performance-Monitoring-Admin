@@ -13,7 +13,6 @@ import CrimeStack from './CrimeStack';
 import TagDetail from './TagDetail';
 
 import { convertIP } from '../../../utils/convertIP';
-import service from '../../../service';
 
 interface IProps {
   crimeIds: string[];

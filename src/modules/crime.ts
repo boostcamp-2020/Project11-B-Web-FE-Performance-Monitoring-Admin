@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Dispatch } from 'redux';
 import { ICrime } from '../types';
 
@@ -60,7 +59,7 @@ const crimeDummy: ICrime = {
 function crime(state: ICrime = crimeDummy, action: CrimeAction): ICrime {
   switch (action.type) {
     case SET_CRIME: {
-      const newCrime: ICrime = _.cloneDeep(action.crime);
+      const newCrime: ICrime = action.crime;
       return newCrime;
     }
     default:
