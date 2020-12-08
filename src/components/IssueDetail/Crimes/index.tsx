@@ -9,7 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import { styled } from '@material-ui/core';
 
 import Typography from '@material-ui/core/Typography';
+import Pagination from '@material-ui/lab/Pagination';
+
 import service from '../../../service';
+import { ICrimesMeta } from '../../../types';
 
 const TableHeadCell = styled(TableCell)({
   fontSize: '16px',
@@ -22,6 +25,7 @@ const TableBodyCell = styled(TableCell)({
 
 const BoldTypography = styled(Typography)({
   fontWeight: 'bold',
+  padding: 0,
 });
 
 interface IProps {
@@ -31,21 +35,28 @@ interface IProps {
 function Crimes(props: IProps): React.ReactElement {
   const { issueId } = props;
   const [crimes, setCrimes] = useState<any[]>([]);
-  const [meta, setMeta] = useState({});
+  const [meta, setMeta] = useState<ICrimesMeta>();
+  const [pageNum, setPageNum] = useState<number>(1);
+
+  const changePage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPageNum(value);
+  };
+
   useEffect(() => {
     (async () => {
-      const newCrimes = await service.getCrimes(issueId as string);
+      const newCrimes = await service.getCrimes(issueId as string, pageNum);
       setMeta(newCrimes.data.meta[0]);
       setCrimes(newCrimes.data.data);
     })();
-  }, [issueId]);
+  }, [issueId, pageNum]);
+
   return (
     <>
       <TableContainer component="span">
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeadCell>occuredAt</TableHeadCell>
+              <TableHeadCell>OccuredAt</TableHeadCell>
               <TableHeadCell align="right">Error Type</TableHeadCell>
               <TableHeadCell align="right">Error Message</TableHeadCell>
               <TableHeadCell align="right">Browser</TableHeadCell>
@@ -55,7 +66,7 @@ function Crimes(props: IProps): React.ReactElement {
           <TableBody>
             {crimes.map((crime) => (
               <TableRow key={crime.crimes._id}>
-                <TableBodyCell component="th" scope="row">
+                <TableBodyCell scope="row">
                   <BoldTypography color="primary">
                     {new Date(crime.crimes.occuredAt).toLocaleString()}
                   </BoldTypography>
@@ -69,6 +80,7 @@ function Crimes(props: IProps): React.ReactElement {
           </TableBody>
         </Table>
       </TableContainer>
+      <Pagination count={meta?.totalPage} page={pageNum} onChange={changePage} />
     </>
   );
 }

@@ -9,7 +9,7 @@ export default (
   getIssue: (id: string) => Promise<AxiosResponse>;
   getIssues: (query: string) => Promise<AxiosResponse>;
   getCrime: (id: string) => Promise<AxiosResponse>;
-  getCrimes: (id: string) => Promise<AxiosResponse>;
+  getCrimes: (id: string, pageNum: number) => Promise<AxiosResponse>;
 } => {
   const getIssue = (id: string) => {
     return apiRequest.get(`/api/issue/${id}`);
@@ -23,8 +23,8 @@ export default (
     return apiRequest.get(`/api/crime/${id}`);
   };
 
-  const getCrimes = (id: string) => {
-    return apiRequest.get(`/api/crimes/${id}`);
+  const getCrimes = (id: string, pageNum: number) => {
+    return apiRequest.get(`/api/crimes/${id}?page=${pageNum}`);
   };
 
   return {
