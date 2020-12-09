@@ -8,7 +8,7 @@ import { setIssue } from '../modules/issue';
 interface MatchParams {
   id: string;
 }
-const useProject = () => {
+const useCrimeIndex = () => {
   const issue: IIssue = useSelector((state: RootState) => state.issue);
   const dispatch = useDispatch();
 
@@ -36,4 +36,4 @@ const useProject = () => {
 
   return [tabIndex, crimeIndex, handleBack, handleNext, setCrimeById, handleChangeTab] as const;
 };
-export default useProject;
+export default useCrimeIndex;
