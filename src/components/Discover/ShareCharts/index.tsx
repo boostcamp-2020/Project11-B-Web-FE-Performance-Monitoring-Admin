@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 
+import { IProjectCardProps } from '../../../types';
+import ProjectSelector from '../../Issues/ProjectSelector';
 import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
 
-// Redux 또는 Context API로 받아온다고 가정
-const projectIds = ['5fcf7c6d70fc246340a7c37e'];
-
 function ShareCharts(): React.ReactElement {
+  const [selectedProjects, setSelectedProjects] = useState<IProjectCardProps[]>([]);
   const [columns, setColumns] = useState<any>();
 
   useEffect(() => {
     (async () => {
       const res = await service.getSharesData({
-        projectIds,
+        projectIds: selectedProjects.map((project) => project._id),
         type: 'recent',
         period: '1w',
       });
       setColumns(res.data);
     })();
-  }, [projectIds]);
+  }, [selectedProjects]);
 
   const getPieChartInputs = (columnsData: any) => {
     const mapNameValues = (item: { name: string; count: number }) => {
@@ -72,11 +72,17 @@ function ShareCharts(): React.ReactElement {
   return columns === undefined ? (
     <Progress />
   ) : (
-    <Grid container spacing={2}>
-      {getPieChartInputs(columns).map((input) => (
-        <PieChart key={input.title} columns={input.columns} />
-      ))}
-    </Grid>
+    <Box p={3}>
+      <ProjectSelector
+        selectedProject={selectedProjects}
+        setSelectedProject={setSelectedProjects}
+      />
+      <Grid container spacing={2}>
+        {getPieChartInputs(columns).map((input) => (
+          <PieChart key={input.title} columns={input.columns} />
+        ))}
+      </Grid>
+    </Box>
   );
 }
 
