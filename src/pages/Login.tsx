@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -7,9 +7,10 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import qs from 'qs';
+import { useDispatch } from 'react-redux';
 import PanopticonLogo from '../image/panopticon.png';
 import service from '../service';
-import UserContext from '../context';
+import { loginUser } from '../modules/user';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -45,7 +46,8 @@ type IWindowProps = {
 };
 
 const Login = (): React.ReactElement => {
-  const { setUser } = useContext(UserContext);
+  const dispatch = useDispatch();
+
   const OAUTH_URL = `https://github.com/login/oauth/authorize?client_id=${
     process.env.NODE_ENV === 'development'
       ? process.env.REACT_APP_GITHUB_OAUTH_DEV_CLIENT_ID
@@ -105,8 +107,8 @@ const Login = (): React.ReactElement => {
             if (location.state) {
               history.go(-1);
             } else {
-              if (setUser) {
-                setUser({ nickname, token });
+              if (loginUser) {
+                dispatch(loginUser(nickname, token));
               }
               history.replace('/projects');
             }

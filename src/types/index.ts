@@ -1,10 +1,15 @@
+export interface IUserLocalStorage {
+  nickname?: string;
+  token?: string;
+}
+
 export interface MatchParams {
   id: string;
 }
 
 export interface IProject {
   _id: string;
-  users: [];
+  users: string[];
   name: string;
   description: string;
   owner: string;

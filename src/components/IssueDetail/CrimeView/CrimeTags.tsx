@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 
-import { ICrime } from './types';
+import { ICrime } from '../../../types';
 import Tag from '../../Tag';
 import { convertIP } from '../../../utils/convertIP';
 

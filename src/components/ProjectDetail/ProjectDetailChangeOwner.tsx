@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Button, styled } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
+import { RootState } from '../../modules';
 
-import UserContext from '../../context';
 import service from '../../service';
 
 import { IUser } from '../../hooks/ProjectDetailHooks';
@@ -23,7 +24,7 @@ interface IProps {
 
 function ProjectsUserInfo(props: IProps): React.ReactElement {
   const { owner, users, setProjectOwner } = props;
-  const { user: globalUser } = useContext(UserContext);
+  const globalUser = useSelector((state: RootState) => state.user);
   const [changing, setChanging] = useState(false);
   const [targetUserName, setTargetUserName] = useState('');
   const startChangeOwner = () => {
