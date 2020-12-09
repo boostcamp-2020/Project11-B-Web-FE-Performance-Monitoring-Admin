@@ -7,6 +7,7 @@ import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import timeAgo from '../../../utils/timeAgo';
 import { IIssue } from '../../../types';
+import Chart from './IssueCrimeChart';
 
 export interface IProps {
   issue: IIssue;
@@ -37,7 +38,7 @@ function IssueListItem(props: IProps): React.ReactElement {
   const styles = useStyle();
   return (
     <Box display="flex" fontSize="small" px={3} py={1} className={styles.issueItem}>
-      <Box>
+      <Box minWidth="500px">
         <Box display="flex" gridGap={10}>
           <StyledLink to={`/issue/${issueData._id}`}>{issueData.type}</StyledLink>
           <Box>{`${issueData.stack.function}(${issueData.stack.filename}) `}</Box>
@@ -55,6 +56,9 @@ function IssueListItem(props: IProps): React.ReactElement {
             <span> {timeAgo(issueData.lastCrime.occuredAt)}</span>
           </Box>
         </Box>
+      </Box>
+      <Box>
+        <Chart issueId={issue._id._id} />
       </Box>
       <Box display="flex" justifyContent="space-around" minWidth="300px" alignItems="center">
         <Box>
