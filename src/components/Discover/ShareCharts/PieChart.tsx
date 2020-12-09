@@ -18,17 +18,22 @@ function PieChart(props: IProps): React.ReactElement {
   const flatColumns = columns.map((column) => [column.name, ...column.values]);
 
   useEffect(() => {
-    bb.generate({
+    const chart = bb.generate({
       data: {
-        columns: flatColumns,
+        columns: [['sample', 1000]],
         type: pie(),
       },
       pie: {
         padding: 1,
       },
+      transition: {
+        duration: 1000,
+      },
       bindto: chartDiv.current,
     });
-  }, [columns, flatColumns]);
+    chart.load({ columns: flatColumns });
+    chart.unload({ ids: 'sample' });
+  }, [flatColumns]);
 
   return (
     <Grid item xs={6}>
