@@ -7,16 +7,13 @@ import { IProjectCardProps } from '../../types';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: { width: '100%', margin: '16px 0px' },
+    root: { width: '100%' },
     formControl: {
       minWidth: 120,
-      maxWidth: '33%',
     },
-    select: { height: '80px' },
-    chips: { height: '100%', display: 'flex', flexWrap: 'wrap' },
+    chips: { display: 'flex', flexWrap: 'wrap' },
     chip: {
-      height: '40px',
-      margin: 2,
+      margin: 1,
     },
   }),
 );
@@ -43,33 +40,35 @@ function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
     })();
   }, []);
   return (
-    <Box className={classes.root}>
-      <FormControl variant="outlined" size="medium" fullWidth className={classes.formControl}>
-        <InputLabel>SELECTED PROJECT</InputLabel>
-        <Select
-          className={classes.select}
-          placeholder="SELECTED PROJECT"
-          variant="filled"
-          multiple
-          value={selectedProject}
-          onChange={handleSelectChange}
-          input={<Input />}
-          renderValue={(selected) => (
-            <div className={classes.chips}>
-              {(selected as IProjectCardProps[]).map((value) => (
-                <Chip color="primary" key={value._id} label={value.name} className={classes.chip} />
-              ))}
-            </div>
-          )}
-        >
-          {projects.map((project) => (
-            <MenuItem className={classes.select} key={project._id} value={project as any}>
-              {project.name} : {`[${project._id}]`}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl fullWidth className={classes.formControl}>
+      <InputLabel>SELECTED PROJECT</InputLabel>
+      <Select
+        placeholder="SELECTED PROJECT"
+        multiple
+        value={selectedProject}
+        onChange={handleSelectChange}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          getContentAnchorEl: null,
+        }}
+        renderValue={(selected) => (
+          <div className={classes.chips}>
+            {(selected as IProjectCardProps[]).map((value) => (
+              <Chip color="primary" key={value._id} label={value.name} className={classes.chip} />
+            ))}
+          </div>
+        )}
+      >
+        {projects.map((project) => (
+          <MenuItem key={project._id} value={project as any}>
+            {project.name} : {`[${project._id}]`}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
 

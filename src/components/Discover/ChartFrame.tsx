@@ -7,10 +7,8 @@ const useStyle = makeStyles((theme: Theme) =>
     chart: {
       border: '2px solid black',
       borderColor: theme.palette.text.secondary,
-      margin: '12px 0',
       backgroundColor: 'white',
       borderRadius: '10px',
-      padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
     },
@@ -25,7 +23,7 @@ interface IProps {
 function IssueDetailSideBar({ children, xs }: IProps): React.ReactElement {
   const styles = useStyle();
   return (
-    <Grid item spacing={4} xs={xs} className={styles.chart}>
+    <Grid item xs={xs} className={styles.chart}>
       {children}
     </Grid>
   );

@@ -30,8 +30,6 @@ function IssueCountChart(props: IProps): React.ReactElement {
           return project._id;
         }),
       })}`;
-      console.log(selectedProjects);
-      console.log(query);
       const res = await service.getCountByIssue(query);
       const statsData = res.data;
       bb.generate({
