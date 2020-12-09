@@ -46,11 +46,18 @@ function ShareCharts(): React.ReactElement {
       return [...topNs, etc];
     };
 
+    const processIssueName = (message: string, type: string, maxLen: number) => {
+      const fullMessage = type === 'etc' ? message : `${type}: ${message}`;
+      const cutMessage =
+        fullMessage.length > maxLen - 3 ? `${fullMessage.slice(0, maxLen - 3)}...` : fullMessage;
+      return cutMessage;
+    };
+
     return [
       {
         title: 'Shares by Issue',
         columns: getTopNEtc(columnsData.issue, 3).map((issue: any) => ({
-          name: issue.type === 'etc' ? issue.message : `${issue.type}: ${issue.message}`,
+          name: processIssueName(issue.message, issue.type, 45),
           values: [issue.count],
         })),
       },
@@ -77,11 +84,13 @@ function ShareCharts(): React.ReactElement {
         selectedProject={selectedProjects}
         setSelectedProject={setSelectedProjects}
       />
-      <Grid container spacing={2}>
-        {getPieChartInputs(columns).map((input) => (
-          <PieChart key={input.title} columns={input.columns} />
-        ))}
-      </Grid>
+      {selectedProjects.length > 0 && (
+        <Grid container spacing={2}>
+          {getPieChartInputs(columns).map((input) => (
+            <PieChart key={input.title} columns={input.columns} />
+          ))}
+        </Grid>
+      )}
     </Box>
   );
 }
