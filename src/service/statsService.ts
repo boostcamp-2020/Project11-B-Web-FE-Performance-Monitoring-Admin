@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 import qs from 'querystring';
 
 interface ISharesDataRequest {
@@ -6,16 +6,14 @@ interface ISharesDataRequest {
   type: string;
   period: string;
 }
-export interface Irequest {
-  getStatsData: () => Promise<AxiosRequestConfig>;
-}
-export default (
-  apiRequest: AxiosInstance,
-): {
+
+export interface IStatsService {
   getStatsData: (query: string, token: string) => Promise<AxiosResponse>;
-  // getSharesData: (query: string) => Promise<AxiosResponse>;
-  getSharesData: (req: ISharesDataRequest) => Promise<any>;
-} => {
+  getCrimesCountByIssue: (id: string) => Promise<AxiosResponse>;
+  getSharesData: (req: ISharesDataRequest) => Promise<AxiosResponse>;
+}
+
+export default (apiRequest: AxiosInstance): IStatsService => {
   const getStatsData = (query: string, token: string) => {
     return apiRequest.get(`/api/stats${query}`, { headers: { jwt: token } });
   };
@@ -31,8 +29,13 @@ export default (
 
     return apiRequest.get(`/api/stats/shares${query}`);
   };
+
+  const getCrimesCountByIssue = (issueId: string) => {
+    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count`);
+  };
   return {
     getStatsData,
     getSharesData,
+    getCrimesCountByIssue,
   };
 };
