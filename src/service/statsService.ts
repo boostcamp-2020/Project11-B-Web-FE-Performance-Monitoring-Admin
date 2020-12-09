@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 import qs from 'querystring';
 
 interface ISharesDataRequest {
@@ -6,18 +6,17 @@ interface ISharesDataRequest {
   type: string;
   period: string;
 }
-export interface Irequest {
-  getStatsData: () => Promise<AxiosRequestConfig>;
-}
+
 export default (
   apiRequest: AxiosInstance,
 ): {
-  getStatsData: (query: string, token: string) => Promise<AxiosResponse>;
+  getStatsData: (query: string) => Promise<AxiosResponse>;
   // getSharesData: (query: string) => Promise<AxiosResponse>;
   getSharesData: (req: ISharesDataRequest) => Promise<any>;
+  getCountByIssue: (query: string) => Promise<AxiosResponse>;
 } => {
-  const getStatsData = (query: string, token: string) => {
-    return apiRequest.get(`/api/stats${query}`, { headers: { jwt: token } });
+  const getStatsData = (query: string) => {
+    return apiRequest.get(`/api/stats${query}`);
   };
   // sample query : ?projectId=myproject1&projectId=myproject2&type=recent&period=1w
   const getSharesData = async (req: ISharesDataRequest) => {
@@ -31,8 +30,12 @@ export default (
 
     return apiRequest.get(`/api/stats/shares${query}`);
   };
+  const getCountByIssue = (query: string) => {
+    return apiRequest.get(`/api/countbyissue${query}`);
+  };
   return {
     getStatsData,
     getSharesData,
+    getCountByIssue,
   };
 };

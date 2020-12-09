@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Box, Grid } from '@material-ui/core';
 
 import { IProjectCardProps } from '../../../types';
-import ProjectSelector from '../../Issues/ProjectSelector';
 import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
+import ChartFrame from '../ChartFrame';
 
-function ShareCharts(): React.ReactElement {
-  const [selectedProjects, setSelectedProjects] = useState<IProjectCardProps[]>([]);
+interface IProps {
+  selectedProjects: IProjectCardProps[];
+}
+function ShareCharts(props: IProps): React.ReactElement {
   const [columns, setColumns] = useState<any>();
-
+  const { selectedProjects } = props;
   useEffect(() => {
     (async () => {
       const res = await service.getSharesData({
@@ -79,19 +81,17 @@ function ShareCharts(): React.ReactElement {
   return columns === undefined ? (
     <Progress />
   ) : (
-    <Box p={3}>
-      <ProjectSelector
-        selectedProject={selectedProjects}
-        setSelectedProject={setSelectedProjects}
-      />
+    <>
       {selectedProjects.length > 0 && (
-        <Grid container spacing={2}>
+        <>
           {getPieChartInputs(columns).map((input) => (
-            <PieChart key={input.title} columns={input.columns} />
+            <ChartFrame xs={4}>
+              <PieChart key={input.title} columns={input.columns} />
+            </ChartFrame>
           ))}
-        </Grid>
+        </>
       )}
-    </Box>
+    </>
   );
 }
 
