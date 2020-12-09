@@ -18,18 +18,16 @@ function Chart(props: IProps): React.ReactElement {
         data: {
           x: 'x',
           json: {
-            x: [
-              ...crimes.map((crime: any) => {
-                const date = new Date(+crime._id);
-                return `${date.getFullYear()}-${date.getMonth()}-${
-                  date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate()
-                } ${date.getHours() <= 9 ? `0${date.getHours()}` : date.getHours()}:00`;
-              }),
-            ],
-            error: [...crimes.map((crime: any) => crime.count)],
+            x: crimes.map((crime: any) => {
+              const date = new Date(+crime._id);
+              return `${date.getFullYear()}-${date.getMonth()}-${
+                date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate()
+              } ${date.getHours() <= 9 ? `0${date.getHours()}` : date.getHours()}:00`;
+            }),
+            error: crimes.map((crime: any) => crime.count),
           },
           xFormat: '%Y-%m-%d %H:%M',
-          type: bar(), // for ESM specify as: area()
+          type: bar(),
         },
         legend: {
           show: false,
