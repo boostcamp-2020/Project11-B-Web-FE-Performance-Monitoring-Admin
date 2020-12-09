@@ -1,7 +1,14 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
+
+import ShareCharts from '../components/Discover/ShareCharts';
 
 function Discover(): React.ReactElement {
-  return <div>Discover 페이지 입니다!!!</div>;
+  return (
+    <Box>
+      <ShareCharts />
+    </Box>
+  );
 }
 
 export default Discover;

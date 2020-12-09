@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import qs from 'qs';
-import service from '../service';
-import UserContext from '../context';
+import { useDispatch } from 'react-redux';
+import { acceptInvitation } from '../modules/user';
 
 function InviteProject(): React.ReactElement {
   const history = useHistory();
-  const { setUser } = useContext(UserContext);
+  const dispatch = useDispatch();
   const {
     location: { search },
   } = history;
@@ -15,15 +15,8 @@ function InviteProject(): React.ReactElement {
     const nickname = localStorage.getItem('nickname');
     const token = localStorage.getItem('token');
     if (key && nickname && token) {
-      (async () => {
-        const encodeKey = encodeURIComponent(key as string);
-        await service.acceptInvitation(encodeKey);
-        setUser({
-          nickname,
-          token,
-        });
-        history.push('/projects');
-      })();
+      const encodeKey = encodeURIComponent(key as string);
+      dispatch(acceptInvitation(encodeKey, nickname, token, history));
     } else {
       history.push(`/`, { key });
     }

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import bb, { line, zoom } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
 import qs from 'qs';
+import { RootState } from '../../../modules';
 import service from '../../../service';
-import UserContext from '../../../context';
 // ```json
 // type: "recent"
 // period: "1d" // 1y, 1M, 1d, 1h
@@ -18,7 +19,7 @@ const defaultData = {
 
 function Chart(): React.ReactElement {
   const chartDiv = useRef(null);
-  const { user } = useContext(UserContext);
+  const user = useSelector((state: RootState) => state.user);
   useEffect(() => {
     const formatTime = (date: Date): string => {
       return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
