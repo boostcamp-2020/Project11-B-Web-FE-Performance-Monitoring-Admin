@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import bb, { pie } from 'billboard.js';
+import bb, { line } from 'billboard.js';
 
 interface IColumn {
   name: string;
@@ -10,7 +10,7 @@ interface IProps {
   columns: IColumn[];
 }
 
-function PieChart(props: IProps): React.ReactElement {
+function LineChart(props: IProps): React.ReactElement {
   const { columns } = props;
   const chartDiv = useRef(null);
 
@@ -19,22 +19,20 @@ function PieChart(props: IProps): React.ReactElement {
   useEffect(() => {
     const chart = bb.generate({
       data: {
-        columns: [['sample', 1000]],
-        type: pie(),
+        x: 'x',
+        columns: flatColumns,
+        type: line(),
       },
-      pie: {
-        padding: 1,
-      },
-      transition: {
-        duration: 1000,
+      axis: {
+        x: {
+          type: 'timeseries',
+        },
       },
       bindto: chartDiv.current,
     });
-    chart.load({ columns: flatColumns });
-    chart.unload({ ids: 'sample' });
   }, [flatColumns]);
 
   return <div ref={chartDiv} />;
 }
 
-export default PieChart;
+export default LineChart;

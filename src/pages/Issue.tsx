@@ -8,13 +8,13 @@ import { IProjectCardProps } from '../types';
 function Issue(): React.ReactElement {
   const [selectedProject, setSelectedProject] = useState<IProjectCardProps[]>([]);
   return (
-    <>
+    <Box p={3}>
       <ProjectSelector selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
-      <Box padding={3}>
+      <Box pt={3}>
         <IssueHeader />
         <IssueTable selectedProject={selectedProject} />
       </Box>
-    </>
+    </Box>
   );
 }
 
