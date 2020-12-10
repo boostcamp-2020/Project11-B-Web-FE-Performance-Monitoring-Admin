@@ -23,9 +23,10 @@ function TabPanel(props: TabPanelProps) {
 
 interface IProps {
   selectedProjects: IProjectCardProps[];
+  filterQuery: Record<string, string[] | undefined>;
 }
 function ShareCharts(props: IProps): React.ReactElement {
-  const { selectedProjects } = props;
+  const { selectedProjects, filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
@@ -36,10 +37,11 @@ function ShareCharts(props: IProps): React.ReactElement {
         projectIds: selectedProjects.map((project) => project._id),
         type: 'recent',
         period: '1w',
+        filters: filterQuery,
       });
       setColumns(res.data);
     })();
-  }, [selectedProjects]);
+  }, [selectedProjects, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);

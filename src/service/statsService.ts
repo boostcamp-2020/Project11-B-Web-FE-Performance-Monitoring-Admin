@@ -5,6 +5,7 @@ interface IChartRequest {
   projectIds: string[];
   type: string;
   period: string;
+  filters: Record<string, string[] | undefined>;
 }
 export interface IStatsService {
   getCrimesCountByIssue: (id: string) => Promise<AxiosResponse>;
@@ -20,24 +21,26 @@ export default (apiRequest: AxiosInstance): IStatsService => {
 
   // sample query : ?projectId=myproject1&projectId=myproject2&type=recent&period=1w
   const getSharesData = async (req: IChartRequest) => {
-    const { projectIds, type, period } = req;
+    const { projectIds, type, period, filters } = req;
 
     const query = `?${qs.stringify({
       projectId: projectIds,
       type,
       period,
+      ...filters,
     })}`;
 
     return apiRequest.get(`/api/stats/shares${query}`);
   };
 
   const getCountByInterval = (req: IChartRequest) => {
-    const { projectIds, type, period } = req;
+    const { projectIds, type, period, filters } = req;
 
     const query = `?${qs.stringify({
       projectId: projectIds,
       type,
       period,
+      ...filters,
     })}`;
 
     return apiRequest.get(`/api/stats/interval${query}`);
