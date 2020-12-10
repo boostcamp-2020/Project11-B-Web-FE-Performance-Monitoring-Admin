@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type IFilterQuery = Record<string, string[] | undefined>;
 interface IProps {
-  filterQuery: Record<string, string[] | undefined>;
+  filterQuery: IFilterQuery;
   setFilterQuery: (query: Record<string, string[] | undefined>) => void;
 }
 
@@ -28,6 +29,10 @@ const arrayToString = (arr: string[] | undefined): string => {
 const stringToArray = (str: string): string[] | undefined => {
   if (str.trim() === '') return undefined;
   return str.split(',').map((item) => item.trim());
+};
+
+const isEqualFilterQuery = (oldFilter: IFilterQuery, newFilter: IFilterQuery): boolean => {
+  return JSON.stringify(oldFilter) === JSON.stringify(newFilter);
 };
 
 function Filters(props: IProps): React.ReactElement {
@@ -52,12 +57,16 @@ function Filters(props: IProps): React.ReactElement {
 
   const handleClose = () => {
     setAnchorEl(null);
-    const newQuery = {
-      browser: stringToArray(browserFilter),
-      os: stringToArray(osFilter),
-      url: stringToArray(urlFilter),
-    };
-    setFilterQuery(newQuery);
+    const newFilterQuery: any = {};
+    const browsers = stringToArray(browserFilter);
+    const oss = stringToArray(osFilter);
+    const urls = stringToArray(urlFilter);
+    if (browsers !== undefined) newFilterQuery.browser = browsers;
+    if (oss !== undefined) newFilterQuery.os = oss;
+    if (urls !== undefined) newFilterQuery.url = urls;
+    if (!isEqualFilterQuery(filterQuery, newFilterQuery)) {
+      setFilterQuery(newFilterQuery);
+    }
   };
 
   const handleChange = (event: any) => {
