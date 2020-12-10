@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid } from '@material-ui/core';
 
-import ProjectCard, { IProjectCardProps } from './ProjectCard';
-import service from '../../../service';
+import ProjectCard from './ProjectCard';
+import { initializeProjects } from '../../../modules/projects';
+import { RootState } from '../../../modules';
 
 function ProjectCards(): React.ReactElement {
-  const [projects, setProjects] = useState<IProjectCardProps[]>([]);
+  const projects = useSelector((state: RootState) => state.projects.projects);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => {
-      const response = await service.getProjects();
-      setProjects(response.data.projects);
-    })();
+    dispatch(initializeProjects());
   }, []);
 
   return (
