@@ -8,34 +8,12 @@ const INITIALIZE_VISITS = 'visits/INITIALIZE_VISITS' as const;
 const SET_MONTHLY_VISITS = 'visits/SET_MONTHLY_VISITS' as const;
 const SET_DAILY_VISITS = 'visits/SET_DAILY_VISITS' as const;
 
-const initializeVisitsAction = (newVisits: IVisits) => ({
+export const initializeVisitsAction = (newVisits: IVisits) => ({
   type: INITIALIZE_VISITS,
   newVisits,
 });
 
-export const testInitialVisits = (newVisits: IVisits) => ({
-  type: INITIALIZE_VISITS,
-  newVisits,
-});
-
-export const initializeVisits = (projectId: string) => async (
-  dispatch: Dispatch,
-): Promise<void> => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-
-  const monthlyRes = await service.getMonthlyVisits(projectId, year);
-  const dailyRes = await service.getDailyVisits(projectId, year, month);
-
-  const monthlyVisits: IMonthlyVisit[] = monthlyRes.data;
-  const dailyVisits: IDailyVisit[] = dailyRes.data;
-
-  const newVisits: IVisits = { monthlyVisits, dailyVisits };
-  dispatch(initializeVisitsAction(newVisits));
-};
-
-const setMonthlyVisitsAction = (newMonthlyVisits: IMonthlyVisit[]) => ({
+export const setMonthlyVisitsAction = (newMonthlyVisits: IMonthlyVisit[]) => ({
   type: SET_MONTHLY_VISITS,
   monthlyVisits: newMonthlyVisits,
 });
@@ -48,7 +26,7 @@ export const setMonthlyVisits = (projectId: string, year: number) => async (
   dispatch(setMonthlyVisitsAction(newMonthlyVisits));
 };
 
-const setDailyVisitsAction = (newDailyVisits: IDailyVisit[]) => ({
+export const setDailyVisitsAction = (newDailyVisits: IDailyVisit[]) => ({
   type: SET_DAILY_VISITS,
   dailyVisits: newDailyVisits,
 });

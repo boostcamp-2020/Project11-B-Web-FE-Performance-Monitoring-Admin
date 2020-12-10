@@ -35,9 +35,6 @@ function MonthlyChart(props: IProps): React.ReactElement {
           type: line(),
           xFormat: '%Y-%m',
         },
-        zoom: {
-          enabled: zoom(),
-        },
         axis: {
           x: {
             type: 'timeseries',
@@ -46,7 +43,7 @@ function MonthlyChart(props: IProps): React.ReactElement {
         bindto: visitChartDiv.current,
       });
     })();
-  }, [year]);
+  }, [projectId, year]);
   return (
     <>
       <div ref={visitChartDiv} />

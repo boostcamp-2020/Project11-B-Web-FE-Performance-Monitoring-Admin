@@ -4,7 +4,7 @@ import VisitsHeader from '../components/Visits/VisitsHeader';
 import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
 
-function Projects(): React.ReactElement {
+function Visits(): React.ReactElement {
   const today = new Date();
   const projectId = '5fd0bbb03eaa461e2c83a0c4';
   const [year, setYear] = useState(today.getFullYear());
@@ -27,7 +27,7 @@ function Projects(): React.ReactElement {
   };
 
   return (
-    <>
+    <Box p={7}>
       <VisitsHeader year={year} month={month} nextMonth={nextMonth} beforeMonth={beforeMonth} />
       <Box>
         <MonthlyChart projectId={projectId} year={year} />
@@ -35,8 +35,8 @@ function Projects(): React.ReactElement {
       <Box>
         <DailyChart projectId={projectId} year={year} month={month} />
       </Box>
-    </>
+    </Box>
   );
 }
 
-export default Projects;
+export default Visits;
