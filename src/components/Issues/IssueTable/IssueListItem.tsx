@@ -7,7 +7,7 @@ import { faJs } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import timeAgo from '../../../utils/timeAgo';
 import { IIssue } from '../../../types';
-import Chart from './IssueCrimeChart';
+import Chart from '../../common/IssueCrimeChart';
 
 export interface IProps {
   issue: IIssue;

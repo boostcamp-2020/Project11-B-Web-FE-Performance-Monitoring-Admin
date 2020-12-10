@@ -87,3 +87,11 @@ export interface ICrimesMeta {
   pageNum: number;
   countPerPage: number;
 }
+
+export interface IGetSharesDataByIssueResponse {
+  metas: {
+    browser: { name: string; count: number }[];
+    os: { name: string; count: number }[];
+    url: { name: string; count: number }[];
+  };
+}
