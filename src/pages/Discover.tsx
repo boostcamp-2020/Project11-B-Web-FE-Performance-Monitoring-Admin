@@ -13,6 +13,7 @@ import { IProjectCardProps } from '../types';
 function Discover(): React.ReactElement {
   const [selectedProjects, setSelectedProjects] = useState<IProjectCardProps[]>([]);
   const [period, setPeriod] = useState('1w');
+  const [filterQuery, setFilterQuery] = useState({});
 
   return (
     <Box p={3}>
@@ -22,6 +23,8 @@ function Discover(): React.ReactElement {
           setSelectedProjects={setSelectedProjects}
           period={period}
           setPeriod={setPeriod}
+          filterQuery={filterQuery}
+          setFilterQuery={setFilterQuery}
         />
       </Box>
       <Grid container direction="row" spacing={3} alignItems="stretch">
