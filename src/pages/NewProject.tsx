@@ -12,7 +12,7 @@ function NewProject(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [dsn, setDsn] = useState('http://panopticon.gq/api/crime/mydsn123');
+  const [dsn, setDsn] = useState('http://panopticon.gq/api/sdk/mydsn123');
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -29,7 +29,7 @@ function NewProject(): React.ReactElement {
     };
     try {
       const response = await service.addProject(project);
-      setDsn(`http://panopticon.gq/api/crime/${response.data.projectId}`);
+      setDsn(`http://panopticon.gq/api/sdk/${response.data.projectId}`);
       handleNext();
     } catch (e) {
       console.log(e);
