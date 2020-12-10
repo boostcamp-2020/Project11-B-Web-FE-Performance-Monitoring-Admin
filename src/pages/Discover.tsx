@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Box, Grid } from '@material-ui/core';
 
+import DiscoverHeader from '../components/Discover/DiscoverHeader';
+import TimeCharts from '../components/Discover/TimeCharts';
+import IssueCountChart from '../components/Discover/IssueCountChart';
 import ShareCharts from '../components/Discover/ShareCharts';
 
-import DiscoverHeader from '../components/Discover/DiscoverHeader';
-import IssueCountChart from '../components/Discover/IssueCountChart';
 import ChartFrame from '../components/Discover/ChartFrame';
 
 import { IProjectCardProps } from '../types';
@@ -25,7 +26,9 @@ function Discover(): React.ReactElement {
       </Box>
       <Grid container direction="row" spacing={3} alignItems="stretch">
         <Grid item xs={12}>
-          <ChartFrame>Trend Chart</ChartFrame>
+          <ChartFrame>
+            <TimeCharts selectedProjects={selectedProjects} />
+          </ChartFrame>
         </Grid>
         <Grid item xs={6}>
           <ChartFrame>
