@@ -6,6 +6,7 @@ import { IDailyVisit } from '../../types';
 import service from '../../service';
 
 interface IProps {
+  projectId: string;
   year: number;
 }
 
@@ -15,9 +16,8 @@ interface ICustomDate extends IProps {
 }
 
 function MonthlyChart(props: IProps): React.ReactElement {
-  const { year }: IProps = props;
+  const { projectId, year }: IProps = props;
   const visitChartDiv = useRef(null);
-  const projectId = '5fd0bbb03eaa461e2c83a0c4';
   useEffect(() => {
     const formatTime = (inputDate: ICustomDate): string => {
       return `${inputDate.year}-${inputDate.month}`;

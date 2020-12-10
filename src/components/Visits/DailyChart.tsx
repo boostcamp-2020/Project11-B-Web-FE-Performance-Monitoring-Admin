@@ -6,6 +6,7 @@ import { IDailyVisit } from '../../types';
 import service from '../../service';
 
 interface IProps {
+  projectId: string;
   year: number;
   month: number;
 }
@@ -14,10 +15,9 @@ interface ICustomDate extends IProps {
   day: number;
 }
 
-function Projects(props: IProps): React.ReactElement {
-  const { year, month }: IProps = props;
+function DailyChart(props: IProps): React.ReactElement {
+  const { projectId, year, month }: IProps = props;
   const visitChartDiv = useRef(null);
-  const projectId = '5fd0bbb03eaa461e2c83a0c4';
   useEffect(() => {
     const formatTime = (inputDate: ICustomDate): string => {
       return `${inputDate.year}-${inputDate.month}-${inputDate.day}`;
@@ -54,4 +54,4 @@ function Projects(props: IProps): React.ReactElement {
   );
 }
 
-export default Projects;
+export default DailyChart;
