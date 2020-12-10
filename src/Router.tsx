@@ -7,6 +7,7 @@ import NewProject from './pages/NewProject';
 import Login from './pages/Login';
 import Issue from './pages/Issue';
 import Discover from './pages/Discover';
+import Visits from './pages/Visits';
 import IssueDetail from './pages/IssueDetail';
 import InviteProject from './pages/InviteProject';
 
@@ -31,6 +32,7 @@ function PrivateRouter(): React.ReactElement {
       <Route path="/project/:id" exact component={ProjectDetail} />
       <Route path="/issue" exact component={Issue} />
       <Route path="/discover" exact component={Discover} />
+      <Route path="/visits" exact component={Visits} />
       <Route path="/issue/:id" exact component={IssueDetail} />
       <Route path="/">
         <Redirect to="/projects" />
