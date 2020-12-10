@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
 import bb, { pie } from 'billboard.js';
 
 interface IColumn {

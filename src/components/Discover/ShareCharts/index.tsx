@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import SwipeableViews from 'react-swipeable-views';
 import { Box, Tabs, Tab } from '@material-ui/core';
 
 import { IProjectCardProps } from '../../../types';
