@@ -9,10 +9,9 @@ import service from '../../../service';
 
 interface IProps {
   selectedProjects: IProjectCardProps[];
-  period: string;
 }
 function ShareCharts(props: IProps): React.ReactElement {
-  const { selectedProjects, period } = props;
+  const { selectedProjects } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
@@ -22,11 +21,11 @@ function ShareCharts(props: IProps): React.ReactElement {
       const res = await service.getSharesData({
         projectIds: selectedProjects.map((project) => project._id),
         type: 'recent',
-        period,
+        period: '1w',
       });
       setColumns(res.data);
     })();
-  }, [selectedProjects, period]);
+  }, [selectedProjects]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);
