@@ -5,12 +5,17 @@ import { IDailyVisit } from '../../types';
 
 import service from '../../service';
 
-interface ICustomDate {
+interface IProps {
+  year: number;
+}
+
+interface ICustomDate extends IProps {
   year: number;
   month: number;
 }
 
-function Projects(): React.ReactElement {
+function MonthlyChart(props: IProps): React.ReactElement {
+  const { year }: IProps = props;
   const visitChartDiv = useRef(null);
   const projectId = '5fd0bbb03eaa461e2c83a0c4';
   useEffect(() => {
@@ -18,9 +23,6 @@ function Projects(): React.ReactElement {
       return `${inputDate.year}-${inputDate.month}`;
     };
     (async (): Promise<void> => {
-      const today = new Date();
-      const year = today.getFullYear();
-
       const monthlyRes = await service.getMonthlyVisits(projectId, year);
       const newMonthlyVisits: IDailyVisit[] = await monthlyRes.data;
       bb.generate({
@@ -44,7 +46,7 @@ function Projects(): React.ReactElement {
         bindto: visitChartDiv.current,
       });
     })();
-  }, [projectId]);
+  }, [year]);
   return (
     <>
       <div ref={visitChartDiv} />
@@ -52,4 +54,4 @@ function Projects(): React.ReactElement {
   );
 }
 
-export default Projects;
+export default MonthlyChart;
