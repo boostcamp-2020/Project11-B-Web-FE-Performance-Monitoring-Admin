@@ -63,7 +63,7 @@ function TimeCharts(props: IProps): React.ReactElement {
               <Tab key={key} label={key} id={`tab-${index}`} />
             ))}
           </Tabs>
-          <LineChart columns={getColumnInput(getColumnKeys()[currTab])} />
+          <LineChart columns={getColumnInput(getColumnKeys()[currTab])} period={period} />
         </Box>
       )}
     </Box>
