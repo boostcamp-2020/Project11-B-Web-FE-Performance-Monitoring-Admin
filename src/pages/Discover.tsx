@@ -23,14 +23,18 @@ function Discover(): React.ReactElement {
           setPeriod={setPeriod}
         />
       </Box>
-      <Grid container spacing={3}>
-        <ChartFrame xs={12}>
-          <IssueCountChart selectedProjects={selectedProjects} />
-        </ChartFrame>
-
-        {/* <ChartFrame xs={12}> */}
-        <ShareCharts selectedProjects={selectedProjects} />
-        {/* </ChartFrame> */}
+      <Grid container direction="row" spacing={3} alignItems="stretch">
+        <Grid item xs={12}>
+          <ChartFrame>Trend Chart</ChartFrame>
+        </Grid>
+        <Grid item xs={6}>
+          <ChartFrame>
+            <IssueCountChart selectedProjects={selectedProjects} />
+          </ChartFrame>
+        </Grid>
+        <Grid item xs={6}>
+          <ChartFrame>Pie Chart</ChartFrame>
+        </Grid>
       </Grid>
     </Box>
   );

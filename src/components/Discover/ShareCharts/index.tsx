@@ -85,7 +85,7 @@ function ShareCharts(props: IProps): React.ReactElement {
       {selectedProjects.length > 0 && (
         <>
           {getPieChartInputs(columns).map((input) => (
-            <ChartFrame xs={4}>
+            <ChartFrame>
               <PieChart key={input.title} columns={input.columns} />
             </ChartFrame>
           ))}

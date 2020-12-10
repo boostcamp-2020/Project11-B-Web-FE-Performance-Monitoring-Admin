@@ -1,35 +1,19 @@
 import React from 'react';
-import { Grid, Theme } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { Paper, styled } from '@material-ui/core';
 
-const useStyle = makeStyles((theme: Theme) =>
-  createStyles({
-    chart: {
-      border: '2px solid black',
-      borderColor: theme.palette.text.secondary,
-      backgroundColor: 'white',
-      borderRadius: '10px',
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }),
-);
+const FullHeightPaper = styled(Paper)({
+  height: '100%',
+  padding: '10px',
+  textAlign: 'center',
+});
 
 interface IProps {
-  children: React.ReactElement;
-  xs?: boolean | 'auto' | 12 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | undefined;
+  children: React.ReactElement | string;
 }
 
-function IssueDetailSideBar({ children, xs }: IProps): React.ReactElement {
-  const styles = useStyle();
-  return (
-    <Grid item xs={xs} className={styles.chart}>
-      {children}
-    </Grid>
-  );
+function ChartFrame(props: IProps): React.ReactElement {
+  const { children } = props;
+  return <FullHeightPaper>{children}</FullHeightPaper>;
 }
-IssueDetailSideBar.defaultProps = {
-  xs: 'auto',
-};
 
-export default IssueDetailSideBar;
+export default ChartFrame;
