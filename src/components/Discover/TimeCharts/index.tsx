@@ -33,7 +33,9 @@ function TimeCharts(props: IProps): React.ReactElement {
   };
 
   const getColumnInput = (key: string) => {
+    if (!columns[key]) return [];
     const [firstItem] = columns[key];
+    if (!firstItem) return [];
 
     const result = [
       {
