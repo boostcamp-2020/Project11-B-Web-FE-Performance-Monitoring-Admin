@@ -23,7 +23,7 @@ function ProjectCard(props: IProjectCardProps): React.ReactElement {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const { _id, name, owner, users } = props;
 
-  const dsn = `http://panopticon.gq/api/crime/${_id}`;
+  const dsn = `http://panopticon.gq/api/sdk/${_id}`;
 
   return (
     <Grid item xs={4}>
