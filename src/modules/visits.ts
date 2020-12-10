@@ -4,8 +4,31 @@ import { IVisits, IMonthlyVisits, IDailyVisits } from '../types';
 
 import service from '../service';
 
+const INITIALIZE_VISITS = 'visits/INITIALIZE_VISITS' as const;
 const SET_MONTHLY_VISITS = 'visits/SET_MONTHLY_VISITS' as const;
 const SET_DAILY_VISITS = 'visits/SET_DAILY_VISITS' as const;
+
+const initializeVisitsAction = (newVisits: IVisits) => ({
+  type: INITIALIZE_VISITS,
+  newVisits,
+});
+
+export const initializeVisits = (projectId: string) => async (
+  dispatch: Dispatch,
+): Promise<void> => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  const monthlyRes = await service.getMonthlyVisits(projectId, year);
+  const dailyRes = await service.getDailyVisits(projectId, year, month);
+
+  const monthlyVisits: IMonthlyVisits = monthlyRes.data;
+  const dailyVisits: IDailyVisits = dailyRes.data;
+
+  const newVisits: IVisits = { monthlyVisits, dailyVisits };
+  dispatch(initializeVisitsAction(newVisits));
+};
 
 const setMonthlyVisitsAction = (newMonthlyVisits: IMonthlyVisits) => ({
   type: SET_MONTHLY_VISITS,
@@ -34,6 +57,7 @@ export const setDailyVisits = (projectId: string, year: number, month: number) =
 };
 
 type VisitsAction =
+  | ReturnType<typeof initializeVisitsAction>
   | ReturnType<typeof setMonthlyVisitsAction>
   | ReturnType<typeof setDailyVisitsAction>;
 
@@ -61,6 +85,9 @@ const visitsDummy: IVisits = {
 
 function visits(state: IVisits = visitsDummy, action: VisitsAction): IVisits {
   switch (action.type) {
+    case INITIALIZE_VISITS: {
+      return action.newVisits;
+    }
     case SET_MONTHLY_VISITS: {
       const newMonthlyVisits: IMonthlyVisits = action.monthlyVisits;
       const newVisits = _.cloneDeep(state);
