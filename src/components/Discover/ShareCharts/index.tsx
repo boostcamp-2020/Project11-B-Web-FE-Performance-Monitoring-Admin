@@ -1,18 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Grid } from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
+import { Box, Tabs, Tab } from '@material-ui/core';
 
 import { IProjectCardProps } from '../../../types';
 import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
-import ChartFrame from '../ChartFrame';
+
+interface TabPanelProps {
+  children: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index } = props;
+  return (
+    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`}>
+      {value === index && <Box width="100%">{children}</Box>}
+    </div>
+  );
+}
 
 interface IProps {
   selectedProjects: IProjectCardProps[];
 }
 function ShareCharts(props: IProps): React.ReactElement {
-  const [columns, setColumns] = useState<any>();
   const { selectedProjects } = props;
+
+  const [currTab, setCurrTab] = useState(0);
+  const [columns, setColumns] = useState<any>();
+
   useEffect(() => {
     (async () => {
       const res = await service.getSharesData({
@@ -23,6 +41,10 @@ function ShareCharts(props: IProps): React.ReactElement {
       setColumns(res.data);
     })();
   }, [selectedProjects]);
+
+  const handleChange = (event: any, newValue: number) => {
+    setCurrTab(newValue);
+  };
 
   const getPieChartInputs = (columnsData: any) => {
     const mapNameValues = (item: { name: string; count: number }) => {
@@ -57,6 +79,7 @@ function ShareCharts(props: IProps): React.ReactElement {
 
     return [
       {
+        label: 'Issue',
         title: 'Shares by Issue',
         columns: getTopNEtc(columnsData.issue, 3).map((issue: any) => ({
           name: processIssueName(issue.message, issue.type, 45),
@@ -64,14 +87,17 @@ function ShareCharts(props: IProps): React.ReactElement {
         })),
       },
       {
+        label: 'Browser',
         title: 'Shares by Browser',
         columns: columnsData.browser.map(mapNameValues),
       },
       {
+        label: 'OS',
         title: 'Shares by OS',
         columns: columnsData.os.map(mapNameValues),
       },
       {
+        label: 'URL',
         title: 'Shares by URL',
         columns: columnsData.url.map(mapNameValues),
       },
@@ -81,17 +107,22 @@ function ShareCharts(props: IProps): React.ReactElement {
   return columns === undefined ? (
     <Progress />
   ) : (
-    <>
+    <Box>
       {selectedProjects.length > 0 && (
-        <>
-          {getPieChartInputs(columns).map((input) => (
-            <ChartFrame>
-              <PieChart key={input.title} columns={input.columns} />
-            </ChartFrame>
+        <Box>
+          <Tabs value={currTab} onChange={handleChange}>
+            {getPieChartInputs(columns).map((input, index) => (
+              <Tab key={input.label} label={input.label} id={`tab-${index}`} />
+            ))}
+          </Tabs>
+          {getPieChartInputs(columns).map((input, index) => (
+            <TabPanel key={input.label} index={index} value={currTab}>
+              <PieChart columns={input.columns} />
+            </TabPanel>
           ))}
-        </>
+        </Box>
       )}
-    </>
+    </Box>
   );
 }
 

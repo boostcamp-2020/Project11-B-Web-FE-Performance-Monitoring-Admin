@@ -33,7 +33,9 @@ function Discover(): React.ReactElement {
           </ChartFrame>
         </Grid>
         <Grid item xs={6}>
-          <ChartFrame>Pie Chart</ChartFrame>
+          <ChartFrame>
+            <ShareCharts selectedProjects={selectedProjects} />
+          </ChartFrame>
         </Grid>
       </Grid>
     </Box>

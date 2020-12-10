@@ -35,11 +35,7 @@ function PieChart(props: IProps): React.ReactElement {
     chart.unload({ ids: 'sample' });
   }, [flatColumns]);
 
-  return (
-    <Grid item xs={6}>
-      <div ref={chartDiv} />
-    </Grid>
-  );
+  return <div ref={chartDiv} />;
 }
 
 export default PieChart;
