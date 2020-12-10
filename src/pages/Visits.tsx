@@ -1,16 +1,11 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
-
-interface ICustomDate {
-  year: number;
-  month: number;
-  day: number;
-}
 
 function Projects(): React.ReactElement {
   return (
     <>
+      <MonthlyChart />
       <DailyChart />
     </>
   );
