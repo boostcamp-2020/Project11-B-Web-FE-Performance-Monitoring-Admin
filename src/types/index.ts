@@ -83,7 +83,7 @@ export interface IProjectCardProps {
 
 export interface IProjectsModule {
   projects: IProjectCardProps[];
-  selectedProjects: IProjectCardProps[];
+  selectedProjectsIds: string[];
 }
 
 export interface ICrimesMeta {
