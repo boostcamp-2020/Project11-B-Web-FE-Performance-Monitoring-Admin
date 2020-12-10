@@ -81,6 +81,11 @@ export interface IProjectCardProps {
   users: IUser[];
 }
 
+export interface IProjectsModule {
+  projects: IProjectCardProps[];
+  selectedProjects: IProjectCardProps[];
+}
+
 export interface ICrimesMeta {
   total: number;
   totalPage: number;
