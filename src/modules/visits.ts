@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import _ from 'lodash';
-import { IVisits, IMonthlyVisits, IDailyVisits } from '../types';
+import { IVisits, IMonthlyVisit, IDailyVisit } from '../types';
 
 import service from '../service';
 
@@ -9,6 +9,11 @@ const SET_MONTHLY_VISITS = 'visits/SET_MONTHLY_VISITS' as const;
 const SET_DAILY_VISITS = 'visits/SET_DAILY_VISITS' as const;
 
 const initializeVisitsAction = (newVisits: IVisits) => ({
+  type: INITIALIZE_VISITS,
+  newVisits,
+});
+
+export const testInitialVisits = (newVisits: IVisits) => ({
   type: INITIALIZE_VISITS,
   newVisits,
 });
@@ -23,14 +28,14 @@ export const initializeVisits = (projectId: string) => async (
   const monthlyRes = await service.getMonthlyVisits(projectId, year);
   const dailyRes = await service.getDailyVisits(projectId, year, month);
 
-  const monthlyVisits: IMonthlyVisits = monthlyRes.data;
-  const dailyVisits: IDailyVisits = dailyRes.data;
+  const monthlyVisits: IMonthlyVisit[] = monthlyRes.data;
+  const dailyVisits: IDailyVisit[] = dailyRes.data;
 
   const newVisits: IVisits = { monthlyVisits, dailyVisits };
   dispatch(initializeVisitsAction(newVisits));
 };
 
-const setMonthlyVisitsAction = (newMonthlyVisits: IMonthlyVisits) => ({
+const setMonthlyVisitsAction = (newMonthlyVisits: IMonthlyVisit[]) => ({
   type: SET_MONTHLY_VISITS,
   monthlyVisits: newMonthlyVisits,
 });
@@ -43,7 +48,7 @@ export const setMonthlyVisits = (projectId: string, year: number) => async (
   dispatch(setMonthlyVisitsAction(newMonthlyVisits));
 };
 
-const setDailyVisitsAction = (newDailyVisits: IDailyVisits) => ({
+const setDailyVisitsAction = (newDailyVisits: IDailyVisit[]) => ({
   type: SET_DAILY_VISITS,
   dailyVisits: newDailyVisits,
 });
@@ -66,21 +71,8 @@ type VisitsAction =
  * dummy data를 어떻게 하지....???
  */
 const visitsDummy: IVisits = {
-  dailyVisits: {
-    _id: {
-      year: 1970,
-      month: 1,
-      date: 1,
-    },
-    count: 0,
-  },
-  monthlyVisits: {
-    _id: {
-      year: 1970,
-      month: 1,
-    },
-    count: 0,
-  },
+  dailyVisits: [],
+  monthlyVisits: [],
 };
 
 function visits(state: IVisits = visitsDummy, action: VisitsAction): IVisits {
@@ -89,13 +81,13 @@ function visits(state: IVisits = visitsDummy, action: VisitsAction): IVisits {
       return action.newVisits;
     }
     case SET_MONTHLY_VISITS: {
-      const newMonthlyVisits: IMonthlyVisits = action.monthlyVisits;
+      const newMonthlyVisits: IMonthlyVisit[] = action.monthlyVisits;
       const newVisits = _.cloneDeep(state);
       newVisits.monthlyVisits = newMonthlyVisits;
       return newVisits;
     }
     case SET_DAILY_VISITS: {
-      const newDailyVisits: IDailyVisits = action.dailyVisits;
+      const newDailyVisits: IDailyVisit[] = action.dailyVisits;
       const newVisits = _.cloneDeep(state);
       newVisits.dailyVisits = newDailyVisits;
       return newVisits;

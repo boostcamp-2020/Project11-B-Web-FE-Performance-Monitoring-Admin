@@ -1,26 +1,17 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { Box } from '@material-ui/core';
-import { initializeVisits } from '../modules/visits';
+import DailyChart from '../components/Visits/DailyChart';
 
-import { RootState } from '../modules';
+interface ICustomDate {
+  year: number;
+  month: number;
+  day: number;
+}
 
 function Projects(): React.ReactElement {
-  const projectId = '5fd0bbb03eaa461e2c83a0c4';
-  const monthlyVisits = useSelector((state: RootState) => state.visits.monthlyVisits);
-  const dailyVisits = useSelector((state: RootState) => state.visits.dailyVisits);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(initializeVisits(projectId));
-  }, [projectId]);
   return (
     <>
-      <Box p={5} display="flex" flexDirection="column">
-        {JSON.stringify(monthlyVisits)}
-      </Box>
-      <Box p={5} display="flex" flexDirection="column">
-        {JSON.stringify(dailyVisits)}
-      </Box>
+      <DailyChart />
     </>
   );
 }

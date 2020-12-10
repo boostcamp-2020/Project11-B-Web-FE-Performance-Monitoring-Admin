@@ -88,7 +88,7 @@ export interface ICrimesMeta {
   countPerPage: number;
 }
 
-export interface IMonthlyVisits {
+export interface IMonthlyVisit {
   _id: {
     year: number;
     month: number;
@@ -96,7 +96,7 @@ export interface IMonthlyVisits {
   count: number;
 }
 
-export interface IDailyVisits {
+export interface IDailyVisit {
   _id: {
     year: number;
     month: number;
@@ -106,6 +106,6 @@ export interface IDailyVisits {
 }
 
 export interface IVisits {
-  dailyVisits: IDailyVisits;
-  monthlyVisits: IMonthlyVisits;
+  dailyVisits: IDailyVisit[];
+  monthlyVisits: IMonthlyVisit[];
 }
