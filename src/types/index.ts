@@ -87,3 +87,25 @@ export interface ICrimesMeta {
   pageNum: number;
   countPerPage: number;
 }
+
+export interface IMonthlyVisits {
+  _id: {
+    year: number;
+    month: number;
+  };
+  count: number;
+}
+
+export interface IDailyVisits {
+  _id: {
+    year: number;
+    month: number;
+    date: number;
+  };
+  count: number;
+}
+
+export interface IVisits {
+  dailyVisits: IDailyVisits;
+  monthlyVisits: IMonthlyVisits;
+}
