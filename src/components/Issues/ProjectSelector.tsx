@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
-import service from '../../service';
-import { IProjectCardProps } from '../../types';
 import { initializeProjects, setSelectedProjectsIdsAction } from '../../modules/projects';
 import { RootState } from '../../modules';
 
@@ -24,11 +22,7 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-export interface IProjectSelectorProps {
-  selectedProject: IProjectCardProps[];
-  setSelectedProject: React.Dispatch<React.SetStateAction<IProjectCardProps[]>>;
-}
-function ProjectSelector(props: IProjectSelectorProps): React.ReactElement {
+function ProjectSelector(): React.ReactElement {
   const classes = useStyles();
 
   const projects = useSelector((state: RootState) => state.projects.projects);
