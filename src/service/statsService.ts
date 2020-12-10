@@ -1,25 +1,25 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
 import qs from 'querystring';
 
-interface ISharesDataRequest {
+interface IChartRequest {
   projectIds: string[];
   type: string;
   period: string;
 }
 export interface IStatsService {
-  getStatsData: (query: string, token: string) => Promise<AxiosResponse>;
   getCrimesCountByIssue: (id: string) => Promise<AxiosResponse>;
-  getSharesData: (req: ISharesDataRequest) => Promise<AxiosResponse>;
+  getSharesData: (req: IChartRequest) => Promise<AxiosResponse>;
+  getCountByInterval: (req: IChartRequest) => Promise<AxiosResponse>;
   getCountByIssue: (query: string) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IStatsService => {
-  const getStatsData = (query: string, token: string) => {
-    return apiRequest.get(`/api/stats${query}`, { headers: { jwt: token } });
+  const getCrimesCountByIssue = (issueId: string) => {
+    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count`);
   };
 
   // sample query : ?projectId=myproject1&projectId=myproject2&type=recent&period=1w
-  const getSharesData = async (req: ISharesDataRequest) => {
+  const getSharesData = async (req: IChartRequest) => {
     const { projectIds, type, period } = req;
 
     const query = `?${qs.stringify({
@@ -31,18 +31,26 @@ export default (apiRequest: AxiosInstance): IStatsService => {
     return apiRequest.get(`/api/stats/shares${query}`);
   };
 
+  const getCountByInterval = (req: IChartRequest) => {
+    const { projectIds, type, period } = req;
+
+    const query = `?${qs.stringify({
+      projectId: projectIds,
+      type,
+      period,
+    })}`;
+
+    return apiRequest.get(`/api/stats/interval${query}`);
+  };
+
   const getCountByIssue = (query: string) => {
     return apiRequest.get(`/api/countbyissue${query}`);
   };
 
-  const getCrimesCountByIssue = (issueId: string) => {
-    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count`);
-  };
-
   return {
-    getStatsData,
-    getSharesData,
-    getCountByIssue,
     getCrimesCountByIssue,
+    getCountByInterval,
+    getCountByIssue,
+    getSharesData,
   };
 };
