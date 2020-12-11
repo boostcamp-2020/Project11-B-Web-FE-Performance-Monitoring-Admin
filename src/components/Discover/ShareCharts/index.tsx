@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Tabs, Tab } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
-import { IProjectCardProps } from '../../../types';
 import TabPanel from './TabPanel';
 import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
+import { RootState } from '../../../modules';
 
 interface IProps {
-  selectedProjects: IProjectCardProps[];
   period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
 
 function ShareCharts(props: IProps): React.ReactElement {
-  const { selectedProjects, period, filterQuery } = props;
+  const { period, filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
 
+  const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
+
   useEffect(() => {
     (async () => {
       const res = await service.getSharesData({
-        projectIds: selectedProjects.map((project) => project._id),
+        projectIds: selectedProjects,
         type: 'recent',
         period,
         filters: filterQuery,

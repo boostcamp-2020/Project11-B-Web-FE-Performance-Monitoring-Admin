@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Grid } from '@material-ui/core';
 
 import DiscoverHeader from '../components/Discover/DiscoverHeader';
@@ -9,19 +10,17 @@ import ShareCharts from '../components/Discover/ShareCharts';
 
 import ChartFrame from '../components/Discover/ChartFrame';
 
-import { IProjectCardProps } from '../types';
+import { RootState } from '../modules';
 
 function Discover(): React.ReactElement {
-  const [selectedProjects, setSelectedProjects] = useState<IProjectCardProps[]>([]);
   const [period, setPeriod] = useState('1w');
+  const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const [filterQuery, setFilterQuery] = useState({});
 
   return (
     <Box p={3}>
       <Box pb={3}>
         <DiscoverHeader
-          selectedProjects={selectedProjects}
-          setSelectedProjects={setSelectedProjects}
           period={period}
           setPeriod={setPeriod}
           filterQuery={filterQuery}
@@ -34,29 +33,17 @@ function Discover(): React.ReactElement {
         <Grid container direction="row" spacing={3} alignItems="stretch">
           <Grid item xs={12}>
             <ChartFrame>
-              <TimeCharts
-                selectedProjects={selectedProjects}
-                filterQuery={filterQuery}
-                period={period}
-              />
+              <TimeCharts filterQuery={filterQuery} period={period} />
             </ChartFrame>
           </Grid>
           <Grid item xs={6}>
             <ChartFrame>
-              <IssueCountChart
-                selectedProjects={selectedProjects}
-                filterQuery={filterQuery}
-                period={period}
-              />
+              <IssueCountChart filterQuery={filterQuery} />
             </ChartFrame>
           </Grid>
           <Grid item xs={6}>
             <ChartFrame>
-              <ShareCharts
-                selectedProjects={selectedProjects}
-                filterQuery={filterQuery}
-                period={period}
-              />
+              <ShareCharts filterQuery={filterQuery} period={period} />
             </ChartFrame>
           </Grid>
         </Grid>

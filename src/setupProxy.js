@@ -6,9 +6,9 @@ module.exports = function (app) {
     '/api',
     createProxyMiddleware({
       // 개발 서버
-      target: 'http://panopticon-dev.gq',
+      // target: 'http://panopticon-dev.gq',
       // 로컬 서버
-      // target: 'http://localhost:4000',
+      target: 'http://localhost:4000',
       changeOrigin: true,
     }),
   );

@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Tabs, Tab } from '@material-ui/core';
 
-import { IProjectCardProps } from '../../../types';
 import LineChart from './LineChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
+import { RootState } from '../../../modules';
 
 interface IProps {
-  selectedProjects: IProjectCardProps[];
   period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
 
 function TimeCharts(props: IProps): React.ReactElement {
-  const { selectedProjects, period, filterQuery } = props;
+  const { period, filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>([]);
+  const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
 
   useEffect(() => {
     (async () => {
       const res = await service.getCountByInterval({
-        projectIds: selectedProjects.map((project) => project._id),
+        projectIds: selectedProjects,
         type: 'recent',
         period,
         filters: filterQuery,

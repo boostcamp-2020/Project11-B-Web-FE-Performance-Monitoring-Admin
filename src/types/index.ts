@@ -81,11 +81,38 @@ export interface IProjectCardProps {
   users: IUser[];
 }
 
+export interface IProjectsModule {
+  projects: IProjectCardProps[];
+  selectedProjectsIds: string[];
+}
+
 export interface ICrimesMeta {
   total: number;
   totalPage: number;
   pageNum: number;
   countPerPage: number;
+}
+
+export interface IMonthlyVisit {
+  _id: {
+    year: number;
+    month: number;
+  };
+  count: number;
+}
+
+export interface IDailyVisit {
+  _id: {
+    year: number;
+    month: number;
+    date: number;
+  };
+  count: number;
+}
+
+export interface IVisits {
+  dailyVisits: IDailyVisit[];
+  monthlyVisits: IMonthlyVisit[];
 }
 
 export interface IGetSharesDataByIssueResponse {

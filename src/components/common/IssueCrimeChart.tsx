@@ -26,42 +26,45 @@ function Chart(props: IProps): React.ReactElement {
   useEffect(() => {
     (async () => {
       if (issueId === '' || chartContainer === null) return;
-      const res = await service.getCrimesCountByIssue(issueId, intervalType as string);
-      const getXLabel = function formatting(x: number | Date) {
-        return typeof x === 'number' ? x : x.getHours();
-      };
-      const { crimes } = res.data;
-      billboard.generate({
-        data: {
-          x: 'x',
-          json: {
-            x: crimes.map((crime: any) => {
-              const date = new Date(+crime._id);
-              return getDate(date, intervalType as string);
-            }),
-            error: crimes.map((crime: any) => crime.count),
-          },
-          xFormat: intervalType === 'hour' ? '%Y-%m-%d %H:%M' : '%Y-%m-%d',
-          type: bar(),
-        },
-        legend: {
-          show: false,
-        },
-        axis: {
-          x: {
-            type: 'timeseries',
-            tick: {
-              fit: false,
-              count: 10,
-              format: intervalType === 'hour' ? getXLabel : undefined,
+      try {
+        const res = await service.getCrimesCountByIssue(issueId, intervalType as string);
+        const getXLabel = function formatting(x: number | Date) {
+          return typeof x === 'number' ? x : x.getHours();
+        };
+        const { crimes } = res.data;
+        billboard.generate({
+          data: {
+            x: 'x',
+            json: {
+              x: crimes.map((crime: any) => {
+                const date = new Date(+crime._id);
+                return getDate(date, intervalType as string);
+              }),
+              error: crimes.map((crime: any) => crime.count),
             },
+            xFormat: intervalType === 'hour' ? '%Y-%m-%d %H:%M' : '%Y-%m-%d',
+            type: bar(),
           },
-          y: {
+          legend: {
             show: false,
           },
-        },
-        bindto: chartContainer.current,
-      });
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                fit: false,
+                count: 10,
+                format: intervalType === 'hour' ? getXLabel : undefined,
+              },
+            },
+            y: {
+              show: false,
+            },
+          },
+          bindto: chartContainer.current,
+        });
+        // eslint-disable-next-line no-empty
+      } catch (e) {}
     })();
   }, [issueId, intervalType]);
   return <div ref={chartContainer} style={{ width, height }} />;

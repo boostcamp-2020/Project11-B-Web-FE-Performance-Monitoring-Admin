@@ -1,15 +1,11 @@
 import React from 'react';
 import { FormControl, InputLabel, Grid } from '@material-ui/core';
 
-import { IProjectCardProps } from '../../../types';
-
 import ProjectSelector from '../../Issues/ProjectSelector';
 import PeriodSelector from './PeriodSelector';
 import Filters from './Filters';
 
 interface IProps {
-  selectedProjects: IProjectCardProps[];
-  setSelectedProjects: React.Dispatch<React.SetStateAction<IProjectCardProps[]>>;
   period: string;
   setPeriod: (period: string) => void;
   filterQuery: Record<string, string[] | undefined>;
@@ -17,22 +13,11 @@ interface IProps {
 }
 
 function DiscoverHeader(props: IProps): React.ReactElement {
-  const {
-    selectedProjects,
-    setSelectedProjects,
-    period,
-    setPeriod,
-    filterQuery,
-    setFilterQuery,
-  } = props;
-
+  const { period, setPeriod, filterQuery, setFilterQuery } = props;
   return (
     <Grid container spacing={2}>
       <Grid item xs={4}>
-        <ProjectSelector
-          selectedProject={selectedProjects}
-          setSelectedProject={setSelectedProjects}
-        />
+        <ProjectSelector />
       </Grid>
       <Grid item xs={4}>
         <FormControl fullWidth>

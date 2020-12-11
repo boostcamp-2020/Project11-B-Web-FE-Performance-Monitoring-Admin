@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
 import { Box } from '@material-ui/core';
 import qs from 'querystring';
 import IssueToolbar from './IssueToolbar';
 import IssueListItem from './IssueListItem';
 import service from '../../../service';
-import { IIssue, IProjectCardProps } from '../../../types';
+import { IIssue } from '../../../types';
+import { RootState } from '../../../modules';
 
-interface ITableProps {
-  selectedProject: IProjectCardProps[];
-}
-function IssueTable(props: ITableProps): React.ReactElement {
+function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
-  const { selectedProject } = props;
+  const projects = useSelector((state: RootState) => state.projects.projects);
+  const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
+
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
   useEffect(() => {
     (async () => {
+      const selectedProjectsObj = projects.filter((project) =>
+        selectedProjectsIds.includes(project._id),
+      );
       const query = `?${qs.stringify({
         page,
-        projectId: selectedProject.map((pj) => {
+        projectId: selectedProjectsObj.map((pj) => {
           return pj._id;
         }),
       })}`;
@@ -36,7 +40,7 @@ function IssueTable(props: ITableProps): React.ReactElement {
       setTotalPage(res.data.metaData.totalPage);
       setIssues(res.data.data);
     })();
-  }, [page, selectedProject]);
+  }, [page, selectedProjectsIds]);
   return (
     <Box my={1} display="flex" flexDirection="column">
       <Box flexGrow={1}>

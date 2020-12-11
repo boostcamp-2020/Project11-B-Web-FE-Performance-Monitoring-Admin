@@ -6,7 +6,8 @@ import IssueDetailHeader from '../components/IssueDetail/IssueDetailHeader';
 import IssueDetailSidebar from '../components/IssueDetail/IssueDetailSideBar';
 import CrimeView from '../components/IssueDetail/CrimeView';
 import Crimes from '../components/IssueDetail/Crimes';
-import useProject from '../hooks/CrimeIndexHooks';
+
+import useCrimeIndex from '../hooks/CrimeIndexHooks';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -33,7 +34,7 @@ function IssueDetail(): React.ReactElement {
     handleNext,
     setCrimeById,
     handleChangeTab,
-  ] = useProject();
+  ] = useCrimeIndex();
 
   const issueId = issue?._id._id;
   return (
