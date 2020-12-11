@@ -13,6 +13,7 @@ function NewProject(): React.ReactElement {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [dsn, setDsn] = useState('http://panopticon.gq/api/sdk/mydsn123');
+  const [projectId, setProjectId] = useState('');
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -30,6 +31,7 @@ function NewProject(): React.ReactElement {
     try {
       const response = await service.addProject(project);
       setDsn(`http://panopticon.gq/api/sdk/${response.data.projectId}`);
+      setProjectId(response.data.projectId);
       handleNext();
     } catch (e) {
       console.log(e);
@@ -40,7 +42,7 @@ function NewProject(): React.ReactElement {
     await service.inviteMembers({
       to: emails,
       project: name,
-      projectId: dsn,
+      projectId,
     });
   };
 
