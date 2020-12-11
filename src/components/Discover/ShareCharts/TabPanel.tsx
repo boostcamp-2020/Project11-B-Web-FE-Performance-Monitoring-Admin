@@ -11,7 +11,7 @@ interface TabPanelProps {
 function TabPanel(props: TabPanelProps): React.ReactElement {
   const { children, value, index } = props;
   return (
-    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`}>
+    <div hidden={value !== index} id={`tabpanel-${index}`}>
       {value === index && <Box width="100%">{children}</Box>}
     </div>
   );
