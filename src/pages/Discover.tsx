@@ -34,17 +34,29 @@ function Discover(): React.ReactElement {
         <Grid container direction="row" spacing={3} alignItems="stretch">
           <Grid item xs={12}>
             <ChartFrame>
-              <TimeCharts selectedProjects={selectedProjects} filterQuery={filterQuery} />
+              <TimeCharts
+                selectedProjects={selectedProjects}
+                filterQuery={filterQuery}
+                period={period}
+              />
             </ChartFrame>
           </Grid>
           <Grid item xs={6}>
             <ChartFrame>
-              <IssueCountChart selectedProjects={selectedProjects} filterQuery={filterQuery} />
+              <IssueCountChart
+                selectedProjects={selectedProjects}
+                filterQuery={filterQuery}
+                period={period}
+              />
             </ChartFrame>
           </Grid>
           <Grid item xs={6}>
             <ChartFrame>
-              <ShareCharts selectedProjects={selectedProjects} filterQuery={filterQuery} />
+              <ShareCharts
+                selectedProjects={selectedProjects}
+                filterQuery={filterQuery}
+                period={period}
+              />
             </ChartFrame>
           </Grid>
         </Grid>

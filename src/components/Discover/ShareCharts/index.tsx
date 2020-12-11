@@ -2,31 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Box, Tabs, Tab } from '@material-ui/core';
 
 import { IProjectCardProps } from '../../../types';
+import TabPanel from './TabPanel';
 import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
 
-interface TabPanelProps {
-  children: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index } = props;
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`}>
-      {value === index && <Box width="100%">{children}</Box>}
-    </div>
-  );
-}
-
 interface IProps {
   selectedProjects: IProjectCardProps[];
+  period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
+
 function ShareCharts(props: IProps): React.ReactElement {
-  const { selectedProjects, filterQuery } = props;
+  const { selectedProjects, period, filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
@@ -36,12 +24,12 @@ function ShareCharts(props: IProps): React.ReactElement {
       const res = await service.getSharesData({
         projectIds: selectedProjects.map((project) => project._id),
         type: 'recent',
-        period: '1w',
+        period,
         filters: filterQuery,
       });
       setColumns(res.data);
     })();
-  }, [selectedProjects, filterQuery]);
+  }, [selectedProjects, period, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);

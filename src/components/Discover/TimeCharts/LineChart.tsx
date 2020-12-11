@@ -8,10 +8,21 @@ interface IColumn {
 
 interface IProps {
   columns: IColumn[];
+  period: string;
 }
 
+const timeFormats: Record<string, string> = {
+  '1h': '%H:%M',
+  '1d': '%H:%M',
+  '1w': '%m-%d %H:%M',
+  '2w': '%m-%d %H:%M',
+  '1M': '%Y-%m-%d',
+  '3M': '%Y-%m-%d',
+  '1y': '%Y-%m',
+};
+
 function LineChart(props: IProps): React.ReactElement {
-  const { columns } = props;
+  const { columns, period } = props;
   const chartDiv = useRef(null);
 
   const flatColumns = columns.map((column) => [column.name, ...column.values]);
@@ -26,11 +37,14 @@ function LineChart(props: IProps): React.ReactElement {
       axis: {
         x: {
           type: 'timeseries',
+          tick: {
+            format: timeFormats[period],
+          },
         },
       },
       bindto: chartDiv.current,
     });
-  }, [flatColumns]);
+  }, [flatColumns, period]);
 
   return <div ref={chartDiv} />;
 }

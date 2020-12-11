@@ -8,10 +8,12 @@ import service from '../../../service';
 
 interface IProps {
   selectedProjects: IProjectCardProps[];
+  period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
+
 function TimeCharts(props: IProps): React.ReactElement {
-  const { selectedProjects, filterQuery } = props;
+  const { selectedProjects, period, filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>([]);
@@ -21,12 +23,12 @@ function TimeCharts(props: IProps): React.ReactElement {
       const res = await service.getCountByInterval({
         projectIds: selectedProjects.map((project) => project._id),
         type: 'recent',
-        period: '1w',
+        period,
         filters: filterQuery,
       });
       setColumns(res.data);
     })();
-  }, [selectedProjects, filterQuery]);
+  }, [selectedProjects, period, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);
@@ -66,7 +68,7 @@ function TimeCharts(props: IProps): React.ReactElement {
               <Tab key={key} label={key} id={`tab-${index}`} />
             ))}
           </Tabs>
-          <LineChart columns={getColumnInput(getColumnKeys()[currTab])} />
+          <LineChart columns={getColumnInput(getColumnKeys()[currTab])} period={period} />
         </Box>
       )}
     </Box>

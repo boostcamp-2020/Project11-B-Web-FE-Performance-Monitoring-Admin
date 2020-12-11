@@ -1,5 +1,6 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
 import qs from 'querystring';
+import { IGetSharesDataByIssueResponse } from '../types';
 
 interface IChartRequest {
   projectIds: string[];
@@ -8,15 +9,16 @@ interface IChartRequest {
   filters: Record<string, string[] | undefined>;
 }
 export interface IStatsService {
-  getCrimesCountByIssue: (id: string) => Promise<AxiosResponse>;
+  getCrimesCountByIssue: (id: string, intervalType: string) => Promise<AxiosResponse>;
   getSharesData: (req: IChartRequest) => Promise<AxiosResponse>;
   getCountByInterval: (req: IChartRequest) => Promise<AxiosResponse>;
   getCountByIssue: (query: string) => Promise<AxiosResponse>;
+  getSharesDataByIssue: (issueId: string) => Promise<AxiosResponse<IGetSharesDataByIssueResponse>>;
 }
 
 export default (apiRequest: AxiosInstance): IStatsService => {
-  const getCrimesCountByIssue = (issueId: string) => {
-    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count`);
+  const getCrimesCountByIssue = (issueId: string, intervalType: string) => {
+    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count?intervalType=${intervalType}`);
   };
 
   // sample query : ?projectId=myproject1&projectId=myproject2&type=recent&period=1w
@@ -50,10 +52,15 @@ export default (apiRequest: AxiosInstance): IStatsService => {
     return apiRequest.get(`/api/countbyissue${query}`);
   };
 
+  const getSharesDataByIssue = (issueId: string) => {
+    return apiRequest.get(`/api/stats/issue/${issueId}/shares`);
+  };
+
   return {
     getCrimesCountByIssue,
     getCountByInterval,
     getCountByIssue,
     getSharesData,
+    getSharesDataByIssue,
   };
 };
