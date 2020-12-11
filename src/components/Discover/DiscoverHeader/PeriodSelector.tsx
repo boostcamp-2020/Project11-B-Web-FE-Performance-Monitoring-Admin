@@ -6,8 +6,8 @@ const periods = [
   { label: 'day', query: '1d' },
   { label: 'week', query: '1w' },
   { label: '2 weeks', query: '2w' },
-  { label: '30 days', query: '30d' },
-  { label: '90 days', query: '90d' },
+  { label: '30 days', query: '1M' },
+  { label: '90 days', query: '3M' },
   { label: 'year', query: '1y' },
 ];
 
