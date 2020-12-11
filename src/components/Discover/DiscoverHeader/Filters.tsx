@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 import { Button, Popover, List, ListItem, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -31,10 +32,6 @@ const stringToArray = (str: string): string[] | undefined => {
   return str.split(',').map((item) => item.trim());
 };
 
-const isEqualFilterQuery = (oldFilter: IFilterQuery, newFilter: IFilterQuery): boolean => {
-  return JSON.stringify(oldFilter) === JSON.stringify(newFilter);
-};
-
 function Filters(props: IProps): React.ReactElement {
   const { filterQuery, setFilterQuery } = props;
 
@@ -64,7 +61,7 @@ function Filters(props: IProps): React.ReactElement {
     if (browsers !== undefined) newFilterQuery.browser = browsers;
     if (oss !== undefined) newFilterQuery.os = oss;
     if (urls !== undefined) newFilterQuery.url = urls;
-    if (!isEqualFilterQuery(filterQuery, newFilterQuery)) {
+    if (!_.isEqual(filterQuery, newFilterQuery)) {
       setFilterQuery(newFilterQuery);
     }
   };
