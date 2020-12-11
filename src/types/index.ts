@@ -114,3 +114,11 @@ export interface IVisits {
   dailyVisits: IDailyVisit[];
   monthlyVisits: IMonthlyVisit[];
 }
+
+export interface IGetSharesDataByIssueResponse {
+  metas: {
+    browser: { name: string; count: number }[];
+    os: { name: string; count: number }[];
+    url: { name: string; count: number }[];
+  };
+}

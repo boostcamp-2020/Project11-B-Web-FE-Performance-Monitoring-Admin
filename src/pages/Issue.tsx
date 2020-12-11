@@ -6,13 +6,13 @@ import ProjectSelector from '../components/Issues/ProjectSelector';
 
 function Issue(): React.ReactElement {
   return (
-    <>
+    <Box p={3}>
       <ProjectSelector />
-      <Box padding={3}>
+      <Box pt={3}>
         <IssueHeader />
         <IssueTable />
       </Box>
-    </>
+    </Box>
   );
 }
 

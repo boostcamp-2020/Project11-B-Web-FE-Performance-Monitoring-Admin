@@ -1,41 +1,66 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
 import qs from 'querystring';
+import { IGetSharesDataByIssueResponse } from '../types';
 
-interface ISharesDataRequest {
+interface IChartRequest {
   projectIds: string[];
   type: string;
   period: string;
+  filters: Record<string, string[] | undefined>;
 }
-
 export interface IStatsService {
-  getStatsData: (query: string, token: string) => Promise<AxiosResponse>;
-  getCrimesCountByIssue: (id: string) => Promise<AxiosResponse>;
-  getSharesData: (req: ISharesDataRequest) => Promise<AxiosResponse>;
+  getCrimesCountByIssue: (id: string, intervalType: string) => Promise<AxiosResponse>;
+  getSharesData: (req: IChartRequest) => Promise<AxiosResponse>;
+  getCountByInterval: (req: IChartRequest) => Promise<AxiosResponse>;
+  getCountByIssue: (query: string) => Promise<AxiosResponse>;
+  getSharesDataByIssue: (issueId: string) => Promise<AxiosResponse<IGetSharesDataByIssueResponse>>;
 }
 
 export default (apiRequest: AxiosInstance): IStatsService => {
-  const getStatsData = (query: string, token: string) => {
-    return apiRequest.get(`/api/stats${query}`, { headers: { jwt: token } });
+  const getCrimesCountByIssue = (issueId: string, intervalType: string) => {
+    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count?intervalType=${intervalType}`);
   };
+
   // sample query : ?projectId=myproject1&projectId=myproject2&type=recent&period=1w
-  const getSharesData = async (req: ISharesDataRequest) => {
-    const { projectIds, type, period } = req;
+  const getSharesData = async (req: IChartRequest) => {
+    const { projectIds, type, period, filters } = req;
 
     const query = `?${qs.stringify({
       projectId: projectIds,
       type,
       period,
+      ...filters,
     })}`;
 
     return apiRequest.get(`/api/stats/shares${query}`);
   };
 
-  const getCrimesCountByIssue = (issueId: string) => {
-    return apiRequest.get(`/api/stats/issue/${issueId}/crimes/count`);
+  const getCountByInterval = (req: IChartRequest) => {
+    const { projectIds, type, period, filters } = req;
+
+    const query = `?${qs.stringify({
+      projectId: projectIds,
+      type,
+      period,
+      ...filters,
+    })}`;
+
+    return apiRequest.get(`/api/stats/interval${query}`);
   };
+
+  const getCountByIssue = (query: string) => {
+    return apiRequest.get(`/api/countbyissue${query}`);
+  };
+
+  const getSharesDataByIssue = (issueId: string) => {
+    return apiRequest.get(`/api/stats/issue/${issueId}/shares`);
+  };
+
   return {
-    getStatsData,
-    getSharesData,
     getCrimesCountByIssue,
+    getCountByInterval,
+    getCountByIssue,
+    getSharesData,
+    getSharesDataByIssue,
   };
 };

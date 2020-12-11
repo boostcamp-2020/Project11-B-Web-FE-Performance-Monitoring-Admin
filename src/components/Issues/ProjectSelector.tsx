@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, FormControl, InputLabel, Select, Input, Chip, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, Select, Chip, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import { initializeProjects, setSelectedProjectsIdsAction } from '../../modules/projects';
@@ -8,16 +8,13 @@ import { RootState } from '../../modules';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    root: { width: '100%', margin: '16px 0px' },
+    root: { width: '100%' },
     formControl: {
       minWidth: 120,
-      maxWidth: '33%',
     },
-    select: { height: '80px' },
-    chips: { height: '100%', display: 'flex', flexWrap: 'wrap' },
+    chips: { display: 'flex', flexWrap: 'wrap' },
     chip: {
-      height: '40px',
-      margin: 2,
+      margin: 1,
     },
   }),
 );
@@ -39,38 +36,40 @@ function ProjectSelector(): React.ReactElement {
   }, []);
 
   return (
-    <Box className={classes.root}>
-      <FormControl variant="outlined" size="medium" fullWidth className={classes.formControl}>
-        <InputLabel>SELECTED PROJECT</InputLabel>
-        <Select
-          className={classes.select}
-          placeholder="SELECTED PROJECT"
-          variant="filled"
-          multiple
-          value={selectedProjects}
-          onChange={handleSelectChange}
-          input={<Input />}
-          renderValue={(selected) => (
-            <div className={classes.chips}>
-              {(selected as string[]).map((value) => (
-                <Chip
-                  color="primary"
-                  key={value}
-                  label={projects.find((project) => project._id === value)?.name}
-                  className={classes.chip}
-                />
-              ))}
-            </div>
-          )}
-        >
-          {projects.map((project) => (
-            <MenuItem className={classes.select} key={project._id} value={project._id}>
-              {project.name} : {`[${project._id}]`}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <FormControl fullWidth className={classes.formControl}>
+      <InputLabel>SELECTED PROJECT</InputLabel>
+      <Select
+        placeholder="SELECTED PROJECT"
+        multiple
+        value={selectedProjects}
+        onChange={handleSelectChange}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          getContentAnchorEl: null,
+        }}
+        renderValue={(selected) => (
+          <div className={classes.chips}>
+            {(selected as string[]).map((value) => (
+              <Chip
+                color="primary"
+                key={value}
+                label={projects.find((project) => project._id === value)?.name}
+                className={classes.chip}
+              />
+            ))}
+          </div>
+        )}
+      >
+        {projects.map((project) => (
+          <MenuItem key={project._id} value={project._id}>
+            {project.name} : {`[${project._id}]`}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
 
