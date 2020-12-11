@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+
 import Pagination from '@material-ui/lab/Pagination';
 import { Box } from '@material-ui/core';
 import qs from 'querystring';
+import { useSelector } from 'react-redux';
 import IssueToolbar from './IssueToolbar';
 import IssueListItem from './IssueListItem';
 import service from '../../../service';
@@ -13,7 +14,6 @@ function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
-  const projects = useSelector((state: RootState) => state.projects.projects);
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -22,14 +22,9 @@ function IssueTable(): React.ReactElement {
 
   useEffect(() => {
     (async () => {
-      const selectedProjectsObj = projects.filter((project) =>
-        selectedProjectsIds.includes(project._id),
-      );
       const query = `?${qs.stringify({
         page,
-        projectId: selectedProjectsObj.map((pj) => {
-          return pj._id;
-        }),
+        projectId: selectedProjectsIds,
       })}`;
       const res = await service.getIssues(query);
       if (res.data.data === undefined) {
