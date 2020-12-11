@@ -14,21 +14,19 @@ interface IIssueCount {
 }
 interface IProps {
   selectedProjects: IProjectCardProps[];
+  filterQuery: Record<string, string[] | undefined>;
 }
 
 function IssueCountChart(props: IProps): React.ReactElement {
-  const { selectedProjects } = props;
+  const { selectedProjects, filterQuery } = props;
   const chartDiv = useRef(null);
   useEffect(() => {
     (async (): Promise<void> => {
-      // const query = qs.stringify(
-      //   { projectIds: selectedProjects.map((project) => project._id) },
-      //   { addQueryPrefix: true },
-      // );
       const query = `?${qs.stringify({
         projectId: selectedProjects.map((project) => {
           return project._id;
         }),
+        ...filterQuery,
       })}`;
       const res = await service.getCountByIssue(query);
       const statsData = res.data;
@@ -79,7 +77,7 @@ function IssueCountChart(props: IProps): React.ReactElement {
         bindto: chartDiv.current,
       });
     })();
-  }, [selectedProjects]);
+  }, [selectedProjects, filterQuery]);
   return <div ref={chartDiv} />;
 }
 export default IssueCountChart;

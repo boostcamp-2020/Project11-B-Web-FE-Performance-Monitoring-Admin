@@ -10,9 +10,11 @@ import service from '../../../service';
 interface IProps {
   selectedProjects: IProjectCardProps[];
   period: string;
+  filterQuery: Record<string, string[] | undefined>;
 }
+
 function ShareCharts(props: IProps): React.ReactElement {
-  const { selectedProjects, period } = props;
+  const { selectedProjects, period, filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
@@ -23,10 +25,11 @@ function ShareCharts(props: IProps): React.ReactElement {
         projectIds: selectedProjects.map((project) => project._id),
         type: 'recent',
         period,
+        filters: filterQuery,
       });
       setColumns(res.data);
     })();
-  }, [selectedProjects, period]);
+  }, [selectedProjects, period, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);
