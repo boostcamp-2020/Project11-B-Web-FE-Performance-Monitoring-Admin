@@ -28,19 +28,22 @@ const drawVisitsChart = (params: DrawParams): void => {
     return countArray;
   });
   const xFormat = type === 'daily' ? '%Y-%m-%d' : '%Y-%m';
-  bb.generate({
-    data: {
-      x: 'x',
-      columns: [dateColumns, ...flatColumns],
-      xFormat,
-      type: line(),
-    },
-    axis: {
-      x: {
-        type: 'timeseries',
+  try {
+    bb.generate({
+      data: {
+        x: 'x',
+        columns: [dateColumns, ...flatColumns],
+        xFormat,
+        type: line(),
       },
-    },
-    bindto: visitChartDiv.current,
-  });
+      axis: {
+        x: {
+          type: 'timeseries',
+        },
+      },
+      bindto: visitChartDiv.current,
+    });
+    // eslint-disable-next-line no-empty
+  } catch (e) {}
 };
 export default drawVisitsChart;
