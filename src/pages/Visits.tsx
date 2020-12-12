@@ -3,11 +3,13 @@ import { Box } from '@material-ui/core';
 import VisitsHeader from '../components/Visits/VisitsHeader';
 import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
+import DailyTable from '../components/Visits/DailyTable';
 import ProjectSelector from '../components/Issues/ProjectSelector';
+import { IDailyVisit } from '../types';
 
 function Visits(): React.ReactElement {
   const today = new Date();
-  const projectId = '5fd0bbb03eaa461e2c83a0c4';
+  const [firstSelectedCounts, setFirstSelectedCounts] = useState<IDailyVisit[]>([]);
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth() + 1);
   const nextMonth = () => {
@@ -26,7 +28,6 @@ function Visits(): React.ReactElement {
       setMonth(month - 1);
     }
   };
-
   return (
     <Box p={3}>
       <ProjectSelector />
@@ -36,7 +37,10 @@ function Visits(): React.ReactElement {
           <MonthlyChart year={year} />
         </Box>
         <Box>
-          <DailyChart year={year} month={month} />
+          <DailyChart year={year} month={month} setFirstSelectedCounts={setFirstSelectedCounts} />
+        </Box>
+        <Box>
+          <DailyTable dailyVisits={firstSelectedCounts} />
         </Box>
       </Box>
     </Box>
