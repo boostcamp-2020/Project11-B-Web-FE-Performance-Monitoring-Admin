@@ -87,4 +87,4 @@ function IssueListItem(props: IProps): React.ReactElement {
   );
 }
 
-export default IssueListItem;
+export default React.memo(IssueListItem);
