@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import bb, { line, zoom } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
@@ -10,8 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { IDailyVisit, IProjectCardProps } from '../../types';
 import { RootState } from '../../modules';
+import drawVisitsChart from '../../utils/visitUtil';
 
 import service from '../../service';
 
@@ -29,36 +28,7 @@ function DailyChart(props: IProps): React.ReactElement {
     (async (): Promise<void> => {
       const dailyRes = await service.getDailyVisitsMulti(selectedProjectsIds, year, month);
       const newDailyVisits = await dailyRes.data;
-
-      const dateColumns = newDailyVisits[0].map((dailyInfo: IDailyVisit) => {
-        return `${dailyInfo._id.year}-${dailyInfo._id.month}-${dailyInfo._id.date}`;
-      });
-      dateColumns.unshift('x');
-      const flatColumns = newDailyVisits.map((dailyArray: IDailyVisit[]) => {
-        const currentProjectId = dailyArray[0]._id.projectId;
-        const countArray: (string | number)[] = dailyArray.map((dailyInfo: IDailyVisit) => {
-          return dailyInfo.count;
-        });
-        const projectObj = projects.find(
-          (project: IProjectCardProps) => project._id === currentProjectId,
-        );
-        const projectName: string = projectObj?.name as string;
-        countArray.unshift(projectName);
-        return countArray;
-      });
-      bb.generate({
-        data: {
-          x: 'x',
-          columns: [dateColumns, ...flatColumns],
-          xFormat: '%Y-%m-%d',
-        },
-        axis: {
-          x: {
-            type: 'timeseries',
-          },
-        },
-        bindto: visitChartDiv.current,
-      });
+      drawVisitsChart({ projects, newVisits: newDailyVisits, visitChartDiv, type: 'daily' });
     })();
   }, [selectedProjectsIds, year, month]);
   return (
