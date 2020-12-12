@@ -20,7 +20,7 @@ function DailyChart(props: IProps): React.ReactElement {
   const visitChartDiv = useRef(null);
   useEffect(() => {
     (async (): Promise<void> => {
-      const dailyRes = await service.getDailyVisitsMulti(selectedProjectsIds, year, month);
+      const dailyRes = await service.getDailyVisits(selectedProjectsIds, year, month);
       const newDailyVisits = await dailyRes.data;
       setFirstSelectedCounts(newDailyVisits[0]);
       drawVisitsChart({ projects, newVisits: newDailyVisits, visitChartDiv, type: 'daily' });

@@ -30,6 +30,7 @@ apiAxios.interceptors.response.use(
       return;
     }
     if (error.response.status === 500) throw new Error('==== SERVER ERROR ====');
+    console.log(error);
     throw new Error('==== UNKNOWN ERROR ====');
   },
 );

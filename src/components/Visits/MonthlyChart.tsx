@@ -17,7 +17,7 @@ function MonthlyChart(props: IProps): React.ReactElement {
   const visitChartDiv = useRef(null);
   useEffect(() => {
     (async (): Promise<void> => {
-      const monthlyRes = await service.getMonthlyVisitsMulti(selectedProjectsIds, year);
+      const monthlyRes = await service.getMonthlyVisits(selectedProjectsIds, year);
       const newMonthlyVisits = await monthlyRes.data;
       drawVisitsChart({ projects, newVisits: newMonthlyVisits, visitChartDiv, type: 'monthly' });
     })();
