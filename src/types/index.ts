@@ -106,6 +106,7 @@ export interface IDailyVisit {
     year: number;
     month: number;
     date: number;
+    projectId: string;
   };
   count: number;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import bb, { line, zoom } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
 import Box from '@material-ui/core/Box';
@@ -9,40 +10,46 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { IDailyVisit } from '../../types';
+import { IDailyVisit, IProjectCardProps } from '../../types';
+import { RootState } from '../../modules';
 
 import service from '../../service';
 
 interface IProps {
-  projectId: string;
   year: number;
   month: number;
 }
 
-interface ICustomDate extends IProps {
-  date: number;
-}
-
 function DailyChart(props: IProps): React.ReactElement {
-  const { projectId, year, month }: IProps = props;
-  const [dailyVisits, setDailyVisits] = useState<IDailyVisit[]>([]);
+  const { year, month }: IProps = props;
+  const projects = useSelector((state: RootState) => state.projects.projects);
+  const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const visitChartDiv = useRef(null);
   useEffect(() => {
-    const formatTime = (inputDate: ICustomDate): string => {
-      return `${inputDate.year}-${inputDate.month}-${inputDate.date}`;
-    };
     (async (): Promise<void> => {
-      const dailyRes = await service.getDailyVisits(projectId, year, month);
-      const newDailyVisits: IDailyVisit[] = await dailyRes.data;
-      setDailyVisits(() => newDailyVisits);
+      const dailyRes = await service.getDailyVisitsMulti(selectedProjectsIds, year, month);
+      const newDailyVisits = await dailyRes.data;
+
+      const dateColumns = newDailyVisits[0].map((dailyInfo: IDailyVisit) => {
+        return `${dailyInfo._id.year}-${dailyInfo._id.month}-${dailyInfo._id.date}`;
+      });
+      dateColumns.unshift('x');
+      const flatColumns = newDailyVisits.map((dailyArray: IDailyVisit[]) => {
+        const currentProjectId = dailyArray[0]._id.projectId;
+        const countArray: (string | number)[] = dailyArray.map((dailyInfo: IDailyVisit) => {
+          return dailyInfo.count;
+        });
+        const projectObj = projects.find(
+          (project: IProjectCardProps) => project._id === currentProjectId,
+        );
+        const projectName: string = projectObj?.name as string;
+        countArray.unshift(projectName);
+        return countArray;
+      });
       bb.generate({
         data: {
           x: 'x',
-          json: {
-            visits: newDailyVisits.map((count: any) => count.count),
-            x: newDailyVisits.map((date: any) => formatTime(date._id)),
-          },
-          type: line(),
+          columns: [dateColumns, ...flatColumns],
           xFormat: '%Y-%m-%d',
         },
         axis: {
@@ -53,7 +60,7 @@ function DailyChart(props: IProps): React.ReactElement {
         bindto: visitChartDiv.current,
       });
     })();
-  }, [projectId, year, month]);
+  }, [selectedProjectsIds, year, month]);
   return (
     <>
       <div ref={visitChartDiv} />
@@ -69,7 +76,7 @@ function DailyChart(props: IProps): React.ReactElement {
                 <TableCell align="right">Average Stay time</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            {/* <TableBody>
               {dailyVisits.map((dailyVisit) => (
                 <TableRow
                   key={`${dailyVisit._id.year}-${dailyVisit._id.month}-${dailyVisit._id.date}`}
@@ -82,7 +89,7 @@ function DailyChart(props: IProps): React.ReactElement {
                   <TableCell align="right">{dailyVisit.count}</TableCell>
                 </TableRow>
               ))}
-            </TableBody>
+            </TableBody> */}
           </Table>
         </TableContainer>
       </Box>
