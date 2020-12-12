@@ -24,4 +24,4 @@ function IssueDetailSideBar(props: IProps): React.ReactElement {
   );
 }
 
-export default IssueDetailSideBar;
+export default React.memo(IssueDetailSideBar);
