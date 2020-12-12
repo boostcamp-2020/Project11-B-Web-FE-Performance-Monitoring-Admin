@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Checkbox, Hidden, Typography } from '@material-ui/core';
+import { Box, Hidden, Typography } from '@material-ui/core';
 
 function IssueToolbar(): React.ReactElement {
   return (
@@ -9,15 +9,10 @@ function IssueToolbar(): React.ReactElement {
       borderColor="#eee"
       px={3}
       display="flex"
+      minHeight="50px"
       justifyContent="space-between"
     >
-      <Box>
-        <Box display="flex" gridGap={5}>
-          <Box display="flex" alignItems="center">
-            <Checkbox checked={false} inputProps={{ 'aria-label': 'primary checkbox' }} />
-          </Box>
-        </Box>
-      </Box>
+      <Box />
 
       <Box display="flex" justifyContent="space-around" alignItems="center" minWidth="33%">
         <Hidden mdDown>
