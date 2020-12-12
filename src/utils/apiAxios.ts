@@ -12,7 +12,7 @@ apiAxios.interceptors.request.use((config) => {
    * @Todo token or session header insert
    */
   const newConfig = { ...config };
-  newConfig.headers.jwt = window.localStorage.getItem('token');
+  newConfig.headers.token = window.localStorage.getItem('token');
   return newConfig;
 });
 
