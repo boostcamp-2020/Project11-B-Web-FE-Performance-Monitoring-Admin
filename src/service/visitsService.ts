@@ -18,6 +18,7 @@ export default (apiRequest: AxiosInstance): IResponse => {
   const getDailyVisitsMulti = (projectIds: string[], year: number, month: number) => {
     const query = `?${qs.stringify({
       projectId: projectIds,
+      type: 'daily',
       year,
       month,
     })}`;

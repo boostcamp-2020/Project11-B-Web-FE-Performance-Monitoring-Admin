@@ -3,6 +3,7 @@ import { Box } from '@material-ui/core';
 import VisitsHeader from '../components/Visits/VisitsHeader';
 import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
+import ProjectSelector from '../components/Issues/ProjectSelector';
 
 function Visits(): React.ReactElement {
   const today = new Date();
@@ -27,13 +28,16 @@ function Visits(): React.ReactElement {
   };
 
   return (
-    <Box p={7}>
-      <VisitsHeader year={year} month={month} nextMonth={nextMonth} beforeMonth={beforeMonth} />
+    <Box p={3}>
+      <ProjectSelector />
       <Box>
-        <MonthlyChart projectId={projectId} year={year} />
-      </Box>
-      <Box>
-        <DailyChart projectId={projectId} year={year} month={month} />
+        <VisitsHeader year={year} month={month} nextMonth={nextMonth} beforeMonth={beforeMonth} />
+        <Box>
+          <MonthlyChart projectId={projectId} year={year} />
+        </Box>
+        <Box>
+          <DailyChart year={year} month={month} />
+        </Box>
       </Box>
     </Box>
   );
