@@ -9,6 +9,7 @@ export interface IResponse {
     month: number,
   ) => Promise<AxiosResponse>;
   getMonthlyVisits: (projectId: string, year: number) => Promise<AxiosResponse>;
+  getMonthlyVisitsMulti: (projectIds: string[], year: number) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {
@@ -28,9 +29,20 @@ export default (apiRequest: AxiosInstance): IResponse => {
   const getMonthlyVisits = (projectId: string, year: number) => {
     return apiRequest.get(`/api/visits/${projectId}?type=monthly&year=${year}`);
   };
+
+  const getMonthlyVisitsMulti = (projectIds: string[], year: number) => {
+    const query = `?${qs.stringify({
+      projectId: projectIds,
+      type: 'monthly',
+      year,
+    })}`;
+
+    return apiRequest.get(`/api/visits${query}`);
+  };
   return {
     getDailyVisits,
     getMonthlyVisits,
     getDailyVisitsMulti,
+    getMonthlyVisitsMulti,
   };
 };

@@ -1,39 +1,48 @@
 import React, { useEffect, useRef } from 'react';
-import bb, { line, zoom } from 'billboard.js';
+import { useSelector } from 'react-redux';
+import bb, { line } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
-import { IDailyVisit } from '../../types';
+import { IDailyVisit, IProjectCardProps } from '../../types';
 
 import service from '../../service';
+import { RootState } from '../../modules';
 
 interface IProps {
-  projectId: string;
   year: number;
-}
-
-interface ICustomDate extends IProps {
-  year: number;
-  month: number;
 }
 
 function MonthlyChart(props: IProps): React.ReactElement {
-  const { projectId, year }: IProps = props;
+  const { year }: IProps = props;
+  const projects = useSelector((state: RootState) => state.projects.projects);
+  const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const visitChartDiv = useRef(null);
   useEffect(() => {
-    const formatTime = (inputDate: ICustomDate): string => {
-      return `${inputDate.year}-${inputDate.month}`;
-    };
     (async (): Promise<void> => {
-      const monthlyRes = await service.getMonthlyVisits(projectId, year);
-      const newMonthlyVisits: IDailyVisit[] = await monthlyRes.data;
+      const monthlyRes = await service.getMonthlyVisitsMulti(selectedProjectsIds, year);
+      const newMonthlyVisits = await monthlyRes.data;
+
+      const dateColumns = newMonthlyVisits[0].map((dailyInfo: IDailyVisit) => {
+        return `${dailyInfo._id.year}-${dailyInfo._id.month}`;
+      });
+      dateColumns.unshift('x');
+      const flatColumns = newMonthlyVisits.map((dailyArray: IDailyVisit[]) => {
+        const currentProjectId = dailyArray[0]._id.projectId;
+        const countArray: (string | number)[] = dailyArray.map((dailyInfo: IDailyVisit) => {
+          return dailyInfo.count;
+        });
+        const projectObj = projects.find(
+          (project: IProjectCardProps) => project._id === currentProjectId,
+        );
+        const projectName: string = projectObj?.name as string;
+        countArray.unshift(projectName);
+        return countArray;
+      });
       bb.generate({
         data: {
           x: 'x',
-          json: {
-            visits: newMonthlyVisits.map((count: any) => count.count),
-            x: newMonthlyVisits.map((date: any) => formatTime(date._id)),
-          },
-          type: line(),
+          columns: [dateColumns, ...flatColumns],
           xFormat: '%Y-%m',
+          type: line(),
         },
         axis: {
           x: {
@@ -43,7 +52,7 @@ function MonthlyChart(props: IProps): React.ReactElement {
         bindto: visitChartDiv.current,
       });
     })();
-  }, [projectId, year]);
+  }, [selectedProjectsIds, year]);
   return (
     <>
       <div ref={visitChartDiv} />

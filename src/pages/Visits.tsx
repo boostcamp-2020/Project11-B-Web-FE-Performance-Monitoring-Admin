@@ -33,7 +33,7 @@ function Visits(): React.ReactElement {
       <Box>
         <VisitsHeader year={year} month={month} nextMonth={nextMonth} beforeMonth={beforeMonth} />
         <Box>
-          <MonthlyChart projectId={projectId} year={year} />
+          <MonthlyChart year={year} />
         </Box>
         <Box>
           <DailyChart year={year} month={month} />
