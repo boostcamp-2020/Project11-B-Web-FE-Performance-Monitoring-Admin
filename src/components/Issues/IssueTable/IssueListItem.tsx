@@ -10,7 +10,7 @@ import { IIssue } from '../../../types';
 import Chart from '../../common/IssueCrimeChart';
 
 export interface IProps {
-  issue: IIssue;
+  issue: any;
 }
 const StyledLink = styled(Link)({
   fontSize: '18px',
@@ -34,9 +34,7 @@ const useStyle = makeStyles({
 
 function IssueListItem(props: IProps): React.ReactElement {
   const { issue } = props;
-  const issueData = issue._id;
-  const issueStat = issue._stat[0];
-  const userSet = new Set([...issueStat.userIps]);
+  const issueData = issue;
   const styles = useStyle();
   return (
     <Box display="flex" fontSize="small" px={3} className={styles.issueItem}>
@@ -53,7 +51,7 @@ function IssueListItem(props: IProps): React.ReactElement {
             <Box mr={1}>
               <FontAwesomeIcon size="lg" icon={faJs} color="#f0db4f" />
             </Box>
-            <Box mr={1}>{issueData.project[0].name}</Box>
+            <Box mr={1}>{issueData.project.name}</Box>
             <Box display="flex" fontSize="small" color="textSecondary">
               <Box>
                 <AccessTime fontSize="inherit" />
@@ -69,17 +67,17 @@ function IssueListItem(props: IProps): React.ReactElement {
       <Box display="flex" justifyContent="space-around" alignItems="center" minWidth="33%">
         <Hidden mdDown>
           <Box width="240px">
-            <Chart issueId={issue._id._id} />
+            <Chart issueId={issue._id} />
           </Box>
         </Hidden>
         <Box display="flex" justifyContent="center" width="80px">
           <Typography variant="h3" color="primary">
-            {issueData.crimeIds.length}
+            {issueData.crimeCount}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center" width="80px">
           <Typography variant="h3" color="primary">
-            {userSet.size}
+            {issueData.userCount}
           </Typography>
         </Box>
       </Box>
