@@ -63,4 +63,4 @@ function IssueDetailHeader(props: IProps): React.ReactElement {
   );
 }
 
-export default IssueDetailHeader;
+export default React.memo(IssueDetailHeader);

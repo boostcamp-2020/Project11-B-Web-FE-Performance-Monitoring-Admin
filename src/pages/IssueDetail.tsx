@@ -80,4 +80,4 @@ function IssueDetail(): React.ReactElement {
   );
 }
 
-export default IssueDetail;
+export default React.memo(IssueDetail);
