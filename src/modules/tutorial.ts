@@ -54,6 +54,14 @@ const initTutorial: ITutorial = {
           '아래의 버튼을 눌러서 Project 탭으로 이동해 보세요! 확인하신 이후에 다시 사이드바에서 Tutorial을 클릭해서 돌아올 수 있습니다.',
         goToProjects: '프로젝트 페이지로 가기',
       },
+      copyDsn: {
+        description:
+          'Panopticon의 모든 프로젝트에는 당신의 App에서 데이터를 보내기 위한 고유한 주소인 DSN이 발급됩니다. 아래의 URL을 클릭해서 DSN을 클립보드로 복사해보세요.',
+        initGuide:
+          'npm install pan-opt 명령어를 이용해서 Panopticon SDK를 설치하고, 위 예시와 같이 App의 시작위치에서 초기화 해서 SDK를 적용할 수 있습니다.',
+        goNextStep:
+          '이번 튜토리얼을 위해서 저희가 미리 테스트할 App과 환경을 구성해놓았습니다. 다음 단계로 진행해서 Codepen로 이동해 보세요.',
+      },
     },
   },
 };
