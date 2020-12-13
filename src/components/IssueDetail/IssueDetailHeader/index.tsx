@@ -22,9 +22,6 @@ const useStyle = makeStyles({
 
 function IssueDetailHeader(props: IProps): React.ReactElement {
   const { issue } = props;
-  const issueData = issue._id;
-  const issueStat = issue._stat[0];
-  const userSet = new Set([...issueStat.userIps]);
   const styles = useStyle();
   return (
     <Box
@@ -38,25 +35,25 @@ function IssueDetailHeader(props: IProps): React.ReactElement {
     >
       <Box>
         <Box display="flex" gridGap={10}>
-          <Typography variant="h2">{issueData.type}</Typography>
-          <Box>{`${issueData.stack.function}(${issueData.stack.filename}) `}</Box>
+          <Typography variant="h2">{issue.type}</Typography>
+          {/* <Box>{`${issue.stack.function}(${issue.stack.filename}) `}</Box> */}
         </Box>
         <Box fontSize="14px">
-          <Typography variant="subtitle1">{issueData.message}</Typography>
+          <Typography variant="subtitle1">{issue.message}</Typography>
         </Box>
         <Box display="flex">
           <Box mr={1}>
             <FontAwesomeIcon size="lg" icon={faJs} color="#f0db4f" />
           </Box>
-          <Box mr={1}>{issueData.project[0].name}</Box>
+          <Box mr={1}>{issue.project.name}</Box>
         </Box>
       </Box>
       <Box display="flex" minWidth="300px" alignItems="center">
         <Box mr={1}>
-          <StatBox name="EVENTS" color="primary.main" count={issueData.crimeIds.length} />
+          <StatBox name="EVENTS" color="primary.main" count={issue.crimeCount} />
         </Box>
         <Box mr={1}>
-          <StatBox name="USERS" color="primary.main" count={userSet.size} />
+          <StatBox name="USERS" color="primary.main" count={issue.userCount} />
         </Box>
       </Box>
     </Box>

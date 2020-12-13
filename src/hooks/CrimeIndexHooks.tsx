@@ -22,7 +22,7 @@ const useCrimeIndex = () => {
     setCrimeIndex((prevIndex: number) => prevIndex + 1);
   };
   const setCrimeById = (crimeId: string) => {
-    const targetCrimeIndex = issue._id.crimeIds.indexOf(crimeId);
+    const targetCrimeIndex = issue.crimeIds.indexOf(crimeId);
     setCrimeIndex(targetCrimeIndex);
     setTabIndex(0);
   };

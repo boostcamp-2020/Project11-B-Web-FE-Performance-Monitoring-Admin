@@ -21,66 +21,57 @@ type IssueAction = ReturnType<typeof setIssueAction>;
  * dummy data를 어떻게 하지....???
  */
 const issueDummy = {
-  _id: {
+  _id: '',
+  message: '',
+  type: '',
+  project: { _id: '', name: '' },
+  crimeIds: [],
+  lastCrime: {
     _id: '',
-    message: '',
-    type: '',
-    project: [
-      {
-        _id: '',
-        users: [''],
-        isDeleted: false,
-        name: '',
-        description: '',
-        owner: '',
-        _v: '',
-      },
-    ],
-    stack: {
-      columnNo: '',
-      lineNo: '',
-      function: '',
-      filename: '',
-    },
-    lastCrime: {
-      _id: '',
-      meta: {
-        browser: {
-          name: '',
-          version: '',
-        },
-        os: {
-          name: '',
-          version: '',
-        },
-        url: '',
-        ip: '',
-      },
-      message: '',
-      type: '',
-      stack: [
-        {
-          _id: '',
-          columnNo: '',
-          lineNo: '',
-          function: '',
-          filename: '',
-        },
-      ],
-      occuredAt: '',
-      sdk: {
+    meta: {
+      browser: {
         name: '',
         version: '',
       },
+      os: {
+        name: '',
+        version: '',
+      },
+      url: '',
+      ip: '',
     },
-
-    crimeIds: [],
+    type: '',
+    message: '',
+    sdk: {
+      name: '',
+      version: '',
+    },
+    stack: [
+      {
+        _id: '',
+        columnNo: '',
+        lineNo: '',
+        filename: '',
+        function: '',
+      },
+    ],
+    occuredAt: '',
+    projectId: '',
+    __v: 0,
   },
-  _stat: [
-    {
-      userIps: [],
-    },
-  ],
+  stack: {
+    columnNo: '',
+    lineNo: '',
+    filename: '',
+    function: '',
+  },
+  occuredAt: '',
+  crimeCount: 0,
+  userCount: 0,
+  sdk: {
+    name: '',
+    version: '',
+  },
 };
 
 function issue(state: IIssue = issueDummy, action: IssueAction): IIssue {

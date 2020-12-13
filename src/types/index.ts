@@ -9,11 +9,11 @@ export interface MatchParams {
 
 export interface IProject {
   _id: string;
-  users: string[];
+  users?: string[];
   name: string;
-  description: string;
-  owner: string;
-  __v?: any;
+  description?: string;
+  owner?: string;
+  __v?: number;
 }
 
 export interface IStack {
@@ -46,26 +46,24 @@ export interface ICrime {
     name: string;
     version: string;
   };
-  __v?: any;
+  __v?: number;
 }
 
 export interface IIssue {
-  _id: {
-    _id: string;
-    message: string;
-    type: string;
-    project: IProject[];
-    crimeIds: string[];
-    lastCrime: ICrime;
-    stack: IStack;
-    occuredAt?: Date;
-    sdk?: {
-      name: string;
-      version: string;
-    };
+  _id: string;
+  message: string;
+  type: string;
+  project: IProject;
+  crimeIds: string[];
+  lastCrime: ICrime;
+  stack: IStack;
+  occuredAt: string;
+  crimeCount: number;
+  userCount: number;
+  sdk?: {
+    name: string;
+    version: string;
   };
-
-  _stat: any;
 }
 
 export interface IUser {
