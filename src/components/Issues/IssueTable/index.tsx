@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 
 import Pagination from '@material-ui/lab/Pagination';
 import { Box, Button } from '@material-ui/core';
@@ -12,6 +12,7 @@ import service from '../../../service';
 import { IIssue } from '../../../types';
 import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
+import useInterval from '../../../hooks/UseInterval';
 
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
@@ -33,11 +34,11 @@ function IssueTable(): React.ReactElement {
       ['project Name', '_id', 'message', 'type', 'lastOccuredAt'],
       ...issues.map((row) => {
         return [
-          row._id.project[0].name,
-          row._id._id,
-          row._id.message,
-          row._id.type,
-          new Date(row._id.lastCrime.occuredAt).toISOString(),
+          row.project.name,
+          row._id,
+          row.message,
+          row.type,
+          new Date(row.occuredAt).toISOString(),
         ];
       }),
     ];
@@ -45,6 +46,7 @@ function IssueTable(): React.ReactElement {
   };
 
   const getData = useCallback(async () => {
+    if (selectedProjectsIds[0] === undefined) return;
     const query = `?${qs.stringify({
       page,
       projectId: selectedProjectsIds,
@@ -57,13 +59,12 @@ function IssueTable(): React.ReactElement {
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  }, [page, selectedProjectsIds]);
-  const RenderIssue = useMemo(() => issues, [issues]);
+  }, [selectedProjectsIds, page]);
+  useInterval(() => getData(), 10000);
+
   useEffect(() => {
-    (async () => {
-      getData();
-    })();
-  }, [page, selectedProjectsIds, getData]);
+    getData();
+  }, [selectedProjectsIds, page, getData]);
   return (
     <Box my={1} display="flex" flexDirection="column">
       <Box flexGrow={1}>
@@ -85,8 +86,8 @@ function IssueTable(): React.ReactElement {
             borderRadius=".2rem"
           >
             <IssueToolbar />
-            {RenderIssue.map((issue) => (
-              <IssueListItem key={issue._id._id} issue={issue} />
+            {issues.map((issue) => (
+              <IssueListItem key={issue._id} issue={issue} />
             ))}
             <Box display="flex" flexDirection="column" alignItems="center" p={1}>
               <Pagination count={totalPage} page={page} onChange={handlePageChange} />
