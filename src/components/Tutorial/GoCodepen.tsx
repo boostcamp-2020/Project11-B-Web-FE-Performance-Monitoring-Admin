@@ -1,29 +1,32 @@
 import React from 'react';
+import { Box, Button, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { Box, Typography } from '@material-ui/core';
-import ProjectDSN from '../NewProject/ProjectDSN';
 import BackNextButtons from '../NewProject/BackNextButtons';
 import { RootState } from '../../modules';
 
 interface IProps {
-  dsn: string;
   handleBack: () => void;
   handleNext: () => void;
 }
 
 function NewProjectDSN(props: IProps): React.ReactElement {
-  const { dsn, handleBack, handleNext } = props;
+  const { handleBack, handleNext } = props;
   const tutorial = useSelector((state: RootState) => state.tutorial);
 
   return (
-    <>
-      <Typography>{tutorial.text.korean.copyDsn.description}</Typography>
+    <Box display="flex" flexDirection="column">
+      <Typography>{tutorial.text.korean.goCodepen.description}</Typography>
       <Box p={2}>
-        <ProjectDSN dsn={dsn} />
-        <Typography>{tutorial.text.korean.copyDsn.initGuide}</Typography>
+        <a
+          href="https://codesandbox.io/s/misty-glitter-hw58z?file=/src/index.js"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Button variant="contained">{tutorial.text.korean.goCodepen.buttonText}</Button>
+        </a>
       </Box>
       <BackNextButtons handleBack={handleBack} handleNext={handleNext} />
-    </>
+    </Box>
   );
 }
 
