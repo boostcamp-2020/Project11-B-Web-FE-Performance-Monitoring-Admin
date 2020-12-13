@@ -21,21 +21,23 @@ function Tutorial(): React.ReactElement {
     dispatch(setStep(tutorial.step - 1));
   };
 
+  const { labels } = tutorial.text.korean;
+
   const stepProps = [
     {
-      label: 'Create a test project for the tutorial',
+      label: labels.createProject,
       content: <CreateProject handleBack={handleBack} handleNext={handleNext} />,
     },
     {
-      label: 'Copy your dsn by clicking on the button',
+      label: labels.copyDsn,
       content: <CopyDSN dsn={tutorial.dsn} handleBack={handleBack} handleNext={handleNext} />,
     },
     {
-      label: 'Head over to Codepen to make some errors',
+      label: labels.goCodepen,
       content: <GoCodepen handleBack={handleBack} handleNext={handleNext} />,
     },
     {
-      label: 'Check how your erros got collected in Issues & Discover',
+      label: labels.checkResults,
       content: <CheckResults handleBack={handleBack} handleNext={handleNext} />,
     },
   ];
