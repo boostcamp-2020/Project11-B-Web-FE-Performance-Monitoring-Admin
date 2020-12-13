@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import _ from 'lodash';
 
+import { setSelectedProjectsIdsAction } from './projects';
 import service from '../service';
 
 interface ITutorial {
@@ -25,6 +26,7 @@ export const addTestProject = () => async (dispatch: Dispatch) => {
   });
   dispatch(setIsProjectCreated(true));
   dispatch(setDsn(`http://panopticon.gq/api/sdk/${res.data.projectId}`));
+  dispatch(setSelectedProjectsIdsAction([res.data.projectId]));
 };
 
 type TutorialAction =
@@ -62,8 +64,14 @@ const initTutorial: ITutorial = {
       },
       goCodepen: {
         description:
-          '이번 튜토리얼을 위해서 저희가 미리 테스트할 App과 환경을 구성해놓았습니다. 아래의 버튼을 클릭해서 CodeSandbox로 이동해 보세요.',
+          '이번 튜토리얼을 위해서 저희가 미리 테스트할 App과 환경을 구성해놓았습니다. 아래의 버튼을 클릭해서 CodeSandbox로 이동해서 에러를 마음껏 발생시켜 보세요!',
         buttonText: 'CodeSandbox 가기',
+      },
+      checkResult: {
+        description:
+          '에러를 발생시키고 오셨나요? Panopticon에서 수집한 데이터와 통계를 Issues와 Discover 페이지에서 확인해보세요.',
+        issuesButton: 'Issues 페이지로',
+        discoverButton: 'Discover 페이지로',
       },
     },
   },
