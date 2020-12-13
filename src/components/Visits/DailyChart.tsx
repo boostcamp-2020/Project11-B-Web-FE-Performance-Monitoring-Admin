@@ -10,11 +10,10 @@ import service from '../../service';
 interface IProps {
   year: number;
   month: number;
-  setFirstSelectedCounts: (newDailyVisits: IDailyVisit[]) => void;
 }
 
 function DailyChart(props: IProps): React.ReactElement {
-  const { year, month, setFirstSelectedCounts }: IProps = props;
+  const { year, month }: IProps = props;
   const projects = useSelector((state: RootState) => state.projects.projects);
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const visitChartDiv = useRef(null);
@@ -22,7 +21,6 @@ function DailyChart(props: IProps): React.ReactElement {
     (async (): Promise<void> => {
       const dailyRes = await service.getDailyVisits(selectedProjectsIds, year, month);
       const newDailyVisits = await dailyRes.data;
-      setFirstSelectedCounts(newDailyVisits[0]);
       drawVisitsChart({ projects, newVisits: newDailyVisits, visitChartDiv, type: 'daily' });
     })();
   }, [selectedProjectsIds, year, month]);
