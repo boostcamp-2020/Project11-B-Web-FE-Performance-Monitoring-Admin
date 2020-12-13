@@ -20,7 +20,16 @@ function CrimeTags(props: IProps): React.ReactElement {
 
   const getTags = (curr: ICrime) => {
     const { browser, os, url, ip } = curr.meta;
+    const customTags = Object.keys(curr.meta)
+      .filter((key) => {
+        if (key === 'browser' || key === 'os' || key === 'ip' || key === 'url') return false;
+        return true;
+      })
+      .map((key) => {
+        return { name: key, content: curr.meta[`${key}`] };
+      });
     return [
+      ...customTags,
       { name: 'browser.name', content: browser.name },
       { name: 'browser', content: `${browser.name} ${browser.version}` },
       { name: 'os.name', content: os.name },
