@@ -13,6 +13,7 @@ import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
+import NotesIcon from '@material-ui/icons/Notes';
 import { RootState } from '../../../modules';
 import useStyle from './styles';
 import { logoutUser } from '../../../modules/user';
@@ -188,6 +189,12 @@ function Sidebar(): React.ReactElement {
           <Box display="flex" alignItems="center" px={3}>
             <HighlightIcon />
             <Box px={3}>Discover</Box>
+          </Box>
+        </Tab>
+        <Tab to="/analysis" activeClassName={style.activeStyle}>
+          <Box display="flex" alignItems="center" px={3}>
+            <NotesIcon />
+            <Box px={3}>Analysis</Box>
           </Box>
         </Tab>
         <Tab to="/alerts" activeClassName={style.activeStyle}>

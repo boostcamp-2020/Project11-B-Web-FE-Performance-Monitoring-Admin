@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Checkbox, Button, Typography } from '@material-ui/core';
+import { Box, Hidden, Typography } from '@material-ui/core';
 
 function IssueToolbar(): React.ReactElement {
   return (
@@ -9,43 +9,25 @@ function IssueToolbar(): React.ReactElement {
       borderColor="#eee"
       px={3}
       display="flex"
+      minHeight="50px"
       justifyContent="space-between"
     >
-      <Box>
-        <Box display="flex" gridGap={5}>
-          <Box display="flex" alignItems="center">
-            <Checkbox checked={false} inputProps={{ 'aria-label': 'primary checkbox' }} />
+      <Box />
+
+      <Box display="flex" justifyContent="space-around" alignItems="center" minWidth="33%">
+        <Hidden mdDown>
+          <Box width="240px" display="flex" justifyContent="center">
+            <Typography variant="h4" color="textSecondary">
+              Graph
+            </Typography>
           </Box>
-          <Box display="flex" alignItems="center" fontSize="10px">
-            <Button variant="outlined">
-              <Box component="span" fontSize="0.625rem" fontWeight={900}>
-                Resolve
-              </Box>
-            </Button>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Button variant="outlined">
-              <Box component="span" fontSize="0.625rem" fontWeight={900}>
-                Ignore
-              </Box>
-            </Button>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Button variant="outlined">
-              <Box component="span" fontSize="0.625rem" fontWeight={900}>
-                Merge
-              </Box>
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-      <Box display="flex" justifyContent="space-around" minWidth="300px">
-        <Box display="flex" alignItems="center">
+        </Hidden>
+        <Box display="flex" justifyContent="center" width="80px">
           <Typography variant="h4" color="textSecondary">
             Events
           </Typography>
         </Box>
-        <Box display="flex" alignItems="center">
+        <Box display="flex" justifyContent="center" width="80px">
           <Typography variant="h4" color="textSecondary">
             Users
           </Typography>
