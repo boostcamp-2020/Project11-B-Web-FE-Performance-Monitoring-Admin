@@ -194,19 +194,25 @@ function Sidebar(): React.ReactElement {
         <Tab to="/alerts" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <NotesIcon />
-            <Box px={3}>alerts</Box>
+            <Box px={3}>Alerts</Box>
           </Box>
         </Tab>
         <Tab to="/visits" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <TimelineIcon />
-            <Box px={3}>visit</Box>
+            <Box px={3}>Visit</Box>
           </Box>
         </Tab>
         <Tab to="/analysis" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <NotesIcon />
             <Box px={3}>Analysis</Box>
+          </Box>
+        </Tab>
+        <Tab to="/tutorial" activeClassName={style.activeStyle}>
+          <Box display="flex" alignItems="center" px={3}>
+            <NotesIcon />
+            <Box px={3}>Tutorial</Box>
           </Box>
         </Tab>
       </Box>
