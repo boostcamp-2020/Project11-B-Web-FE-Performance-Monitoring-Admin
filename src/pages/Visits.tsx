@@ -11,18 +11,18 @@ function Visits(): React.ReactElement {
   const [month, setMonth] = useState(today.getMonth() + 1);
   const nextMonth = () => {
     if (month === 12) {
-      setYear(year + 1);
-      setMonth(1);
+      setYear(() => year + 1);
+      setMonth(() => 1);
     } else {
-      setMonth(month + 1);
+      setMonth(() => month + 1);
     }
   };
   const beforeMonth = () => {
     if (month === 1) {
-      setYear(year - 1);
-      setMonth(12);
+      setYear(() => year - 1);
+      setMonth(() => 12);
     } else {
-      setMonth(month - 1);
+      setMonth(() => month - 1);
     }
   };
   return (
@@ -30,12 +30,8 @@ function Visits(): React.ReactElement {
       <ProjectSelector />
       <Box>
         <VisitsHeader year={year} month={month} nextMonth={nextMonth} beforeMonth={beforeMonth} />
-        <Box>
-          <MonthlyChart year={year} />
-        </Box>
-        <Box>
-          <DailyChart year={year} month={month} />
-        </Box>
+        <MonthlyChart year={year} />
+        <DailyChart year={year} month={month} />
       </Box>
     </Box>
   );

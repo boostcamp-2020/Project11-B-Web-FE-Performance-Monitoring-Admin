@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import 'billboard.js/dist/billboard.css';
 
 import { RootState } from '../../modules';
-import { IDailyVisit } from '../../types';
 import drawVisitsChart from '../../utils/visitUtil';
 import service from '../../service';
 
@@ -23,7 +22,7 @@ function DailyChart(props: IProps): React.ReactElement {
       const newDailyVisits = await dailyRes.data;
       drawVisitsChart({ projects, newVisits: newDailyVisits, visitChartDiv, type: 'daily' });
     })();
-  }, [selectedProjectsIds, year, month]);
+  }, [selectedProjectsIds, month]);
   return (
     <>
       <div ref={visitChartDiv} />

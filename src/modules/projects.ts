@@ -34,14 +34,14 @@ const initialState: IProjectsModule = {
 function projects(state: IProjectsModule = initialState, action: ProjectsAction): IProjectsModule {
   switch (action.type) {
     case INITIALIZE_PROJECTS: {
-      const copiedSelectedProjects = _.cloneDeep(state.selectedProjectsIds);
       const newProjects = {
         projects: action.projects,
         selectedProjectsIds:
-          copiedSelectedProjects[0] === undefined
+          state.selectedProjectsIds[0] === undefined
             ? [action.projects[0]._id]
-            : copiedSelectedProjects,
+            : state.selectedProjectsIds,
       };
+
       return newProjects;
     }
     case SET_SELECTED_PROJECTS_IDS: {
