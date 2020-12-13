@@ -44,7 +44,12 @@ function CreateProject(props: IProps): React.ReactElement {
           </Box>
         </Box>
       )}
-      <BackNextButtons disableBack handleBack={handleBack} handleNext={handleNext} />
+      <BackNextButtons
+        disableBack
+        disableNext={!tutorial.isProjectCreated}
+        handleBack={handleBack}
+        handleNext={handleNext}
+      />
     </Box>
   );
 }
