@@ -12,6 +12,7 @@ import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChildCareIcon from '@material-ui/icons/ChildCare';
 import clsx from 'clsx';
 import NotesIcon from '@material-ui/icons/Notes';
 import { RootState } from '../../../modules';
@@ -211,7 +212,7 @@ function Sidebar(): React.ReactElement {
         </Tab>
         <Tab to="/tutorial" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
-            <NotesIcon />
+            <ChildCareIcon />
             <Box px={3}>Tutorial</Box>
           </Box>
         </Tab>

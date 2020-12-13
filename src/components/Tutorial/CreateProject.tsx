@@ -14,7 +14,6 @@ interface IProps {
 
 function CreateProject(props: IProps): React.ReactElement {
   const { handleBack, handleNext } = props;
-  const testProjectButtonText = 'Create a test project!';
   const tutorial = useSelector((state: RootState) => state.tutorial);
   const dispatch = useDispatch();
 
@@ -30,7 +29,7 @@ function CreateProject(props: IProps): React.ReactElement {
       <Typography>{textContent.description}</Typography>
       <Box p={2}>
         <Button variant="contained" disabled={tutorial.isProjectCreated} onClick={handleClick}>
-          {testProjectButtonText}
+          {textContent.testProjectButtonText}
         </Button>
       </Box>
       {tutorial.isProjectCreated && (

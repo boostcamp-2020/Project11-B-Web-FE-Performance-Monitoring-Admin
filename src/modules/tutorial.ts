@@ -50,6 +50,7 @@ const initTutorial: ITutorial = {
         welcome: '안녕하세요, Panopticon의 튜토리얼에 오신 것을 환영합니다!',
         description:
           '당신의 App에서 발생한 에러와 퍼포먼스 데이터는 Panopticon에서 프로젝트 단위로 관리됩니다. 아래 버튼을 클릭해서 테스트 프로젝트를 만들어 보세요!',
+        testProjectButtonText: '테스트 프로젝트 생성',
         congrats:
           '축하합니다! 금방 프로젝트를 생성하셨어요. Project 페이지로 이동해서 새로운 프로젝트가 잘 생성되었는지 확인할 수 있습니다.',
         checkResult:
