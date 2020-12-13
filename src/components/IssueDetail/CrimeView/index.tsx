@@ -55,7 +55,8 @@ function CrimeView(props: IProps): React.ReactElement {
 
   const getTagDetailContents = (curr: ICrime) => {
     const { browser, os, ip } = curr.meta;
-    return [
+
+    let tagData = [
       {
         title: 'USER',
         contents: [{ label: 'IP Address', content: convertIP(ip) }],
@@ -82,6 +83,20 @@ function CrimeView(props: IProps): React.ReactElement {
         ],
       },
     ];
+    const customeTags: any = { title: 'CUSTOM TAGS', contents: [] };
+    Object.keys(curr.meta).forEach((key) => {
+      if (key === 'browser' || key === 'os' || key === 'ip' || key === 'url') return;
+      const customTag = { label: key, content: curr.meta[`${key}`] };
+      if (key === 'user') {
+        tagData[0].contents.push(customTag);
+      } else {
+        customeTags.contents.push(customTag);
+      }
+    });
+    if (customeTags.contents[0]) {
+      tagData = [...tagData, customeTags];
+    }
+    return tagData;
   };
 
   return crime === undefined ? (
