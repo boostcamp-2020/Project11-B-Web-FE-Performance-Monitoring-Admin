@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Stepper, Step, StepLabel, StepContent } from '@material-ui/core';
 
+import { useHistory } from 'react-router-dom';
 import CreateProject from '../components/Tutorial/CreateProject';
 import CopyDSN from '../components/Tutorial/CopyDSN';
 import GoCodepen from '../components/Tutorial/GoCodepen';
@@ -12,6 +13,7 @@ import { setStep } from '../modules/tutorial';
 function Tutorial(): React.ReactElement {
   const tutorial = useSelector((state: RootState) => state.tutorial);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleNext = () => {
     dispatch(setStep(tutorial.step + 1));
@@ -19,6 +21,10 @@ function Tutorial(): React.ReactElement {
 
   const handleBack = () => {
     dispatch(setStep(tutorial.step - 1));
+  };
+
+  const handleFinish = () => {
+    history.push('/projects');
   };
 
   const { labels } = tutorial.text.korean;
@@ -38,7 +44,7 @@ function Tutorial(): React.ReactElement {
     },
     {
       label: labels.checkResults,
-      content: <CheckResults handleBack={handleBack} handleNext={handleNext} />,
+      content: <CheckResults handleBack={handleBack} handleNext={handleFinish} />,
     },
   ];
 
