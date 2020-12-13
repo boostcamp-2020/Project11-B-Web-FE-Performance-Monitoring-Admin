@@ -36,7 +36,7 @@ function IssueDetail(): React.ReactElement {
     handleChangeTab,
   ] = useCrimeIndex();
 
-  const issueId = issue?._id._id;
+  const issueId = issue._id;
   return (
     <Box flexGrow={1}>
       <Grid container>
@@ -56,7 +56,7 @@ function IssueDetail(): React.ReactElement {
               <TabPanel value={tabIndex} index={0}>
                 {issue && (
                   <CrimeView
-                    crimeIds={issue._id.crimeIds}
+                    crimeIds={issue.crimeIds}
                     crimeIndex={crimeIndex}
                     handleBack={handleBack}
                     handleNext={handleNext}
@@ -80,4 +80,4 @@ function IssueDetail(): React.ReactElement {
   );
 }
 
-export default IssueDetail;
+export default React.memo(IssueDetail);

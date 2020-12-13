@@ -191,6 +191,12 @@ function Sidebar(): React.ReactElement {
             <Box px={3}>Discover</Box>
           </Box>
         </Tab>
+        <Tab to="/alerts" activeClassName={style.activeStyle}>
+          <Box display="flex" alignItems="center" px={3}>
+            <NotesIcon />
+            <Box px={3}>alerts</Box>
+          </Box>
+        </Tab>
         <Tab to="/visits" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
             <TimelineIcon />
