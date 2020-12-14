@@ -1,11 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../modules';
-
-import { setSelectedPeriodAction } from '../../modules/projects';
+import { setSelectedPeriodAction } from '../../modules/filters';
 import { IPeriod } from '../../types';
 
 const useStyles = makeStyles(() =>
@@ -35,7 +33,6 @@ function PeriodSelector(): React.ReactElement {
   const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const newSelectedPeriod = event.target.value as string;
     dispatch(setSelectedPeriodAction(newSelectedPeriod));
-    console.log(selectedPeriod);
   };
 
   return (

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import _ from 'lodash';
 
-import { setSelectedProjectsIdsAction } from './projects';
+import { setSelectedProjectsIdsAction } from './filters';
 import service from '../service';
 
 interface ITutorial {

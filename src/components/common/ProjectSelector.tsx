@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormControl, InputLabel, Select, Chip, MenuItem } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
-import { initializeProjects, setSelectedProjectsIdsAction } from '../../modules/projects';
+import { initializeProjects, setSelectedProjectsIdsAction } from '../../modules/filters';
 import { RootState } from '../../modules';
 
 const useStyles = makeStyles(() =>
