@@ -7,6 +7,7 @@ import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
 import { RootState } from '../../../modules';
+import useProgress from '../../../hooks/ProgressHooks';
 
 interface IProps {
   period: string;
@@ -18,17 +19,19 @@ function ShareCharts(props: IProps): React.ReactElement {
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
-
+  const [showProgress, displayProgress, hideProgress] = useProgress();
   const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
 
   useEffect(() => {
     (async () => {
+      displayProgress();
       const res = await service.getSharesData({
         projectIds: selectedProjects,
         type: 'recent',
         period,
         filters: filterQuery,
       });
+      hideProgress();
       setColumns(res.data);
     })();
   }, [selectedProjects, period, filterQuery]);
@@ -95,11 +98,11 @@ function ShareCharts(props: IProps): React.ReactElement {
     ];
   };
 
-  return columns === undefined ? (
+  return showProgress ? (
     <Progress />
   ) : (
     <Box>
-      {selectedProjects.length > 0 && (
+      {selectedProjects.length > 0 && columns !== undefined && (
         <Box>
           <Tabs value={currTab} onChange={handleChange}>
             {getPieChartInputs(columns).map((input, index) => (
