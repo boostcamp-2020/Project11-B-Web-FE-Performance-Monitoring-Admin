@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import VisitsHeader from '../components/Visits/VisitsHeader';
 import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
 import ProjectSelector from '../components/Issues/ProjectSelector';
+import ChartFrame from '../components/common/ChartFrame';
 
 function Visits(): React.ReactElement {
   const today = new Date();
@@ -32,8 +33,22 @@ function Visits(): React.ReactElement {
       <ProjectSelector />
       <Box>
         <VisitsHeader year={year} month={month} nextMonth={nextMonth} beforeMonth={beforeMonth} />
-        <MonthlyChart year={year} />
-        <DailyChart year={year} month={month} />
+        <Box mb={5}>
+          <Typography variant="h2" id="tableTitle" component="span">
+            월별 방문자 수
+          </Typography>
+          <ChartFrame>
+            <MonthlyChart year={year} />
+          </ChartFrame>
+        </Box>
+        <Box>
+          <Typography variant="h2" id="tableTitle" component="span">
+            일별 방문자 수
+          </Typography>
+          <ChartFrame>
+            <DailyChart year={year} month={month} />
+          </ChartFrame>
+        </Box>
       </Box>
     </Box>
   );
