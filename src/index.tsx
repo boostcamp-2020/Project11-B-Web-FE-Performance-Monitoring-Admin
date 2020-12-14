@@ -12,7 +12,12 @@ import rootReducer from './modules';
 import App from './App';
 import GlobalTheme from './globalStyle';
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
+const middleWares =
+  process.env.NODE_ENV === 'development'
+    ? composeWithDevTools(applyMiddleware(ReduxThunk, logger))
+    : applyMiddleware(ReduxThunk);
+
+const store = createStore(rootReducer, middleWares);
 
 ReactDOM.render(
   <React.StrictMode>
