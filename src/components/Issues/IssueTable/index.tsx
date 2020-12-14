@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Pagination from '@material-ui/lab/Pagination';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Paper } from '@material-ui/core';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { useSelector } from 'react-redux';
 import TimerBtn from '../../common/TimerBtn';
@@ -75,7 +75,7 @@ function IssueTable(): React.ReactElement {
             <TimerBtn action={getData} count={5} />
           </Box>
         </Box>
-        <Box>
+        <Paper elevation={1}>
           <Box
             display="flex"
             flexDirection="column"
@@ -90,7 +90,7 @@ function IssueTable(): React.ReactElement {
               <Pagination count={totalPage} page={page} onChange={handlePageChange} />
             </Box>
           </Box>
-        </Box>
+        </Paper>
       </Box>
     </Box>
   );
