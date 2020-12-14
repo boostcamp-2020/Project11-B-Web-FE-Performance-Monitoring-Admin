@@ -19,18 +19,18 @@ function Tag(props: IProps): React.ReactElement {
           {meta[0].name} {`${((meta[0].count / totalCount) * 100).toFixed(0)}%`}
         </Box>
       </Box>
-      {meta.map((info, i) => {
-        return (
-          <Box>
+      <Box>
+        {meta.map((info, i) => {
+          return (
             <Span
               name={info.name}
               count={info.count}
               color={colors[i]}
               percent={`${((info.count / totalCount) * 100).toFixed(1)}%`}
             />
-          </Box>
-        );
-      })}
+          );
+        })}
+      </Box>
     </Box>
   );
 }
