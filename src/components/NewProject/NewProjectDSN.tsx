@@ -4,17 +4,17 @@ import ProjectDSN from './ProjectDSN';
 import BackNextButtons from './BackNextButtons';
 
 interface IProps {
-  dsn: string;
+  projectId: string;
   handleBack: () => void;
   handleNext: () => void;
 }
 
 function NewProjectDSN(props: IProps): React.ReactElement {
-  const { dsn, handleBack, handleNext } = props;
+  const { projectId, handleBack, handleNext } = props;
 
   return (
     <>
-      <ProjectDSN dsn={dsn} />
+      <ProjectDSN projectId={projectId} />
       <BackNextButtons disableBack handleBack={handleBack} handleNext={handleNext} />
     </>
   );

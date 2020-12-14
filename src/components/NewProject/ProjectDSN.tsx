@@ -6,10 +6,6 @@ import { Box, Button, Typography, styled } from '@material-ui/core';
 import CopyClipboardBox from '../common/CopyClipboardBox';
 import service from '../../service';
 
-interface IProps {
-  dsn: string;
-}
-
 const LeftPaddingButton = styled(Button)({
   marginLeft: '10px',
 });
@@ -24,8 +20,14 @@ const dsn = '${dsn}'
 Panopticon.init(dsn);`;
 };
 
+interface IProps {
+  projectId: string;
+}
+
 function NewProjectDSN(props: IProps): React.ReactElement {
-  const { dsn } = props;
+  const { projectId } = props;
+
+  const dsn = `http://panopticon.gq/api/sdk/${projectId}`;
 
   const congratsText =
     '축하합니다! 새로운 프로젝트가 생성되었어요. 아래에서 프로젝트에 부여된 고유한 주소인 DSN을 확인할 수 있습니다.';
@@ -34,7 +36,7 @@ function NewProjectDSN(props: IProps): React.ReactElement {
   const createSampleText = '샘플 데이터 생성';
 
   const handleSampleCreate = () => {
-    service.addSampleCrimes(dsn);
+    service.addSampleCrimes(projectId);
   };
 
   return (
