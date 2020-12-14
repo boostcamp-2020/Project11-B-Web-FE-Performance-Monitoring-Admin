@@ -11,10 +11,9 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-import service from '../../service';
 import arrayToCSV from '../../utils/arrayToCSV';
 
-interface IPageMove {
+export interface IPageMove {
   _id: {
     prevLocation: string;
     presentLocation: string;
@@ -43,9 +42,6 @@ function SessionTable(props: IProps): React.ReactElement {
   return (
     <Box my={3}>
       <Box mb={1} display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="h3" id="tableTitle" component="span">
-          페이지간 이동 추이
-        </Typography>
         <Button
           size="small"
           color="primary"

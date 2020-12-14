@@ -21,16 +21,13 @@ interface IDuration {
   count: number;
 }
 interface IProps {
-  durationData: IDuration[];
+  pageDurationData: IDuration[];
 }
 function SessionTable(props: IProps): React.ReactElement {
-  const { durationData } = props;
+  const { pageDurationData } = props;
 
   return (
-    <Box my={3}>
-      <Typography variant="h3" id="tableTitle" component="div">
-        페이지별 체류시간
-      </Typography>
+    <Box mb={3}>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -46,8 +43,8 @@ function SessionTable(props: IProps): React.ReactElement {
             </TableRow>
           </TableHead>
           <TableBody>
-            {durationData &&
-              durationData.map((row: IDuration) => (
+            {pageDurationData &&
+              pageDurationData.map((row: IDuration) => (
                 <TableRow key={row._id}>
                   <TableCell component="th" scope="row" align="center">
                     {row._id}

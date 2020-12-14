@@ -32,9 +32,6 @@ function DailyDurationTable(props: IProps): React.ReactElement {
   return (
     <Box my={3}>
       <Box my={3}>
-        <Typography variant="h3" id="tableTitle" component="div">
-          일별 체류시간
-        </Typography>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>

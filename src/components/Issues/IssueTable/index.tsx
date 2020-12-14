@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Pagination from '@material-ui/lab/Pagination';
 import { Box, Button } from '@material-ui/core';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import qs from 'querystring';
 import { useSelector } from 'react-redux';
 import TimerBtn from '../../common/TimerBtn';
 import IssueToolbar from './IssueToolbar';
@@ -14,7 +13,11 @@ import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
 import useInterval from '../../../hooks/UseInterval';
 
-function IssueTable(): React.ReactElement {
+interface IProps {
+  period: string;
+}
+function IssueTable(props: IProps): React.ReactElement {
+  const { period } = props;
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
 
@@ -47,11 +50,8 @@ function IssueTable(): React.ReactElement {
 
   const getData = useCallback(async () => {
     if (selectedProjectsIds[0] === undefined) return;
-    const query = `?${qs.stringify({
-      page,
-      projectId: selectedProjectsIds,
-    })}`;
-    const res = await service.getIssues(query);
+
+    const res = await service.getIssues(selectedProjectsIds, page, period);
     if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
@@ -59,7 +59,7 @@ function IssueTable(): React.ReactElement {
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  }, [selectedProjectsIds, page]);
+  }, [selectedProjectsIds, page, period]);
   useInterval(() => getData(), 10000);
 
   useEffect(() => {
