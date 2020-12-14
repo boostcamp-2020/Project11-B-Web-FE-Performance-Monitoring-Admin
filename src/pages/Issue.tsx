@@ -6,14 +6,12 @@ import FilterPage from '../components/layout/FilterPage';
 
 function Issue(): React.ReactElement {
   return (
-    <>
-      <FilterPage>
-        <Box pt={3}>
-          <IssueHeader />
-          <IssueTable />
-        </Box>
-      </FilterPage>
-    </>
+    <FilterPage>
+      <Box pt={3}>
+        <IssueHeader />
+        <IssueTable />
+      </Box>
+    </FilterPage>
   );
 }
 
