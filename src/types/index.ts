@@ -39,6 +39,7 @@ export interface ICrime {
     };
     url: string;
     ip: string;
+    [x: string]: any;
   };
   stack: IStack[];
   occuredAt: string;
