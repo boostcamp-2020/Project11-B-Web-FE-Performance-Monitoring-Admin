@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, styled } from '@material-ui/core';
+import { Box, TextField, Typography, styled } from '@material-ui/core';
 
 import BackNextButtons from './BackNextButtons';
 
@@ -18,6 +18,8 @@ interface IProps {
 function NewProjectDescInput(props: IProps): React.ReactElement {
   const { desc, setDesc, handleBack, handleNext } = props;
   const labelText = 'Project description';
+  const descText =
+    '당신의 프로젝트를 설명하기 위한 간단한 내용을 적어주세요. 필요하시지 않을 경우 생략하셔도 됩니다.';
   const [inputText, setInputText] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +37,9 @@ function NewProjectDescInput(props: IProps): React.ReactElement {
 
   return (
     <Box pt={1} display="flex" flexDirection="column">
+      <Box pb={2}>
+        <Typography>{descText}</Typography>
+      </Box>
       <CustomTextField
         multiline
         label={labelText}
