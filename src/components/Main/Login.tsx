@@ -1,28 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import qs from 'qs';
 import { useDispatch } from 'react-redux';
-import PanopticonLogo from '../image/panopticon.png';
-import service from '../service';
-import { loginUser } from '../modules/user';
+import service from '../../service';
+import { loginUser } from '../../modules/user';
 
 const useStyles = makeStyles((theme) => ({
-  grid: {
-    marginTop: '20px',
-  },
   button: {
     backgroundColor: '#3A3A3A',
-    margin: theme.spacing(4),
     textTransform: 'none',
-    fontSize: '20px',
+    fontSize: '12px',
     color: 'white',
-    fontWeight: 600,
+    fontWeight: 500,
     '&:hover': {
       backgroundColor: '#000000',
       color: 'white',
@@ -30,11 +23,6 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: '10px',
-  },
-  img: {
-    width: '240px',
-    height: 'auto',
-    margin: '0 auto',
   },
 }));
 
@@ -127,25 +115,12 @@ const Login = (): React.ReactElement => {
 
   const classes = useStyles();
   return (
-    <Grid
-      container
-      direction="column"
-      justify="flex-start"
-      alignItems="center"
-      className={classes.grid}
-    >
-      <Box height="100vh" pt={20}>
-        <Paper elevation={3}>
-          <Box display="flex" flexDirection="column" p={10}>
-            <img className={classes.img} src={PanopticonLogo} alt="logo" />
-            <Button onClick={handleClick} variant="contained" className={classes.button}>
-              <GitHubIcon fontSize="inherit" className={classes.icon} />
-              Sign in With GitHub
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
-    </Grid>
+    <Box display="flex" flexDirection="column">
+      <Button onClick={handleClick} variant="contained" className={classes.button}>
+        <GitHubIcon fontSize="inherit" className={classes.icon} />
+        Sign in With GitHub
+      </Button>
+    </Box>
   );
 };
 export default Login;
