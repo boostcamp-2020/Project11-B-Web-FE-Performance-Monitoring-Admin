@@ -16,14 +16,14 @@ function VisitsHeader(props: IProps): React.ReactElement {
   const { year, month, nextMonth, beforeMonth }: IProps = props;
   return (
     <Box m={3} display="flex" justifyContent="center" alignItems="center">
-      <IconButton>
-        <ArrowLeftIcon fontSize="large" onClick={beforeMonth} />
+      <IconButton onClick={beforeMonth}>
+        <ArrowLeftIcon fontSize="large" />
       </IconButton>
       <Typography variant="h2">
         {year}-{month}
       </Typography>
-      <IconButton>
-        <ArrowRightIcon fontSize="large" onClick={nextMonth} />
+      <IconButton onClick={nextMonth}>
+        <ArrowRightIcon fontSize="large" />
       </IconButton>
     </Box>
   );
