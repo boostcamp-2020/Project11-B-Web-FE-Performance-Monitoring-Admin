@@ -13,16 +13,13 @@ import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
 import useInterval from '../../../hooks/UseInterval';
 
-interface IProps {
-  period: string;
-}
-function IssueTable(props: IProps): React.ReactElement {
-  const { period } = props;
+function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
 
   const [totalPage, setTotalPage] = useState<number>();
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -51,7 +48,7 @@ function IssueTable(props: IProps): React.ReactElement {
   const getData = useCallback(async () => {
     if (selectedProjectsIds[0] === undefined) return;
 
-    const res = await service.getIssues(selectedProjectsIds, page, period);
+    const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod);
     if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
@@ -59,7 +56,7 @@ function IssueTable(props: IProps): React.ReactElement {
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  }, [selectedProjectsIds, page, period]);
+  }, [selectedProjectsIds, page, selectedPeriod]);
   useInterval(() => getData(), 10000);
 
   useEffect(() => {

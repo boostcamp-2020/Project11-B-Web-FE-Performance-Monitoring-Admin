@@ -1,7 +1,12 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { RootState } from '../../modules';
+
+import { setSelectedPeriodAction } from '../../modules/projects';
+import { IPeriod } from '../../types';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -11,7 +16,7 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-const periods = [
+const periods: IPeriod[] = [
   { label: 'hour', query: '1h' },
   { label: 'day', query: '1d' },
   { label: 'week', query: '1w' },
@@ -22,18 +27,15 @@ const periods = [
   { label: 'all', query: '1A' },
 ];
 
-interface IProps {
-  period: string;
-  setPeriod: (period: string) => void;
-  all?: boolean;
-}
-
-function PeriodSelector(props: IProps): React.ReactElement {
+function PeriodSelector(): React.ReactElement {
   const classes = useStyles();
-  const { period, setPeriod, all } = props;
+  const dispatch = useDispatch();
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
 
-  const handleChange = (event: any) => {
-    setPeriod(event.target.value);
+  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const newSelectedPeriod = event.target.value as string;
+    dispatch(setSelectedPeriodAction(newSelectedPeriod));
+    console.log(selectedPeriod);
   };
 
   return (
@@ -42,8 +44,8 @@ function PeriodSelector(props: IProps): React.ReactElement {
       <Select
         className={classes.h100}
         label="SELECTED PERIOD"
-        value={period}
-        onChange={handleChange}
+        value={selectedPeriod}
+        onChange={handleSelectChange}
         MenuProps={{
           anchorOrigin: {
             vertical: 'bottom',
@@ -52,22 +54,14 @@ function PeriodSelector(props: IProps): React.ReactElement {
           getContentAnchorEl: null,
         }}
       >
-        {periods
-          .filter((item) => {
-            if (item.label === 'all' && !all) return false;
-            return true;
-          })
-          .map((item) => (
-            <MenuItem key={item.label} value={item.query} className={classes.h100}>
-              Last {item.label}
-            </MenuItem>
-          ))}
+        {periods.map((item) => (
+          <MenuItem key={item.label} value={item.query} className={classes.h100}>
+            {`${item.label === 'all' ? '' : 'Last '}${item.label}`}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
 }
 
-PeriodSelector.defaultProps = {
-  all: false,
-};
 export default PeriodSelector;

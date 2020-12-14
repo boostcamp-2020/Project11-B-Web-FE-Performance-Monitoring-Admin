@@ -20,7 +20,7 @@ function DiscoverHeader(props: IProps): React.ReactElement {
         <ProjectSelector />
       </Grid>
       <Grid item xs={4}>
-        <PeriodSelector period={period} setPeriod={setPeriod} />
+        <PeriodSelector />
       </Grid>
       <Grid item xs={4}>
         <Filters filterQuery={filterQuery} setFilterQuery={setFilterQuery} />
