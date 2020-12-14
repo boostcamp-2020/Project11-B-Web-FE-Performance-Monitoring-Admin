@@ -7,10 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ArchiveRoundedIcon from '@material-ui/icons/ArchiveRounded';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import HighlightIcon from '@material-ui/icons/Highlight';
 import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import TimelineIcon from '@material-ui/icons/Timeline';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChildCareIcon from '@material-ui/icons/ChildCare';
 import clsx from 'clsx';
@@ -192,16 +193,10 @@ function Sidebar(): React.ReactElement {
             <Box px={3}>Discover</Box>
           </Box>
         </Tab>
-        <Tab to="/alerts" activeClassName={style.activeStyle}>
-          <Box display="flex" alignItems="center" px={3}>
-            <NotesIcon />
-            <Box px={3}>Alerts</Box>
-          </Box>
-        </Tab>
         <Tab to="/visits" activeClassName={style.activeStyle}>
           <Box display="flex" alignItems="center" px={3}>
-            <TimelineIcon />
-            <Box px={3}>Visit</Box>
+            <TrendingUpIcon />
+            <Box px={3}>Visits</Box>
           </Box>
         </Tab>
         <Tab to="/analysis" activeClassName={style.activeStyle}>
@@ -217,6 +212,12 @@ function Sidebar(): React.ReactElement {
           </Box>
         </Tab>
       </Box>
+      <Tab to="/alerts" activeClassName={style.activeStyle}>
+        <Box display="flex" alignItems="center" px={3}>
+          <NotificationsActiveIcon />
+          <Box px={3}>Alerts</Box>
+        </Box>
+      </Tab>
     </Drawer>
   );
 }
