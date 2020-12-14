@@ -49,4 +49,4 @@ function LineChart(props: IProps): React.ReactElement {
   return <div ref={chartDiv} />;
 }
 
-export default LineChart;
+export default React.memo(LineChart);

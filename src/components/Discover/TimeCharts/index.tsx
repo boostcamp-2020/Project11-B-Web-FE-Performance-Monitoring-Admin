@@ -6,6 +6,7 @@ import LineChart from './LineChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
 import { RootState } from '../../../modules';
+import useInterval from '../../../hooks/UseInterval';
 
 interface IProps {
   period: string;
@@ -57,6 +58,18 @@ function TimeCharts(props: IProps): React.ReactElement {
   const getColumnKeys = () => {
     return Object.keys(columns);
   };
+
+  const updateColumns = async () => {
+    const res = await service.getCountByInterval({
+      projectIds: selectedProjects,
+      type: 'recent',
+      period,
+      filters: filterQuery,
+    });
+    setColumns(res.data);
+  };
+
+  useInterval(updateColumns, 30000);
 
   return columns === undefined ? (
     <Progress />
