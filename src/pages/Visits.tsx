@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import VisitsHeader from '../components/Visits/VisitsHeader';
 import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
-import ProjectSelector from '../components/Issues/ProjectSelector';
+import ProjectSelector from '../components/common/ProjectSelector';
 
 function Visits(): React.ReactElement {
   const today = new Date();

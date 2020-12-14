@@ -1,8 +1,8 @@
 import React from 'react';
-import { FormControl, InputLabel, Grid } from '@material-ui/core';
+import { FormControl, Grid } from '@material-ui/core';
 
-import ProjectSelector from '../../Issues/ProjectSelector';
-import PeriodSelector from './PeriodSelector';
+import ProjectSelector from '../../common/ProjectSelector';
+import PeriodSelector from '../../common/PeriodSelector';
 import Filters from './Filters';
 
 interface IProps {
@@ -20,10 +20,7 @@ function DiscoverHeader(props: IProps): React.ReactElement {
         <ProjectSelector />
       </Grid>
       <Grid item xs={4}>
-        <FormControl fullWidth>
-          <InputLabel>SELECTED PERIOD</InputLabel>
-          <PeriodSelector period={period} setPeriod={setPeriod} />
-        </FormControl>
+        <PeriodSelector period={period} setPeriod={setPeriod} />
       </Grid>
       <Grid item xs={4}>
         <Filters filterQuery={filterQuery} setFilterQuery={setFilterQuery} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
-import ProjectSelector from '../components/Issues/ProjectSelector';
+import ProjectSelector from '../components/common/ProjectSelector';
 
 import SessionTable from '../components/Analysis/SessionTable';
 
