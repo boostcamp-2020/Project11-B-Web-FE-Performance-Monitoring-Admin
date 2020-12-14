@@ -11,6 +11,7 @@ function Visits(): React.ReactElement {
   const [month, setMonth] = useState(today.getMonth() + 1);
 
   const nextMonth = () => {
+    if (year === today.getFullYear() && month === today.getMonth() + 1) return;
     if (month === 12) {
       setYear(() => year + 1);
       setMonth(() => 1);
