@@ -9,46 +9,42 @@ import IssueCountChart from '../components/Discover/IssueCountChart';
 import ShareCharts from '../components/Discover/ShareCharts';
 
 import ChartFrame from '../components/Discover/ChartFrame';
-
+import FilterPage from '../components/layout/FilterPage';
 import { RootState } from '../modules';
 
 function Discover(): React.ReactElement {
-  const [period, setPeriod] = useState('1w');
   const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const [filterQuery, setFilterQuery] = useState({});
 
   return (
-    <Box p={3}>
-      <Box pb={3}>
-        <DiscoverHeader
-          period={period}
-          setPeriod={setPeriod}
-          filterQuery={filterQuery}
-          setFilterQuery={setFilterQuery}
-        />
+    <FilterPage>
+      <Box>
+        <Box pb={3} width="100%">
+          <DiscoverHeader filterQuery={filterQuery} setFilterQuery={setFilterQuery} />
+        </Box>
+        {selectedProjects.length === 0 ? (
+          <NoProjectSelected />
+        ) : (
+          <Grid container direction="row" spacing={3} alignItems="stretch">
+            <Grid item xs={12}>
+              <ChartFrame>
+                <TimeCharts filterQuery={filterQuery} />
+              </ChartFrame>
+            </Grid>
+            <Grid item xs={6}>
+              <ChartFrame>
+                <IssueCountChart filterQuery={filterQuery} />
+              </ChartFrame>
+            </Grid>
+            <Grid item xs={6}>
+              <ChartFrame>
+                <ShareCharts filterQuery={filterQuery} />
+              </ChartFrame>
+            </Grid>
+          </Grid>
+        )}
       </Box>
-      {selectedProjects.length === 0 ? (
-        <NoProjectSelected />
-      ) : (
-        <Grid container direction="row" spacing={3} alignItems="stretch">
-          <Grid item xs={12}>
-            <ChartFrame>
-              <TimeCharts filterQuery={filterQuery} period={period} />
-            </ChartFrame>
-          </Grid>
-          <Grid item xs={6}>
-            <ChartFrame>
-              <IssueCountChart filterQuery={filterQuery} />
-            </ChartFrame>
-          </Grid>
-          <Grid item xs={6}>
-            <ChartFrame>
-              <ShareCharts filterQuery={filterQuery} period={period} />
-            </ChartFrame>
-          </Grid>
-        </Grid>
-      )}
-    </Box>
+    </FilterPage>
   );
 }
 

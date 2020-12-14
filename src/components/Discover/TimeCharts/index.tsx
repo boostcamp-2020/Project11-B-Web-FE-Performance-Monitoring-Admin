@@ -9,12 +9,13 @@ import { RootState } from '../../../modules';
 import useInterval from '../../../hooks/UseInterval';
 
 interface IProps {
-  period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
 
 function TimeCharts(props: IProps): React.ReactElement {
-  const { period, filterQuery } = props;
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
+
+  const { filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>([]);
@@ -25,12 +26,12 @@ function TimeCharts(props: IProps): React.ReactElement {
       const res = await service.getCountByInterval({
         projectIds: selectedProjects,
         type: 'recent',
-        period,
+        period: selectedPeriod,
         filters: filterQuery,
       });
       setColumns(res.data);
     })();
-  }, [selectedProjects, period, filterQuery]);
+  }, [selectedProjects, selectedPeriod, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);
@@ -63,7 +64,7 @@ function TimeCharts(props: IProps): React.ReactElement {
     const res = await service.getCountByInterval({
       projectIds: selectedProjects,
       type: 'recent',
-      period,
+      period: selectedPeriod,
       filters: filterQuery,
     });
     setColumns(res.data);
@@ -82,7 +83,7 @@ function TimeCharts(props: IProps): React.ReactElement {
               <Tab key={key} label={key} id={`tab-${index}`} />
             ))}
           </Tabs>
-          <LineChart columns={getColumnInput(getColumnKeys()[currTab])} period={period} />
+          <LineChart columns={getColumnInput(getColumnKeys()[currTab])} />
         </Box>
       )}
     </Box>
