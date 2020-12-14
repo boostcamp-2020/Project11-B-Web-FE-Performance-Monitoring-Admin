@@ -19,7 +19,7 @@ function NewProjectDSN(props: IProps): React.ReactElement {
     <>
       <Typography>{tutorial.text.korean.copyDsn.description}</Typography>
       <Box p={2}>
-        <ProjectDSN dsn={dsn} />
+        <ProjectDSN projectId={dsn} />
         <Typography>{tutorial.text.korean.copyDsn.initGuide}</Typography>
       </Box>
       <BackNextButtons handleBack={handleBack} handleNext={handleNext} />
