@@ -14,7 +14,7 @@ const useStyles = makeStyles(() =>
     },
     chips: { display: 'flex', flexWrap: 'wrap' },
     chip: {
-      margin: 1,
+      marginRight: 1,
     },
   }),
 );
@@ -36,10 +36,11 @@ function ProjectSelector(): React.ReactElement {
   }, []);
 
   return (
-    <FormControl fullWidth className={classes.formControl}>
-      <InputLabel>SELECTED PROJECT</InputLabel>
+    <FormControl variant="outlined" fullWidth className={classes.formControl}>
+      <InputLabel id="selected-label">SELECTED PROJECT</InputLabel>
       <Select
         placeholder="SELECTED PROJECT"
+        label="SELECTED PROJECT"
         multiple
         value={selectedProjects}
         onChange={handleSelectChange}
