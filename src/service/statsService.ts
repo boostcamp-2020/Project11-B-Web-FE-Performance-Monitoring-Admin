@@ -14,7 +14,6 @@ export interface IStatsService {
   getCountByInterval: (req: IChartRequest) => Promise<AxiosResponse>;
   getCountByIssue: (query: string) => Promise<AxiosResponse>;
   getSharesDataByIssue: (issueId: string) => Promise<AxiosResponse<IGetSharesDataByIssueResponse>>;
-  getSession: (query: string) => Promise<AxiosResponse>;
 }
 
 export default (apiRequest: AxiosInstance): IStatsService => {
@@ -57,16 +56,11 @@ export default (apiRequest: AxiosInstance): IStatsService => {
     return apiRequest.get(`/api/stats/issue/${issueId}/shares`);
   };
 
-  const getSession = (query: string) => {
-    return apiRequest.get(`/api/session${query}`);
-  };
-
   return {
     getCrimesCountByIssue,
     getCountByInterval,
     getCountByIssue,
     getSharesData,
     getSharesDataByIssue,
-    getSession,
   };
 };
