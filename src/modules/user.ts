@@ -67,6 +67,7 @@ type UserAction =
 const initialState = {
   nickname: undefined,
   token: undefined,
+  email: undefined,
 };
 
 function crime(state: IUserLocalStorage = initialState, action: UserAction): IUserLocalStorage {
