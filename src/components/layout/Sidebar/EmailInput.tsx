@@ -26,7 +26,7 @@ function EmailInput(props: IProps): React.ReactElement {
     <input
       className={classes.input}
       ref={inputEl}
-      type="text"
+      type="email"
       value={value}
       onChange={handleInput}
       onKeyPress={handleSubmit}

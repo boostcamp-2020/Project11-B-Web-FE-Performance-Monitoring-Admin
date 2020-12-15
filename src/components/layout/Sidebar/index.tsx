@@ -125,6 +125,11 @@ function Sidebar(): React.ReactElement {
   const handleEmailSubmit = (
     event: KeyboardEvent<HTMLInputElement> & FocusEvent<HTMLInputElement>,
   ): void => {
+    if (email === user.email) {
+      setInputEmail(false);
+      setEmail(user.email);
+      return;
+    }
     if (event.key === 'Enter' && event.type === 'keypress' && email) {
       if (validateEmail(email)) {
         dispatch(thunkUpdateEmail(email));
@@ -133,7 +138,7 @@ function Sidebar(): React.ReactElement {
       return;
     }
     if (event.type === 'blur') {
-      if (email && validateEmail(email)) {
+      if (email && email !== user.email) {
         dispatch(thunkUpdateEmail(email));
         setInputEmail(false);
       } else {
