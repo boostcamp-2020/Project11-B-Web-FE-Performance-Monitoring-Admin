@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, ChangeEvent, KeyboardEvent, FocusEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, NavLink } from 'react-router-dom';
 import { Box, Avatar } from '@material-ui/core';
@@ -13,12 +13,13 @@ import HighlightIcon from '@material-ui/icons/Highlight';
 import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChildCareIcon from '@material-ui/icons/ChildCare';
 import clsx from 'clsx';
 import NotesIcon from '@material-ui/icons/Notes';
 import { RootState } from '../../../modules';
 import useStyle from './styles';
-import { logoutUser } from '../../../modules/user';
+import { logoutUser, thunkUpdateEmail } from '../../../modules/user';
+import EmailInput from './EmailInput';
+import validateEmail from '../../../utils/validation';
 
 const drawerWidth = 240;
 
@@ -87,10 +88,12 @@ const Tab = styled(NavLink)({
 });
 
 function Sidebar(): React.ReactElement {
+  const user = useSelector((state: RootState) => state.user);
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-  const user = useSelector((state: RootState) => state.user);
+  const [open, setOpen] = useState(true);
+  const [email, setEmail] = useState(user.email);
+  const [inputEmail, setInputEmail] = useState(false);
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -107,6 +110,36 @@ function Sidebar(): React.ReactElement {
     if (logoutUser) {
       dispatch(logoutUser());
       history.push('/');
+    }
+  };
+
+  const handleOpenEmailInput = (): void => {
+    setInputEmail(true);
+    setEmail('');
+  };
+
+  const handleEmailInput = (event: ChangeEvent<HTMLInputElement>): void => {
+    setEmail(event.target.value);
+  };
+
+  const handleEmailSubmit = (
+    event: KeyboardEvent<HTMLInputElement> & FocusEvent<HTMLInputElement>,
+  ): void => {
+    if (event.key === 'Enter' && event.type === 'keypress' && email) {
+      if (validateEmail(email)) {
+        dispatch(thunkUpdateEmail(email));
+        setInputEmail(false);
+      }
+      return;
+    }
+    if (event.type === 'blur') {
+      if (email && validateEmail(email)) {
+        dispatch(thunkUpdateEmail(email));
+        setInputEmail(false);
+      } else {
+        setInputEmail(false);
+        setEmail(user.email);
+      }
     }
   };
 
@@ -160,16 +193,26 @@ function Sidebar(): React.ReactElement {
           <Box className={style.profileMenu}>
             <Box
               display="flex"
-              justifyContent="center"
               fontSize={16}
               fontWeight={700}
               className={style.profileMenuBtn}
               color="white"
             >
-              {user.nickname}
+              <Box>{user.nickname}</Box>
               <Box onClick={handleSingOut} pl={1}>
                 <ExitToAppIcon />
               </Box>
+            </Box>
+            <Box color="white">
+              {inputEmail ? (
+                <EmailInput
+                  value={email || ''}
+                  handleInput={handleEmailInput}
+                  handleSubmit={handleEmailSubmit}
+                />
+              ) : (
+                <Box onClick={handleOpenEmailInput}>{email || '이메일을 입력해주세요'}</Box>
+              )}
             </Box>
           </Box>
         </Box>
