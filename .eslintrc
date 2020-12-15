@@ -1,0 +1,29 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "prettier",
+    "airbnb-typescript",
+    "react-app",
+    "prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "array-callback-return": 0,
+    "import/extensions": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "import/no-anonymous-default-export": 0,
+    "no-underscore-dangle": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  }
+}
