@@ -8,7 +8,6 @@ import TimeCharts from '../components/Discover/TimeCharts';
 import IssueCountChart from '../components/Discover/IssueCountChart';
 import ShareCharts from '../components/Discover/ShareCharts';
 
-import ChartFrame from '../components/Discover/ChartFrame';
 import FilterPage from '../components/layout/FilterPage';
 import ChartFrame from '../components/common/ChartFrame';
 
