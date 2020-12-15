@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, MouseEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -7,10 +7,13 @@ import { makeStyles } from '@material-ui/styles';
 import { initializeProjects } from '../modules/filters';
 import { RootState } from '../modules';
 import AlertsProjectSelector from '../components/Alerts/AlertsProjectSelector';
-import AlertsConfig from '../components/Alerts/AlertsConfig';
-import { IProjectCardProps, IAlertsUserProfile } from '../types';
 import AlertsPeriodSelector from '../components/Alerts/AlertsPeriodSelector';
+import AlertsCountSelector from '../components/Alerts/AlertCountSelector';
+import AlertsConfig from '../components/Alerts/AlertsConfig';
+import { IAlertsUserProfile } from '../types';
 import AlertList from '../components/Alerts/AlertList';
+import useAlert, { AlertState } from '../hooks/AlertHooks';
+import service from '../service';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -28,14 +31,16 @@ function Alerts(): React.ReactElement {
   });
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [projectId, setProjectId] = useState('');
-  const [project, setProject] = useState<IProjectCardProps>();
-  const [period, setPeriod] = useState('');
-  const [userList, setUserList] = useState<IAlertsUserProfile[]>();
+  const [alertState, useAlertSelector, setAlertState] = useAlert();
   const periodList = [
     { name: '1 day', value: '1d' },
     { name: '3 day', value: '3d' },
     { name: '1 week', value: '1w' },
+  ];
+  const countList = [
+    { name: '1 issue', value: 1 },
+    { name: '10 issues', value: 10 },
+    { name: '100 issues', value: 100 },
   ];
   useEffect(() => {
     dispatch(initializeProjects());
@@ -45,27 +50,31 @@ function Alerts(): React.ReactElement {
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ): void => {
     const nextProjectId = event.target.value as string;
-    setProjectId(nextProjectId);
-    setPeriod(periodList[0].value);
     const selectProject = projectList.find((proj) => {
       return proj._id === nextProjectId;
     });
     if (selectProject) {
-      setProject(selectProject);
-      const owner: IAlertsUserProfile = { email: selectProject.owner.email, isSelected: false };
+      setAlertState({ project: selectProject });
+      const owner: IAlertsUserProfile = {
+        _id: selectProject.owner._id,
+        email: selectProject.owner.email,
+        isSelected: false,
+      };
       const newUserList = [];
       if (owner.email) newUserList.push(owner);
       newUserList.push(
         ...selectProject.users
           .filter(({ email }) => email)
-          .map((member) => ({ email: member.email, isSelected: false })),
+          .map((member) => ({ _id: member._id, email: member.email, isSelected: false })),
       );
-      setUserList(newUserList);
+      setAlertState({ userList: newUserList });
     } else {
-      setUserList(undefined);
-      setProject(undefined);
-      setPeriod('');
-      setProjectId('');
+      setAlertState({
+        project: undefined,
+        userList: [],
+        period: '',
+        count: 0,
+      });
     }
   };
 
@@ -73,21 +82,43 @@ function Alerts(): React.ReactElement {
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ): void => {
     const nextPeriod = event.target.value as string;
-    setPeriod(nextPeriod);
+    setAlertState({
+      period: nextPeriod,
+      count: 0,
+    });
+  };
+
+  const handleSelectCount = (event: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
+    const nextCount = event.target.value as number;
+    setAlertState({
+      period: '',
+      count: nextCount,
+    });
   };
 
   const handleUserlist = (email: string) => {
-    setUserList((prevUserList) => {
-      if (prevUserList) {
-        return prevUserList.map((member) => {
-          if (member.email === email) {
-            return { ...member, isSelected: !member.isSelected };
-          }
-          return member;
-        });
-      }
-      return undefined;
-    });
+    setAlertState(
+      (prevState: AlertState): AlertState => {
+        if (prevState.userList) {
+          const newUserList = prevState.userList.map((member) => {
+            if (member.email === email) {
+              return { ...member, isSelected: !member.isSelected };
+            }
+            return member;
+          });
+          return { ...prevState, userList: newUserList };
+        }
+        return prevState;
+      },
+    );
+  };
+
+  const handleSubmit = (users: string[]) => async (): Promise<void> => {
+    const { period, count } = alertState;
+    if (alertState.project && users.length) {
+      setAlertState({ userList: [], project: undefined, period: '', count: 0 });
+      await service.addAlert({ projectId: alertState.project._id, users, period, count });
+    }
   };
 
   return (
@@ -97,16 +128,35 @@ function Alerts(): React.ReactElement {
           <Paper className={classes.paper}>
             <Box display="flex" flexDirection="column" gridGap={15}>
               <AlertsProjectSelector
-                projectId={projectId}
+                project={alertState.project}
                 handleSelectProject={handleSelectProject}
                 projectList={projectList}
               />
-              <AlertsPeriodSelector
-                period={period}
-                handleSelectPeriod={handleSelectPeriod}
-                periodList={periodList}
-              />
-              {project && <AlertsConfig userList={userList} handleUserList={handleUserlist} />}
+              {alertState.project && (
+                <>
+                  <AlertsPeriodSelector
+                    period={alertState.period}
+                    readOnly={!!alertState.count}
+                    handleSelectPeriod={handleSelectPeriod}
+                    periodList={periodList}
+                  />
+                  <AlertsCountSelector
+                    count={alertState.count}
+                    readOnly={!!alertState.period}
+                    handleSelectCount={handleSelectCount}
+                    countList={countList}
+                  />
+                </>
+              )}
+
+              {alertState.project && (
+                <AlertsConfig
+                  selector={useAlertSelector}
+                  userList={alertState.userList}
+                  handleUserList={handleUserlist}
+                  handleSubmit={handleSubmit}
+                />
+              )}
             </Box>
           </Paper>
         </Box>
