@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import NewProject from './pages/NewProject';
-import Login from './pages/Login';
+import Main from './pages/Main';
 import Issue from './pages/Issue';
 import Discover from './pages/Discover';
 import Visits from './pages/Visits';
@@ -16,7 +16,7 @@ import Error from './pages/Error';
 function PublicRouter(): React.ReactElement {
   return (
     <Switch>
-      <Route path="/" exact component={Login} />
+      <Route path="/" exact component={Main} />
       <Route path="/accept" component={InviteProject} />
       <Route path="/auth" />
       <Route path="*">
