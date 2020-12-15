@@ -8,7 +8,7 @@ import TimeCharts from '../components/Discover/TimeCharts';
 import IssueCountChart from '../components/Discover/IssueCountChart';
 import ShareCharts from '../components/Discover/ShareCharts';
 
-import ChartFrame from '../components/Discover/ChartFrame';
+import ChartFrame from '../components/common/ChartFrame';
 
 import { RootState } from '../modules';
 

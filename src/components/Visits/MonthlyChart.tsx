@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import 'billboard.js/dist/billboard.css';
+import Box from '@material-ui/core/Box';
 
 import service from '../../service';
 import { RootState } from '../../modules';
@@ -27,7 +28,7 @@ function MonthlyChart(props: IProps): React.ReactElement {
       drawVisitsChart({ projects, newVisits: newMonthlyVisits, visitChartDiv, type: 'monthly' });
     })();
   }, [selectedProjectsIds, year]);
-  return <>{showProgress ? <Progress /> : <div ref={visitChartDiv} />}</>;
+  return <Box>{showProgress ? <Progress /> : <div ref={visitChartDiv} />}</Box>;
 }
 
 export default MonthlyChart;

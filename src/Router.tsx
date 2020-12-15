@@ -11,6 +11,7 @@ import Visits from './pages/Visits';
 import IssueDetail from './pages/IssueDetail';
 import InviteProject from './pages/InviteProject';
 import Analysis from './pages/Analysis';
+import Error from './pages/Error';
 
 function PublicRouter(): React.ReactElement {
   return (
@@ -36,6 +37,7 @@ function PrivateRouter(): React.ReactElement {
       <Route path="/visits" exact component={Visits} />
       <Route path="/issue/:id" exact component={IssueDetail} />
       <Route path="/analysis" exact component={Analysis} />
+      <Route path="/error" exact component={Error} />
       <Route path="/">
         <Redirect to="/projects" />
       </Route>
