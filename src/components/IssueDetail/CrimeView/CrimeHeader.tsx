@@ -30,6 +30,8 @@ function CrimeHeader(props: IProps): React.ReactElement {
         disableNext={disableNext}
         handleBack={handleBack}
         handleNext={handleNext}
+        leftButtonText="Older"
+        rightButtonText="Newer"
       />
     </Box>
   );
