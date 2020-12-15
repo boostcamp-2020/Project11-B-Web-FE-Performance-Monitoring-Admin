@@ -13,13 +13,14 @@ const useStyles = makeStyles((theme) => ({
 
 interface IProps {
   title: string;
-  value: string;
-  menuList: { name: string; value: string }[];
+  readOnly: boolean;
+  value: string | number;
+  menuList: { name: string; value: string | number }[];
   handleSelect: (event: React.ChangeEvent<{ name?: string; value: unknown }>) => void;
 }
 
-function AlertsProjectSelector(props: IProps): React.ReactElement {
-  const { title, value, menuList, handleSelect } = props;
+function Selector(props: IProps): React.ReactElement {
+  const { title, value, menuList, handleSelect, readOnly } = props;
   const classes = useStyles();
   return (
     <FormControl variant="outlined" className={classes.formControl}>
@@ -28,6 +29,7 @@ function AlertsProjectSelector(props: IProps): React.ReactElement {
         labelId={`${title}-label`}
         value={value}
         onChange={handleSelect}
+        disabled={readOnly}
         label={title}
         MenuProps={{
           anchorOrigin: {
@@ -37,6 +39,9 @@ function AlertsProjectSelector(props: IProps): React.ReactElement {
           getContentAnchorEl: null,
         }}
       >
+        <MenuItem key="none" value={typeof value === 'string' ? '' : 0}>
+          None
+        </MenuItem>
         {menuList.map((menu) => (
           <MenuItem key={menu.value} value={menu.value}>
             {menu.name}
@@ -47,4 +52,4 @@ function AlertsProjectSelector(props: IProps): React.ReactElement {
   );
 }
 
-export default AlertsProjectSelector;
+export default Selector;
