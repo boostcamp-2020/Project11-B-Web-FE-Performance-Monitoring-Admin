@@ -24,7 +24,7 @@ function ProjectDetail(): React.ReactElement {
   const match = useRouteMatch<MatchParams>('/project/:id');
   const projectId = match?.params.id as string;
 
-  const [project, setProjectName, setProjectUsers, setProjectOwner] = useProject(
+  const [project, isOwner, setProjectName, setProjectUsers, setProjectOwner] = useProject(
     projectId as string,
   );
 
