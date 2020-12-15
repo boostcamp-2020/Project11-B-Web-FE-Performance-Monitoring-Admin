@@ -51,6 +51,7 @@ function ProjectDetail(): React.ReactElement {
           <ProjectDetailHeader
             title={project.name}
             desc={project.description}
+            isOwner={isOwner}
             setProjectName={setProjectName}
           />
           <ProjectDetailDialog dsn={dsn} />
