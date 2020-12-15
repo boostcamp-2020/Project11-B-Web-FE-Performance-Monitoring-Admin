@@ -56,7 +56,11 @@ function ProjectDetail(): React.ReactElement {
           />
           <ProjectDetailDialog dsn={dsn} />
           <ProjectUserInfo userName={project.owner.nickname} />
-          <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
+          <ProjectDetailUserList
+            users={project.users}
+            isOwner={isOwner}
+            deleteUsers={deleteUsers}
+          />
           {isOwner && (
             <Box>
               <InviteMember handleSend={handleSend} />

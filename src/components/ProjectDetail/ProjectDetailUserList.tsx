@@ -43,12 +43,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface IProps {
   users: IUser[];
+  isOwner: boolean;
   deleteUsers: (selectedIds: string[]) => void;
 }
 
 export default function UserListTable(props: IProps): React.ReactElement {
   const classes = useStyles();
-  const { users, deleteUsers } = props;
+  const { users, isOwner, deleteUsers } = props;
   const [selected, setSelected] = useState<string[]>([]);
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -86,8 +87,9 @@ export default function UserListTable(props: IProps): React.ReactElement {
       <Paper className={classes.paper}>
         <ProjectDetailUserListToolbar
           numSelected={selected.length}
-          deleteUsers={deleteUserAndReset}
           selectedUsers={selected}
+          isOwner={isOwner}
+          deleteUsers={deleteUserAndReset}
         />
         <TableContainer>
           <Table
