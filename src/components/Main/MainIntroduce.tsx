@@ -2,6 +2,8 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import CheckIcon from '@material-ui/icons/Check';
+import Image from 'material-ui-image';
 
 interface IProps {
   title: string;
@@ -10,6 +12,9 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
+  title: {
+    margin: '10px 10px',
+  },
   container: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -18,12 +23,11 @@ const useStyles = makeStyles({
     },
   },
   imgContainer: {
-    height: '100%',
-    borderRadius: '3px',
+    border: 0,
+    borderRadius: '10px',
     boxShadow: '0 0 20px 5px #cfcfcf',
-    '& img': {
-      width: '100%',
-    },
+
+    width: '100%',
   },
 });
 
@@ -32,22 +36,29 @@ function MainIntroduce(props: IProps): React.ReactElement {
   const classes = useStyles();
   return (
     <Box className={classes.container} py={10}>
-      <Box flex="1" p={5} display="flex" justifyContent="center" flexDirection="column">
-        <Typography color="primary" variant="h2">
+      <Box flex="1" p={5} display="flex" justifyContent="flex-start" flexDirection="column">
+        <Typography color="primary" variant="h2" className={classes.title}>
           {title}
         </Typography>
         <Box fontSize="16px">
-          <ul>
-            {list.map((el) => (
-              <li>{el}</li>
-            ))}
-          </ul>
+          {list.map((el) => (
+            <Box display="flex" alignItems="center">
+              <Box m={1}>
+                <CheckIcon />
+              </Box>
+              {el}
+            </Box>
+          ))}
         </Box>
       </Box>
       <Box flex="1">
-        <Box className={classes.imgContainer}>
-          <img src={img} alt="description" />
-        </Box>
+        <Image
+          aspectRatio={16 / 9}
+          disableSpinner
+          className={classes.imgContainer}
+          src={img}
+          alt="description"
+        />
       </Box>
     </Box>
   );

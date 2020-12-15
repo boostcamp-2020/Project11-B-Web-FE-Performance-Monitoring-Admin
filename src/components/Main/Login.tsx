@@ -10,17 +10,21 @@ import service from '../../service';
 import { loginUser } from '../../modules/user';
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    backgroundColor: '#3A3A3A',
+  button: (props: IProps) => ({
+    backgroundColor: props.color === 'white' ? '#eeeeee' : 'transparent',
     textTransform: 'none',
-    fontSize: '12px',
-    color: 'white',
-    fontWeight: 500,
+    fontSize: props.large ? '25px' : '16px',
+    color: props.color === 'white' ? 'black' : '#eeeeee',
+    borderColor: '#eee',
+    width: '100%',
+    fontWeight: props.large ? 600 : 500,
+    borderWidth: '2px',
     '&:hover': {
       backgroundColor: '#000000',
+      borderColor: '#000000',
       color: 'white',
     },
-  },
+  }),
   icon: {
     marginRight: '10px',
   },
@@ -33,7 +37,12 @@ type IWindowProps = {
   height: number;
 };
 
-const Login = (): React.ReactElement => {
+interface IProps {
+  color: string;
+  large: boolean;
+}
+const Login = (props: IProps): React.ReactElement => {
+  const { color, large } = props;
   const dispatch = useDispatch();
 
   const OAUTH_URL = `https://github.com/login/oauth/authorize?client_id=${
@@ -114,14 +123,12 @@ const Login = (): React.ReactElement => {
     }
   });
 
-  const classes = useStyles();
+  const classes = useStyles(props);
   return (
-    <Box display="flex" flexDirection="column">
-      <Button onClick={handleClick} variant="contained" className={classes.button}>
-        <GitHubIcon fontSize="inherit" className={classes.icon} />
-        Sign in With GitHub
-      </Button>
-    </Box>
+    <Button onClick={handleClick} variant="outlined" className={classes.button}>
+      <GitHubIcon fontSize="inherit" className={classes.icon} />
+      Sign in With GitHub
+    </Button>
   );
 };
 export default Login;
