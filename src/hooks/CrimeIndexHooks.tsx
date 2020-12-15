@@ -14,7 +14,7 @@ const useCrimeIndex = () => {
 
   const [tabIndex, setTabIndex] = useState<number>(0);
 
-  const [crimeIndex, setCrimeIndex] = useState(0);
+  const [crimeIndex, setCrimeIndex] = useState(issue.crimeCount - 1);
   const handleBack = () => {
     setCrimeIndex((prevIndex) => prevIndex - 1);
   };
