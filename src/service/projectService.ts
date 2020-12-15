@@ -30,15 +30,11 @@ export interface IResponse {
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {
-  // TODO
-  // const getProjects = (userType: string) => {
-  //   return apiRequest.get(`/api/projects`);
-  // };
   const getProject = (projectId: string) => {
     return apiRequest.get(`/api/project/${projectId}`);
   };
   const updateProjectName = (projectId: string, name: IName) => {
-    return apiRequest.put(`/api/project/name/${projectId}`, name);
+    return apiRequest.put(`/api/project/${projectId}/name`, name);
   };
   const updateProjectOwner = (projectId: string, userIds: IUserUpdateIds) => {
     return apiRequest.put(`/api/project/${projectId}/user`, userIds);
