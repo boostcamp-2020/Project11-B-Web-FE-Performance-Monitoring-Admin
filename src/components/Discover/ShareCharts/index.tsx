@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Tabs, Tab } from '@material-ui/core';
+
 import { useSelector } from 'react-redux';
 
 import TabPanel from './TabPanel';
@@ -10,15 +11,16 @@ import { RootState } from '../../../modules';
 import useProgress from '../../../hooks/ProgressHooks';
 
 interface IProps {
-  period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
 
 function ShareCharts(props: IProps): React.ReactElement {
-  const { period, filterQuery } = props;
+  const { filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
+
   const [showProgress, displayProgress, hideProgress] = useProgress();
   const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
 
@@ -28,13 +30,13 @@ function ShareCharts(props: IProps): React.ReactElement {
       const res = await service.getSharesData({
         projectIds: selectedProjects,
         type: 'recent',
-        period,
+        period: selectedPeriod,
         filters: filterQuery,
       });
       hideProgress();
       setColumns(res.data);
     })();
-  }, [selectedProjects, period, filterQuery]);
+  }, [selectedProjects, selectedPeriod, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);

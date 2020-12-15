@@ -3,7 +3,7 @@ import { Box, Typography } from '@material-ui/core';
 import VisitsHeader from '../components/Visits/VisitsHeader';
 import MonthlyChart from '../components/Visits/MonthlyChart';
 import DailyChart from '../components/Visits/DailyChart';
-import ProjectSelector from '../components/Issues/ProjectSelector';
+import ProjectSelector from '../components/common/ProjectSelector';
 import ChartFrame from '../components/common/ChartFrame';
 
 function Visits(): React.ReactElement {

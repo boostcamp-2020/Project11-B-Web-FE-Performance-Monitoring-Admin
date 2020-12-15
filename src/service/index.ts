@@ -5,6 +5,7 @@ import projectsService from './projectsService';
 import projectService from './projectService';
 import userService from './userService';
 import visitsService from './visitsService';
+import analysisService from './analysisService';
 
 export default (() => {
   return {
@@ -14,5 +15,6 @@ export default (() => {
     ...userService(axios),
     ...projectService(axios),
     ...visitsService(axios),
+    ...analysisService(axios),
   };
 })();

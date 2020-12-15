@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Pagination from '@material-ui/lab/Pagination';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Paper } from '@material-ui/core';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import qs from 'querystring';
 import { useSelector } from 'react-redux';
 import TimerBtn from '../../common/TimerBtn';
 import IssueToolbar from './IssueToolbar';
@@ -20,6 +19,7 @@ function IssueTable(): React.ReactElement {
 
   const [totalPage, setTotalPage] = useState<number>();
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -47,11 +47,8 @@ function IssueTable(): React.ReactElement {
 
   const getData = useCallback(async () => {
     if (selectedProjectsIds[0] === undefined) return;
-    const query = `?${qs.stringify({
-      page,
-      projectId: selectedProjectsIds,
-    })}`;
-    const res = await service.getIssues(query);
+
+    const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod);
     if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
@@ -59,7 +56,7 @@ function IssueTable(): React.ReactElement {
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  }, [selectedProjectsIds, page]);
+  }, [selectedProjectsIds, page, selectedPeriod]);
   useInterval(() => getData(), 10000);
 
   useEffect(() => {
@@ -78,7 +75,7 @@ function IssueTable(): React.ReactElement {
             <TimerBtn action={getData} count={5} />
           </Box>
         </Box>
-        <Box>
+        <Paper elevation={1}>
           <Box
             display="flex"
             flexDirection="column"
@@ -93,7 +90,7 @@ function IssueTable(): React.ReactElement {
               <Pagination count={totalPage} page={page} onChange={handlePageChange} />
             </Box>
           </Box>
-        </Box>
+        </Paper>
       </Box>
     </Box>
   );

@@ -83,6 +83,7 @@ export interface IProjectCardProps {
 export interface IProjectsModule {
   projects: IProjectCardProps[];
   selectedProjectsIds: string[];
+  selectedPeriod: string;
 }
 
 export interface ICrimesMeta {
@@ -121,4 +122,9 @@ export interface IGetSharesDataByIssueResponse {
     os: { name: string; count: number }[];
     url: { name: string; count: number }[];
   };
+}
+
+export interface IPeriod {
+  label: string;
+  query: string;
 }

@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import bb, { line } from 'billboard.js';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../modules';
 
 interface IColumn {
   name: string;
@@ -8,7 +10,6 @@ interface IColumn {
 
 interface IProps {
   columns: IColumn[];
-  period: string;
 }
 
 const timeFormats: Record<string, string> = {
@@ -22,7 +23,9 @@ const timeFormats: Record<string, string> = {
 };
 
 function LineChart(props: IProps): React.ReactElement {
-  const { columns, period } = props;
+  const { columns } = props;
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
+
   const chartDiv = useRef(null);
 
   const flatColumns = columns.map((column) => [column.name, ...column.values]);
@@ -38,13 +41,13 @@ function LineChart(props: IProps): React.ReactElement {
         x: {
           type: 'timeseries',
           tick: {
-            format: timeFormats[period],
+            format: timeFormats[selectedPeriod],
           },
         },
       },
       bindto: chartDiv.current,
     });
-  }, [flatColumns, period]);
+  }, [flatColumns, selectedPeriod]);
 
   return <div ref={chartDiv} />;
 }
