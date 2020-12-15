@@ -133,3 +133,13 @@ export interface IAlertsUserProfile {
   email: string;
   isSelected: boolean;
 }
+
+export interface IGetAlertsResponse {
+  _id: string;
+  users: { _id: string; email: string; nickname: string }[];
+  period: string;
+  count: number;
+  sendedAt: Date;
+  lastestIssueId: string;
+  project: { _id: string; name: string };
+}

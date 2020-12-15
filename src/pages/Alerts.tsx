@@ -1,4 +1,4 @@
-import React, { useEffect, MouseEvent } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -29,6 +29,7 @@ function Alerts(): React.ReactElement {
   const projectList = useSelector((state: RootState) => {
     return state.projects.projects.filter((project) => project.owner.nickname === user.nickname);
   });
+  const projectIdList = projectList.map((proj) => proj._id);
   const classes = useStyles();
   const dispatch = useDispatch();
   const [alertState, useAlertSelector, setAlertState] = useAlert();
@@ -160,7 +161,7 @@ function Alerts(): React.ReactElement {
             </Box>
           </Paper>
         </Box>
-        <AlertList />
+        <AlertList projects={projectIdList} />
       </Box>
     </Container>
   );
