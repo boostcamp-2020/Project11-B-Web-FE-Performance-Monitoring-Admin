@@ -10,6 +10,9 @@ const useStyle = makeStyles({
     position: 'relative',
   },
   profileMenuBtn: {
+    cursor: 'default',
+  },
+  profileLogOut: {
     cursor: 'pointer',
   },
   activeStyle: {

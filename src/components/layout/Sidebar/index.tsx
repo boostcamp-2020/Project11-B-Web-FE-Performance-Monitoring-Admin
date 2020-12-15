@@ -199,7 +199,7 @@ function Sidebar(): React.ReactElement {
               color="white"
             >
               <Box>{user.nickname}</Box>
-              <Box onClick={handleSingOut} pl={1}>
+              <Box onClick={handleSingOut} pl={1} className={style.profileLogOut}>
                 <ExitToAppIcon />
               </Box>
             </Box>
