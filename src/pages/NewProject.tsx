@@ -12,7 +12,6 @@ function NewProject(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [dsn, setDsn] = useState('http://panopticon.gq/api/sdk/mydsn123');
   const [projectId, setProjectId] = useState('');
 
   const handleNext = () => {
@@ -30,7 +29,6 @@ function NewProject(): React.ReactElement {
     };
     try {
       const response = await service.addProject(project);
-      setDsn(`http://panopticon.gq/api/sdk/${response.data.projectId}`);
       setProjectId(response.data.projectId);
       handleNext();
     } catch (e) {
@@ -82,7 +80,9 @@ function NewProject(): React.ReactElement {
     },
     {
       label: 'Apply the project DSN to your SDK',
-      content: <NewProjectDSN dsn={dsn} handleBack={handleBack} handleNext={handleNext} />,
+      content: (
+        <NewProjectDSN projectId={projectId} handleBack={handleBack} handleNext={handleNext} />
+      ),
     },
     {
       label: 'Invite members to your project (Optional)',

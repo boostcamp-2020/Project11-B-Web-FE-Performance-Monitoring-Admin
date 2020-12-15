@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, styled } from '@material-ui/core';
+import { Box, TextField, Typography, styled } from '@material-ui/core';
 
 import BackNextButtons from './BackNextButtons';
 
@@ -18,6 +18,9 @@ interface IProps {
 function NewProjectNameInput(props: IProps): React.ReactElement {
   const { name, setName, handleBack, handleNext } = props;
   const labelText = 'Project name';
+  const welcomeText = '안녕하세요, Panopticon에 오신 것을 환영합니다!';
+  const descText =
+    '당신의 App에서 발생한 에러와 퍼포먼스 데이터는 Panopticon에서 프로젝트 단위로 관리됩니다. 새로운 프로젝트의 이름을 적어보세요!';
   const [inputText, setInputText] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +39,10 @@ function NewProjectNameInput(props: IProps): React.ReactElement {
 
   return (
     <Box pt={1} display="flex" flexDirection="column">
+      <Box pb={1}>
+        <Typography>{welcomeText}</Typography>
+        <Typography>{descText}</Typography>
+      </Box>
       <CustomTextField label={labelText} required defaultValue={name} onChange={handleChange} />
       <BackNextButtons
         disableBack
