@@ -85,18 +85,19 @@ const Login = (): React.ReactElement => {
           if (!code) return;
           clearTimer();
           const { data } = await service.login(code as string);
-          if (!data.token || !data.nickname) {
+          if (!data.token) {
             history.replace('/');
           } else {
             externalWindow.close();
-            const { nickname, token } = data;
+            const { token, email, nickname } = data;
             localStorage.setItem('token', token);
+            localStorage.setItem('email', email);
             localStorage.setItem('nickname', nickname);
             if (location.state) {
               history.go(-1);
             } else {
               if (loginUser) {
-                dispatch(loginUser(nickname, token));
+                dispatch(loginUser(token, email, nickname));
               }
               history.replace('/projects');
             }

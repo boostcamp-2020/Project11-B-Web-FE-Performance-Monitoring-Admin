@@ -1,6 +1,7 @@
 export interface IUserLocalStorage {
   nickname?: string;
   token?: string;
+  email?: string;
 }
 
 export interface MatchParams {
@@ -123,8 +124,11 @@ export interface IGetSharesDataByIssueResponse {
     url: { name: string; count: number }[];
   };
 }
-
 export interface IPeriod {
   label: string;
   query: string;
+}
+export interface IAlertsUserProfile {
+  email: string;
+  isSelected: boolean;
 }
