@@ -205,12 +205,6 @@ function Sidebar(): React.ReactElement {
             <Box px={3}>Analysis</Box>
           </Box>
         </Tab>
-        <Tab to="/tutorial" activeClassName={style.activeStyle}>
-          <Box display="flex" alignItems="center" px={3}>
-            <ChildCareIcon />
-            <Box px={3}>Tutorial</Box>
-          </Box>
-        </Tab>
       </Box>
       <Tab to="/alerts" activeClassName={style.activeStyle}>
         <Box display="flex" alignItems="center" px={3}>
