@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Box, Button, styled } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
-import { RootState } from '../../modules';
-
-import service from '../../service';
 
 import { IUser } from '../../hooks/ProjectDetailHooks';
 
@@ -24,7 +20,6 @@ interface IProps {
 
 function ProjectsUserInfo(props: IProps): React.ReactElement {
   const { owner, users, setProjectOwner } = props;
-  const globalUser = useSelector((state: RootState) => state.user);
   const [changing, setChanging] = useState(false);
   const [targetUserName, setTargetUserName] = useState('');
   const startChangeOwner = () => {
@@ -51,46 +46,44 @@ function ProjectsUserInfo(props: IProps): React.ReactElement {
 
   return (
     <Box mt={10} display="flex" flex-direction="row" justifyContent="flex-start">
-      {owner.nickname === globalUser.nickname && (
-        <Box>
-          <Button
-            color="primary"
-            size="large"
-            onClick={() => startChangeOwner()}
-            style={{ textTransform: 'none' }}
-            disabled={users.length === 0}
-          >
-            Change Owner
-          </Button>
-          {changing === true && (
-            <Box ml={1} display="flex" flexDirection="row">
-              <CustomSelect value={targetUserName} onChange={changeTargetUser}>
-                {users.map((user) => (
-                  <MenuItem key={user._id} value={user.nickname}>
-                    {user.nickname}
-                  </MenuItem>
-                ))}
-              </CustomSelect>
-              <Box ml={3}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  startIcon={<SaveIcon />}
-                  onClick={saveChange}
-                >
-                  Save
-                </Button>
-              </Box>
-              <Box ml={1}>
-                <Button variant="contained" color="secondary" size="medium" onClick={cancelChange}>
-                  Cancel
-                </Button>
-              </Box>
+      <Box>
+        <Button
+          color="primary"
+          size="large"
+          onClick={() => startChangeOwner()}
+          style={{ textTransform: 'none' }}
+          disabled={users.length === 0}
+        >
+          Change Owner
+        </Button>
+        {changing === true && (
+          <Box ml={1} display="flex" flexDirection="row">
+            <CustomSelect value={targetUserName} onChange={changeTargetUser}>
+              {users.map((user) => (
+                <MenuItem key={user._id} value={user.nickname}>
+                  {user.nickname}
+                </MenuItem>
+              ))}
+            </CustomSelect>
+            <Box ml={3}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="medium"
+                startIcon={<SaveIcon />}
+                onClick={saveChange}
+              >
+                Save
+              </Button>
             </Box>
-          )}
-        </Box>
-      )}
+            <Box ml={1}>
+              <Button variant="contained" color="secondary" size="medium" onClick={cancelChange}>
+                Cancel
+              </Button>
+            </Box>
+          </Box>
+        )}
+      </Box>
     </Box>
   );
 }

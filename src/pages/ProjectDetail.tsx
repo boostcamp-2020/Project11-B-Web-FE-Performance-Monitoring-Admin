@@ -56,13 +56,17 @@ function ProjectDetail(): React.ReactElement {
           <ProjectDetailDialog dsn={dsn} />
           <ProjectUserInfo userName={project.owner.nickname} />
           <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
-          <InviteMember handleSend={handleSend} />
-          <ProjectDetailChangeOwner
-            users={project.users}
-            owner={project.owner}
-            setProjectOwner={setProjectOwner}
-          />
-          <ProjectDetailDelete title={project.name} projectId={project._id} />
+          {isOwner && (
+            <Box>
+              <InviteMember handleSend={handleSend} />
+              <ProjectDetailChangeOwner
+                users={project.users}
+                owner={project.owner}
+                setProjectOwner={setProjectOwner}
+              />
+              <ProjectDetailDelete title={project.name} projectId={project._id} />
+            </Box>
+          )}
         </Box>
       ) : (
         <Box mt={20} display="flex" flexDirection="column" alignItems="center">
