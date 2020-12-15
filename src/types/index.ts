@@ -129,6 +129,7 @@ export interface IPeriod {
   query: string;
 }
 export interface IAlertsUserProfile {
+  _id: string;
   email: string;
   isSelected: boolean;
 }
