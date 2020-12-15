@@ -10,6 +10,8 @@ import ShareCharts from '../components/Discover/ShareCharts';
 
 import ChartFrame from '../components/Discover/ChartFrame';
 import FilterPage from '../components/layout/FilterPage';
+import ChartFrame from '../components/common/ChartFrame';
+
 import { RootState } from '../modules';
 
 function Discover(): React.ReactElement {
