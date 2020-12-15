@@ -3,21 +3,24 @@ import Selector from './Selector';
 import { IProjectCardProps } from '../../types';
 
 interface IProps {
-  projectId: string;
+  project: IProjectCardProps | undefined;
   projectList: IProjectCardProps[];
   handleSelectProject: (event: React.ChangeEvent<{ name?: string; value: unknown }>) => void;
 }
 
 function AlertsProjectSelector(props: IProps): React.ReactElement {
-  const { projectId, handleSelectProject, projectList } = props;
-  const menuList = projectList.map((project) => ({ name: project.name, value: project._id }));
+  const { project, handleSelectProject, projectList } = props;
+  const menuList = projectList.map((proj) => ({ name: proj.name, value: proj._id }));
   return (
-    <Selector
-      title="Project"
-      value={projectId}
-      handleSelect={handleSelectProject}
-      menuList={menuList}
-    />
+    <>
+      <Selector
+        readOnly={false}
+        title="Project"
+        value={project ? project._id : ''}
+        handleSelect={handleSelectProject}
+        menuList={menuList}
+      />
+    </>
   );
 }
 
