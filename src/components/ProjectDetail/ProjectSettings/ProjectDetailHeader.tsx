@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, TextField, styled } from '@material-ui/core';
 
+const HeightBox = styled(Box)({
+  height: '55px',
+});
+
 const Description = styled(Box)({
   fontSize: '18px',
   margin: '10px 0',
 });
-
 interface IProps {
   title: string;
   desc: string;
@@ -36,7 +39,7 @@ function ProjectHeader(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <HeightBox display="flex" flexDirection="row" alignItems="center" height="90">
         {isEditing ? (
           <>
             <TextField
@@ -72,7 +75,7 @@ function ProjectHeader(props: IProps): React.ReactElement {
             )}
           </>
         )}
-      </Box>
+      </HeightBox>
       <Description>{desc}</Description>
     </>
   );
