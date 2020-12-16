@@ -10,7 +10,7 @@ import AlertsProjectSelector from '../components/Alerts/AlertsProjectSelector';
 import AlertsPeriodSelector from '../components/Alerts/AlertsPeriodSelector';
 import AlertsCountSelector from '../components/Alerts/AlertCountSelector';
 import AlertsConfig from '../components/Alerts/AlertsConfig';
-import { IAlertsUserProfile } from '../types';
+import { IAlertsUserProfile, IAlert } from '../types';
 import AlertList from '../components/Alerts/AlertList';
 import useAlert, { AlertState } from '../hooks/AlertHooks';
 import service from '../service';
@@ -27,15 +27,14 @@ const useStyles = makeStyles((theme) => ({
 function Alerts(): React.ReactElement {
   const user = useSelector((state: RootState) => state.user);
   const projectList = useSelector((state: RootState) => {
-    return state.projects.projects.filter((project) => project.owner.nickname === user.nickname);
+    return state.projects.projects;
   });
-  const projectIdList = projectList.map((proj) => proj._id);
   const classes = useStyles();
   const dispatch = useDispatch();
   const [alertState, useAlertSelector, setAlertState] = useAlert();
   const periodList = [
     { name: '1 day', value: '1d' },
-    { name: '3 day', value: '3d' },
+    { name: '3 days', value: '3d' },
     { name: '1 week', value: '1w' },
   ];
   const countList = [
@@ -47,11 +46,26 @@ function Alerts(): React.ReactElement {
     dispatch(initializeProjects());
   }, [dispatch]);
 
+  useEffect(() => {
+    const filteredProjectByUser = projectList.filter(
+      (project) => project.owner.nickname === user.nickname,
+    );
+    setAlertState({ projectList: filteredProjectByUser });
+    const projectIdList = filteredProjectByUser.map((proj) => proj._id);
+    console.log(projectIdList);
+    const fetchAlerts = async () => {
+      const { data } = await service.getAlerts(projectIdList);
+      console.log(data);
+      setAlertState({ alerts: data });
+    };
+    fetchAlerts();
+  }, [projectList, setAlertState, user]);
+
   const handleSelectProject = (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
   ): void => {
     const nextProjectId = event.target.value as string;
-    const selectProject = projectList.find((proj) => {
+    const selectProject = alertState.projectList.find((proj) => {
       return proj._id === nextProjectId;
     });
     if (selectProject) {
@@ -114,11 +128,24 @@ function Alerts(): React.ReactElement {
     );
   };
 
+  const handleAlerts = (alert: IAlert) => {
+    setAlertState((prev) => ({
+      ...prev,
+      alerts: prev.alerts ? prev.alerts.concat(alert) : [alert],
+    }));
+  };
+
   const handleSubmit = (users: string[]) => async (): Promise<void> => {
     const { period, count } = alertState;
     if (alertState.project && users.length) {
       setAlertState({ userList: [], project: undefined, period: '', count: 0 });
-      await service.addAlert({ projectId: alertState.project._id, users, period, count });
+      const { data } = await service.addAlert({
+        projectId: alertState.project._id,
+        users,
+        period,
+        count,
+      });
+      handleAlerts(data);
     }
   };
 
@@ -131,7 +158,7 @@ function Alerts(): React.ReactElement {
               <AlertsProjectSelector
                 project={alertState.project}
                 handleSelectProject={handleSelectProject}
-                projectList={projectList}
+                projectList={alertState.projectList}
               />
               {alertState.project && (
                 <>
@@ -161,7 +188,7 @@ function Alerts(): React.ReactElement {
             </Box>
           </Paper>
         </Box>
-        <AlertList projects={projectIdList} />
+        <AlertList alerts={alertState.alerts} />
       </Box>
     </Container>
   );
