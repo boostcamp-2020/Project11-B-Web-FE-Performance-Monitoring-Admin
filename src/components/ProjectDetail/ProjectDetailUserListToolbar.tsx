@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 interface ProjectDetailUserListToolbarProps {
   numSelected: number;
   selectedUsers: string[];
+  isOwner: boolean;
   deleteUsers: (selectedUids: string[]) => void;
 }
 
@@ -39,7 +40,10 @@ export default function ProjectDetailUserListToolbar(
   props: ProjectDetailUserListToolbarProps,
 ): React.ReactElement {
   const classes = useToolbarStyles();
-  const { numSelected, deleteUsers, selectedUsers } = props;
+  const { numSelected, isOwner, selectedUsers, deleteUsers } = props;
+
+  const enableDelete = numSelected > 0 && isOwner;
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -55,7 +59,7 @@ export default function ProjectDetailUserListToolbar(
           Users
         </Typography>
       )}
-      {numSelected > 0 && (
+      {enableDelete && (
         <Tooltip title="Delete" onClick={() => deleteUsers(selectedUsers)}>
           <IconButton aria-label="delete">
             <DeleteIcon />

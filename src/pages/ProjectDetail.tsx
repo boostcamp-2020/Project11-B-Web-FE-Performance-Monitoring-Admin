@@ -24,7 +24,7 @@ function ProjectDetail(): React.ReactElement {
   const match = useRouteMatch<MatchParams>('/project/:id');
   const projectId = match?.params.id as string;
 
-  const [project, setProjectName, setProjectUsers, setProjectOwner] = useProject(
+  const [project, isOwner, setProjectName, setProjectUsers, setProjectOwner] = useProject(
     projectId as string,
   );
 
@@ -51,18 +51,27 @@ function ProjectDetail(): React.ReactElement {
           <ProjectDetailHeader
             title={project.name}
             desc={project.description}
+            isOwner={isOwner}
             setProjectName={setProjectName}
           />
           <ProjectDetailDialog dsn={dsn} />
           <ProjectUserInfo userName={project.owner.nickname} />
-          <ProjectDetailUserList users={project.users} deleteUsers={deleteUsers} />
-          <InviteMember handleSend={handleSend} />
-          <ProjectDetailChangeOwner
+          <ProjectDetailUserList
             users={project.users}
-            owner={project.owner}
-            setProjectOwner={setProjectOwner}
+            isOwner={isOwner}
+            deleteUsers={deleteUsers}
           />
-          <ProjectDetailDelete title={project.name} projectId={project._id} />
+          {isOwner && (
+            <Box>
+              <InviteMember handleSend={handleSend} />
+              <ProjectDetailChangeOwner
+                users={project.users}
+                owner={project.owner}
+                setProjectOwner={setProjectOwner}
+              />
+              <ProjectDetailDelete title={project.name} projectId={project._id} />
+            </Box>
+          )}
         </Box>
       ) : (
         <Box mt={20} display="flex" flexDirection="column" alignItems="center">

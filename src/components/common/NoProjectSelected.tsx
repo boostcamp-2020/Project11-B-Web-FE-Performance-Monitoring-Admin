@@ -10,7 +10,7 @@ const FullPaper = styled(Paper)({
   padding: '30px',
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
   color: 'primary',
   gap: '20px',
 });
@@ -24,7 +24,7 @@ function NoProjectSelected(): React.ReactElement {
   return (
     <FullPaper>
       <img width="240" height="200" src={NoProjectWarningdImg} alt="No Projects" />
-      <Box display="flex" flexDirection="column" justifyContent="space-between">
+      <Box ml={5} display="flex" flexDirection="column" justifyContent="space-between">
         <Box display="flex" flexDirection="row" alignItems="center">
           <ErrorIcon style={{ fontSize: 60, marginRight: '10px' }} />
           <Typography variant="h1">{warningMessage} </Typography>
