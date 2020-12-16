@@ -26,13 +26,13 @@ function ProjectDetail(): React.ReactElement {
     <>
       {project !== undefined ? (
         <Box p={5} display="flex" flexDirection="column">
-          <ProjectSettings project={project} isOwner={isOwner} setProjectName={setProjectName} />
-          <ProjectMembers
+          <ProjectSettings
             project={project}
             isOwner={isOwner}
+            setProjectName={setProjectName}
             setProjectOwner={setProjectOwner}
-            setProjectUsers={setProjectUsers}
           />
+          <ProjectMembers project={project} isOwner={isOwner} setProjectUsers={setProjectUsers} />
         </Box>
       ) : (
         <Box mt={20} display="flex" flexDirection="column" alignItems="center">

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailDialog from './ProjectDetailDialog';
+import ProjectDetailChangeOwner from './ProjectDetailChangeOwner';
 import ProjectDetailDelete from './ProjectDetailDelete';
 
 const useStyles = makeStyles({
@@ -32,10 +33,11 @@ interface IProps {
   project: IProject;
   isOwner: boolean;
   setProjectName: (name: string) => Promise<void>;
+  setProjectOwner: (originUserId: string, targetUserId: string) => Promise<void>;
 }
 
 function ProjectSettings(props: IProps): React.ReactElement {
-  const { project, isOwner, setProjectName } = props;
+  const { project, isOwner, setProjectName, setProjectOwner } = props;
   const classes = useStyles();
 
   const dsn = `http://panopticon.gq/api/sdk/${project?._id}`;
@@ -50,6 +52,11 @@ function ProjectSettings(props: IProps): React.ReactElement {
           setProjectName={setProjectName}
         />
         <ProjectDetailDialog dsn={dsn} />
+        <ProjectDetailChangeOwner
+          users={project.users}
+          owner={project.owner}
+          setProjectOwner={setProjectOwner}
+        />
         {isOwner && <ProjectDetailDelete title={project.name} projectId={project._id} />}
       </Box>
     </Paper>
