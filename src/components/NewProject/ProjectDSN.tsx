@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { Box, Button, CircularProgress, Typography, styled } from '@material-ui/core';
+import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
 
 import CopyClipboardBox from '../common/CopyClipboardBox';
 import useProgress from '../../hooks/ProgressHooks';
 import service from '../../service';
 
-dark.hljs.padding = '10px';
-
-const makeCodeSnippet = (dsn: string) => {
-  return `import Panopticon from 'pan-opt';
-  
-const dsn = '${dsn}'
-
-Panopticon.init(dsn);`;
-};
+import CodeSnippet from './CodeSnippet';
 
 interface IProps {
   projectId: string;
@@ -64,9 +54,7 @@ function NewProjectDSN(props: IProps): React.ReactElement {
         </Box>
       </Box>
       <Typography>{descText}</Typography>
-      <SyntaxHighlighter language="javascript" style={dark}>
-        {makeCodeSnippet(dsn)}
-      </SyntaxHighlighter>
+      <CodeSnippet DSN={dsn} />
     </Box>
   );
 }
