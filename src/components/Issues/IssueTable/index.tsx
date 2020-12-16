@@ -12,6 +12,7 @@ import { IIssue } from '../../../types';
 import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
 import useInterval from '../../../hooks/UseInterval';
+import NoProjectSelected from '../../common/NoProjectSelected';
 
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
@@ -83,9 +84,11 @@ function IssueTable(): React.ReactElement {
             borderRadius=".2rem"
           >
             <IssueToolbar />
-            {issues.map((issue) => (
-              <IssueListItem key={issue._id} issue={issue} />
-            ))}
+            {issues[0] ? (
+              issues.map((issue) => <IssueListItem key={issue._id} issue={issue} />)
+            ) : (
+              <NoProjectSelected />
+            )}
             <Box display="flex" flexDirection="column" alignItems="center" p={1}>
               <Pagination count={totalPage} page={page} onChange={handlePageChange} />
             </Box>
