@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import NewProject from './pages/NewProject';
@@ -12,6 +11,7 @@ import IssueDetail from './pages/IssueDetail';
 import InviteProject from './pages/InviteProject';
 import Analysis from './pages/Analysis';
 import Error from './pages/Error';
+import Alerts from './pages/Alerts';
 
 function PublicRouter(): React.ReactElement {
   return (
@@ -38,6 +38,7 @@ function PrivateRouter(): React.ReactElement {
       <Route path="/issue/:id" exact component={IssueDetail} />
       <Route path="/analysis" exact component={Analysis} />
       <Route path="/error" exact component={Error} />
+      <Route path="/alerts" exact component={Alerts} />
       <Route path="/">
         <Redirect to="/projects" />
       </Route>

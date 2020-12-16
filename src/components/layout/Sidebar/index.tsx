@@ -138,7 +138,7 @@ function Sidebar(): React.ReactElement {
       return;
     }
     if (event.type === 'blur') {
-      if (email && email !== user.email) {
+      if (email && validateEmail(email)) {
         dispatch(thunkUpdateEmail(email));
         setInputEmail(false);
       } else {

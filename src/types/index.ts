@@ -129,6 +129,17 @@ export interface IPeriod {
   query: string;
 }
 export interface IAlertsUserProfile {
+  _id: string;
   email: string;
   isSelected: boolean;
+}
+
+export interface IGetAlertsResponse {
+  _id: string;
+  users: { _id: string; email: string; nickname: string }[];
+  period: string;
+  count: number;
+  sendedAt: Date;
+  lastestIssueId: string;
+  project: { _id: string; name: string };
 }
