@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
 
-import { IUser } from '../../hooks/ProjectDetailHooks';
+import { IUser } from '../../../hooks/ProjectDetailHooks';
 
 const CustomSelect = styled(Select)({
   margin: '0px',

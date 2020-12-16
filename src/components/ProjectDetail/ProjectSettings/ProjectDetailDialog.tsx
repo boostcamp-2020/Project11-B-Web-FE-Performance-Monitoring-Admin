@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Box from '@material-ui/core/Box';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import CopyClipboardBox from '../common/CopyClipboardBox';
+import CopyClipboardBox from '../../common/CopyClipboardBox';
 
 const useStyles = makeStyles({
   dialog: {

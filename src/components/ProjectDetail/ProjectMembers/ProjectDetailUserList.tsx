@@ -13,7 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import ProjectDetailUserListHead from './ProjectDetailUserListHead';
 import ProjectDetailUserListToolbar from './ProjectDetailUserListToolbar';
 
-import { IUser } from '../../hooks/ProjectDetailHooks';
+import { IUser } from '../../../hooks/ProjectDetailHooks';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import service from '../../service';
+import service from '../../../service';
 
 interface IProps {
   title: string;
