@@ -11,7 +11,7 @@ import ProjectDetailDelete from './ProjectDetailDelete';
 const useStyles = makeStyles({
   box: {
     position: 'relative',
-    margin: '16px',
+    margin: '16px 16px 16px 24px',
   },
 });
 export interface IUser {
