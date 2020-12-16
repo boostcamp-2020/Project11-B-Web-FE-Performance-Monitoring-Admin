@@ -158,9 +158,7 @@ function Main(): React.ReactElement {
             <h1>Feature</h1>
           </Box>
           {introduces.map(({ title, list, img }) => (
-            <Box key={title}>
-              <MainIntroduce title={title} list={list} img={img} />
-            </Box>
+            <MainIntroduce key={title} title={title} list={list} img={img} />
           ))}
         </Box>
       </Container>
