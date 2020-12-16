@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { faJs } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as JsIcon } from '../../../image/javascript.svg';
 import { IIssue } from '../../../types';
 import StatBox from './StatBox';
 
@@ -17,6 +16,12 @@ const useStyle = makeStyles({
     '&:last-child': {
       border: 'none',
     },
+  },
+  svg: {
+    width: '18px',
+    height: '18px',
+    borderRadius: '1px',
+    marginRight: '4px',
   },
 });
 
@@ -36,15 +41,13 @@ function IssueDetailHeader(props: IProps): React.ReactElement {
       <Box>
         <Box display="flex" gridGap={10}>
           <Typography variant="h2">{issue.type}</Typography>
-          {/* <Box>{`${issue.stack.function}(${issue.stack.filename}) `}</Box> */}
         </Box>
         <Box fontSize="14px">
           <Typography variant="subtitle1">{issue.message}</Typography>
         </Box>
-        <Box display="flex">
-          <Box mr={1}>
-            <FontAwesomeIcon size="lg" icon={faJs} color="#f0db4f" />
-          </Box>
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <JsIcon className={styles.svg} />
+
           <Box mr={1}>{issue.project.name}</Box>
         </Box>
       </Box>
