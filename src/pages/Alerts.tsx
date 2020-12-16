@@ -52,10 +52,8 @@ function Alerts(): React.ReactElement {
     );
     setAlertState({ projectList: filteredProjectByUser });
     const projectIdList = filteredProjectByUser.map((proj) => proj._id);
-    console.log(projectIdList);
     const fetchAlerts = async () => {
       const { data } = await service.getAlerts(projectIdList);
-      console.log(data);
       setAlertState({ alerts: data });
     };
     fetchAlerts();
