@@ -208,7 +208,7 @@ function Sidebar(): React.ReactElement {
                 <ExitToAppIcon />
               </Box>
             </Box>
-            <Box color="white">
+            <Box color="white" style={{ whiteSpace: 'nowrap' }}>
               {inputEmail ? (
                 <EmailInput
                   value={email || ''}
