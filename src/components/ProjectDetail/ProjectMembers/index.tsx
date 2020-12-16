@@ -46,7 +46,7 @@ function ProjectMembers(props: IProps): React.ReactElement {
   return (
     <div>
       <ProjectDetailUserList users={project.users} isOwner={isOwner} deleteUsers={deleteUsers} />
-      <InviteMember handleSend={handleSend} />
+      {isOwner && <InviteMember handleSend={handleSend} />}
     </div>
   );
 }
