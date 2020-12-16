@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailDialog from './ProjectDetailDialog';
+import ProjectDetailOwner from './ProjectDetailOwner';
 import ProjectDetailChangeOwner from './ProjectDetailChangeOwner';
 import ProjectDetailDelete from './ProjectDetailDelete';
 
@@ -52,12 +53,22 @@ function ProjectSettings(props: IProps): React.ReactElement {
           setProjectName={setProjectName}
         />
         <ProjectDetailDialog dsn={dsn} />
-        <ProjectDetailChangeOwner
-          users={project.users}
-          owner={project.owner}
-          setProjectOwner={setProjectOwner}
-        />
-        {isOwner && <ProjectDetailDelete title={project.name} projectId={project._id} />}
+        <ProjectDetailOwner name={project.owner.nickname} />
+        {isOwner && (
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="flex-end"
+          >
+            <ProjectDetailChangeOwner
+              users={project.users}
+              owner={project.owner}
+              setProjectOwner={setProjectOwner}
+            />
+            <ProjectDetailDelete title={project.name} projectId={project._id} />
+          </Box>
+        )}
       </Box>
     </Paper>
   );
