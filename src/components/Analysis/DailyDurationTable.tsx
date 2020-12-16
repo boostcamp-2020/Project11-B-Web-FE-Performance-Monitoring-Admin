@@ -53,8 +53,8 @@ function DailyDurationTable(props: IProps): React.ReactElement {
                     <TableCell component="th" scope="row" align="center">
                       {`${row._id.year}-${row._id.month}-${row._id.day}`}
                     </TableCell>
-                    <TableCell align="center">{row.sum_duration / 1000}</TableCell>
-                    <TableCell align="center"> {row.avg_duration / 1000}</TableCell>
+                    <TableCell align="center">{(row.sum_duration / 1000).toFixed(1)}</TableCell>
+                    <TableCell align="center">{(row.avg_duration / 1000).toFixed(1)}</TableCell>
                     <TableCell align="center"> {row.count}</TableCell>
                   </TableRow>
                 ))}
