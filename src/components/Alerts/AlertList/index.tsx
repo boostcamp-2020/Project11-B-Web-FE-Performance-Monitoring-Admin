@@ -10,7 +10,11 @@ interface IProps {
 function AlertList(props: IProps): React.ReactElement {
   const { alerts } = props;
 
-  return <Box flex="1">{alerts && alerts.map((alert) => <Accordion alert={alert} />)}</Box>;
+  return (
+    <Box flex="1">
+      {alerts && alerts.map((alert) => <Accordion key={alert._id} alert={alert} />)}
+    </Box>
+  );
 }
 
 export default AlertList;
