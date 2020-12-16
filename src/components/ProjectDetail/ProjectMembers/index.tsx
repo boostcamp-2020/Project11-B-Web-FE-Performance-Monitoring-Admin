@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ProjectUserInfo from '../../Projects/ProjectsUserInfo';
 import ProjectDetailUserList from './ProjectDetailUserList';
 import InviteMember from '../../NewProject/InviteMember';
 import service from '../../../service';
@@ -46,7 +45,6 @@ function ProjectMembers(props: IProps): React.ReactElement {
 
   return (
     <div>
-      <ProjectUserInfo userName={project.owner.nickname} />
       <ProjectDetailUserList users={project.users} isOwner={isOwner} deleteUsers={deleteUsers} />
       <InviteMember handleSend={handleSend} />
     </div>
