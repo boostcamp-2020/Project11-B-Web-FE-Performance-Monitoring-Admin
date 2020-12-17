@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, Typography } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import ProjectSelector from '../components/common/ProjectSelector';
 
 import DailyDurationTable from '../components/Analysis/DailyDurationTable';
 import PageDurationTable from '../components/Analysis/PageDurationTable';
