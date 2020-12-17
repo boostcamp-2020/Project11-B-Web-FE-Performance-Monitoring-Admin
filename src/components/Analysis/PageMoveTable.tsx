@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Table,
-  Typography,
   TableBody,
   TableCell,
   TableContainer,
@@ -65,7 +64,7 @@ function SessionTable(props: IProps): React.ReactElement {
           <TableBody>
             {pageMoveData &&
               pageMoveData.map((row: any) => (
-                <TableRow key={row.name}>
+                <TableRow key={row._id.prevLocation + row._id.presentLocation}>
                   <TableCell component="th" scope="row" align="center">
                     {row._id.prevLocation}
                   </TableCell>

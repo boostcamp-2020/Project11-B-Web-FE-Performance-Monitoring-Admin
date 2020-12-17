@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import SaveIcon from '@material-ui/icons/Save';
 
-import { IUser } from '../../hooks/ProjectDetailHooks';
+import { IUser } from '../../../hooks/ProjectDetailHooks';
 
 const CustomSelect = styled(Select)({
   margin: '0px',
@@ -45,45 +45,44 @@ function ProjectsUserInfo(props: IProps): React.ReactElement {
   };
 
   return (
-    <Box mt={10} display="flex" flex-direction="row" justifyContent="flex-start">
-      <Box>
-        <Button
-          color="primary"
-          size="large"
-          onClick={() => startChangeOwner()}
-          style={{ textTransform: 'none' }}
-          disabled={users.length === 0}
-        >
-          Change Owner
-        </Button>
-        {changing === true && (
-          <Box ml={1} display="flex" flexDirection="row">
-            <CustomSelect value={targetUserName} onChange={changeTargetUser}>
-              {users.map((user) => (
-                <MenuItem key={user._id} value={user.nickname}>
-                  {user.nickname}
-                </MenuItem>
-              ))}
-            </CustomSelect>
-            <Box ml={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="medium"
-                startIcon={<SaveIcon />}
-                onClick={saveChange}
-              >
-                Save
-              </Button>
-            </Box>
-            <Box ml={1}>
-              <Button variant="contained" color="secondary" size="medium" onClick={cancelChange}>
-                Cancel
-              </Button>
-            </Box>
+    <Box display="flex" flex-direction="row" justifyContent="flex-start">
+      <Button
+        color="primary"
+        size="large"
+        onClick={() => startChangeOwner()}
+        style={{ textTransform: 'none' }}
+        disabled={users.length === 0}
+        variant="outlined"
+      >
+        Change Owner
+      </Button>
+      {changing === true && (
+        <Box ml={1} display="flex" flexDirection="row">
+          <CustomSelect value={targetUserName} onChange={changeTargetUser}>
+            {users.map((user) => (
+              <MenuItem key={user._id} value={user.nickname}>
+                {user.nickname}
+              </MenuItem>
+            ))}
+          </CustomSelect>
+          <Box ml={3}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="medium"
+              startIcon={<SaveIcon />}
+              onClick={saveChange}
+            >
+              Save
+            </Button>
           </Box>
-        )}
-      </Box>
+          <Box ml={1}>
+            <Button variant="contained" color="secondary" size="medium" onClick={cancelChange}>
+              Cancel
+            </Button>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }

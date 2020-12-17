@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { IGetAlertsResponse } from '../types';
+import { IAlert } from '../types';
 
 interface IAddAlertParams {
   projectId: string;
@@ -9,8 +9,8 @@ interface IAddAlertParams {
 }
 
 export interface IResponse {
-  addAlert: (params: IAddAlertParams) => Promise<AxiosResponse>;
-  getAlerts: (projects: string[]) => Promise<AxiosResponse<IGetAlertsResponse[]>>;
+  addAlert: (params: IAddAlertParams) => Promise<AxiosResponse<IAlert>>;
+  getAlerts: (projects: string[]) => Promise<AxiosResponse<IAlert[]>>;
 }
 
 export default (apiRequest: AxiosInstance): IResponse => {

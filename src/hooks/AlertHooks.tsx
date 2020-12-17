@@ -1,21 +1,25 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import _ from 'lodash';
-import { IProjectCardProps, IAlertsUserProfile } from '../types';
+import { IProjectCardProps, IAlertsUserProfile, IAlert } from '../types';
 
 export type AlertState = {
+  projectList: IProjectCardProps[];
   project?: IProjectCardProps;
   period: string;
   count: number;
   userList: IAlertsUserProfile[];
+  alerts?: IAlert[];
 };
 
 export type UserAlertSelector = (fn: UseAlertSelectorFunction) => SetAlertStateParams;
 
 type SetAlertStateParams = {
+  projectList?: IProjectCardProps[];
   project?: IProjectCardProps;
   period?: string;
   count?: number;
   userList?: IAlertsUserProfile[];
+  alerts?: IAlert[];
 };
 
 type SetAlertStateCallback = (prev: AlertState) => AlertState;
@@ -27,10 +31,12 @@ type UseAlertReturn = [AlertState, UserAlertSelector, SetAlertState];
 
 const useAlert = (): UseAlertReturn => {
   const initialState: AlertState = {
+    projectList: [],
     project: undefined,
     period: '',
     count: 0,
     userList: [],
+    alerts: [],
   };
 
   const [alertState, setState] = useState<AlertState>(initialState);
@@ -38,7 +44,7 @@ const useAlert = (): UseAlertReturn => {
   const useAlertSelector = (fn: UseAlertSelectorFunction) => {
     return fn(alertState);
   };
-  const setAlertState = (params: SetAlertStateParams | SetAlertStateCallback) => {
+  const setAlertState = useCallback((params: SetAlertStateParams | SetAlertStateCallback) => {
     if (typeof params === 'function') {
       setState((prev) => params(_.cloneDeep(prev)));
       return;
@@ -47,7 +53,7 @@ const useAlert = (): UseAlertReturn => {
       const copied = _.cloneDeep(prev);
       return { ...copied, ...params };
     });
-  };
+  }, []);
   return [alertState, useAlertSelector, setAlertState];
 };
 

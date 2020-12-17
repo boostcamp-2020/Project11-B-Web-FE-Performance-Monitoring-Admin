@@ -3,8 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Box from '@material-ui/core/Box';
+<<<<<<< HEAD:src/components/ProjectDetail/ProjectDetailDialog.tsx
 import CopyClipboardBox from '../common/CopyClipboardBox';
 import CodeSnippet from '../NewProject/CodeSnippet';
+=======
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import CopyClipboardBox from '../../common/CopyClipboardBox';
+>>>>>>> develop:src/components/ProjectDetail/ProjectSettings/ProjectDetailDialog.tsx
 
 const useStyles = makeStyles({
   button: {

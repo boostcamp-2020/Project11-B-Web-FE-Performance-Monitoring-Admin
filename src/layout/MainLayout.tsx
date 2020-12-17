@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/layout/Sidebar';
 import { PrivateRouter, PublicRouter } from '../Router';
+import { RootState } from '../modules';
 
 const useStyle = makeStyles({
   root: {
@@ -19,8 +21,9 @@ const description = 'Panopticon - 에러 로그 모니터링 분석 플랫폼';
 
 function MainLayout(): React.ReactElement {
   const classes = useStyle();
+  const user = useSelector((state: RootState) => state.user);
   const token = localStorage.getItem('token');
-  return token ? (
+  return user.token || token ? (
     <div className={classes.root}>
       <Helmet
         meta={[
