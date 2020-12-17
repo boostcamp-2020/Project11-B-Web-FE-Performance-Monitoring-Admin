@@ -2,23 +2,16 @@ import React from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailDialog from './ProjectDetailDialog';
-<<<<<<< HEAD
-=======
+import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailOwner from './ProjectDetailOwner';
 import ProjectDetailChangeOwner from './ProjectDetailChangeOwner';
->>>>>>> develop
 import ProjectDetailDelete from './ProjectDetailDelete';
 
 const useStyles = makeStyles({
   box: {
     position: 'relative',
-<<<<<<< HEAD
-    margin: '16px',
-=======
     margin: '16px 16px 16px 24px',
->>>>>>> develop
   },
 });
 export interface IUser {
@@ -41,18 +34,11 @@ interface IProps {
   project: IProject;
   isOwner: boolean;
   setProjectName: (name: string) => Promise<void>;
-<<<<<<< HEAD
-}
-
-function ProjectSettings(props: IProps): React.ReactElement {
-  const { project, isOwner, setProjectName } = props;
-=======
   setProjectOwner: (originUserId: string, targetUserId: string) => Promise<void>;
 }
 
 function ProjectSettings(props: IProps): React.ReactElement {
   const { project, isOwner, setProjectName, setProjectOwner } = props;
->>>>>>> develop
   const classes = useStyles();
 
   const dsn = `http://panopticon.gq/api/sdk/${project?._id}`;
@@ -67,9 +53,6 @@ function ProjectSettings(props: IProps): React.ReactElement {
           setProjectName={setProjectName}
         />
         <ProjectDetailDialog dsn={dsn} />
-<<<<<<< HEAD
-        {isOwner && <ProjectDetailDelete title={project.name} projectId={project._id} />}
-=======
         <ProjectDetailOwner name={project.owner.nickname} />
         {isOwner && (
           <Box
@@ -86,7 +69,6 @@ function ProjectSettings(props: IProps): React.ReactElement {
             <ProjectDetailDelete title={project.name} projectId={project._id} />
           </Box>
         )}
->>>>>>> develop
       </Box>
     </Paper>
   );
