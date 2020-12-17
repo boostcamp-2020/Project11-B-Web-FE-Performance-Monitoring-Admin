@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
+import _ from 'lodash';
 import Pagination from '@material-ui/lab/Pagination';
-import { Box, Button, Paper } from '@material-ui/core';
+import { Box, Button, Paper, TextField } from '@material-ui/core';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { useSelector } from 'react-redux';
 import TimerBtn from '../../common/TimerBtn';
@@ -17,7 +17,8 @@ import NoProjectSelected from '../../common/NoProjectSelected';
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
-
+  const [query, setQuery] = useState<string[]>([]);
+  const [input, setInput] = useState('');
   const [totalPage, setTotalPage] = useState<number>();
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
@@ -46,25 +47,51 @@ function IssueTable(): React.ReactElement {
     arrayToCSV(rows);
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setInput(event.target.value);
+    const strArr = event.target.value.split(',');
+    const temp: any[] = strArr.map((str) => {
+      const splited = str.split(':');
+      const key = splited[0];
+      const val = splited[1];
+      const obj: any = {};
+      obj[`${key}`] = val;
+      if (!key || !val) {
+        return undefined;
+      }
+      // obj.splited[0] = splited[1];
+      return JSON.stringify(obj) as string;
+    });
+    if (!temp[0]) {
+      return setQuery([]);
+    }
+
+    return setQuery(temp as string[]);
+  };
   const getData = useCallback(async () => {
     if (selectedProjectsIds[0] === undefined) return;
 
-    const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod);
-    if (res.data.data === undefined) {
+    const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod, query);
+
+    if (!res.data.data) {
       setTotalPage(0);
       setIssues([]);
       return;
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  }, [selectedProjectsIds, page, selectedPeriod]);
-  useInterval(() => getData(), 10000);
+  }, [selectedProjectsIds, page, input]);
+  const delayedQuery = useCallback(_.debounce(getData, 1000), [input]);
+
+  useInterval(() => getData(), 20000);
 
   useEffect(() => {
-    getData();
-  }, [selectedProjectsIds, page, getData]);
+    delayedQuery();
+    return delayedQuery.cancel;
+  }, [selectedProjectsIds, page, delayedQuery]);
   return (
     <Box my={1} display="flex" flexDirection="column">
+      <TextField id="tag-fillter" label="Tag-fillter" onChange={handleChange} variant="outlined" />
       <Box flexGrow={1}>
         <Box my={1} display="flex" justifyContent="flex-end">
           <Box mr={1}>
