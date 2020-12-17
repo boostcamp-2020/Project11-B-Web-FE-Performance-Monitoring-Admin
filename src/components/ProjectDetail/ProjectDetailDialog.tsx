@@ -7,6 +7,11 @@ import CopyClipboardBox from '../common/CopyClipboardBox';
 import CodeSnippet from '../NewProject/CodeSnippet';
 
 const useStyles = makeStyles({
+  button: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
   dialog: {
     padding: '30px 20px',
   },
@@ -30,7 +35,12 @@ export default function ProjectDNSDialog(props: IProps): React.ReactElement {
 
   return (
     <Box>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleClickOpen}
+        className={classes.button}
+      >
         Show DSN
       </Button>
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
