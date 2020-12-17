@@ -20,8 +20,6 @@ function ProjectDetail(): React.ReactElement {
     projectId as string,
   );
 
-  const a = setProjectUsers;
-
   return (
     <>
       {project !== undefined ? (
