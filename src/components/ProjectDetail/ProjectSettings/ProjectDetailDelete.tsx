@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 import { Box, Button, TextField } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import service from '../../service';
+import service from '../../../service';
 
+const useStyles = makeStyles({
+  root: {
+    height: '60px',
+  },
+});
 interface IProps {
   title: string;
   projectId: string;
@@ -13,6 +19,7 @@ interface IProps {
 
 export default function ProjectDetailDelete(props: IProps): React.ReactElement {
   const { title, projectId }: IProps = props;
+  const classes = useStyles();
   const [inputTitle, setInputTitle] = useState('');
   const [showDelete, setShowDelete] = useState(false);
 
@@ -35,7 +42,7 @@ export default function ProjectDetailDelete(props: IProps): React.ReactElement {
   };
 
   return (
-    <>
+    <Box className={classes.root}>
       <form noValidate autoComplete="off">
         <Box display="flex" flexDirection="column" alignItems="start">
           {showDelete ? (
@@ -74,6 +81,6 @@ export default function ProjectDetailDelete(props: IProps): React.ReactElement {
           )}
         </Box>
       </form>
-    </>
+    </Box>
   );
 }
