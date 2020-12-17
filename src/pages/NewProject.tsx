@@ -31,9 +31,8 @@ function NewProject(): React.ReactElement {
       const response = await service.addProject(project);
       setProjectId(response.data.projectId);
       handleNext();
-    } catch (e) {
-      console.log(e);
-    }
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
   };
 
   const handleSend = async (emails: string[]) => {

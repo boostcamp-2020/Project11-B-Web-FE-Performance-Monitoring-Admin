@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Box,
   Table,
-  Typography,
   TableBody,
   TableCell,
   TableContainer,
@@ -10,8 +9,6 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-
-import arrayToCSV from '../../utils/arrayToCSV';
 
 interface IPerDay {
   _id: {
