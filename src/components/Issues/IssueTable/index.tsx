@@ -84,7 +84,7 @@ function IssueTable(): React.ReactElement {
             borderRadius=".2rem"
           >
             <IssueToolbar />
-            {issues[0] ? (
+            {selectedProjectsIds[0] ? (
               issues.map((issue) => <IssueListItem key={issue._id} issue={issue} />)
             ) : (
               <NoProjectSelected />
