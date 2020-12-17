@@ -1,3 +1,11 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+// IE9
+import 'react-app-polyfill/ie9';
+// IE11
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +20,12 @@ import rootReducer from './modules';
 import App from './App';
 import GlobalTheme from './globalStyle';
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
+const middleWares =
+  process.env.NODE_ENV === 'development'
+    ? composeWithDevTools(applyMiddleware(ReduxThunk, logger))
+    : applyMiddleware(ReduxThunk);
+
+const store = createStore(rootReducer, middleWares);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Tabs, Tab } from '@material-ui/core';
+
 import { useSelector } from 'react-redux';
 
 import TabPanel from './TabPanel';
@@ -7,31 +8,35 @@ import PieChart from './PieChart';
 import Progress from '../../common/Progress';
 import service from '../../../service';
 import { RootState } from '../../../modules';
+import useProgress from '../../../hooks/ProgressHooks';
 
 interface IProps {
-  period: string;
   filterQuery: Record<string, string[] | undefined>;
 }
 
 function ShareCharts(props: IProps): React.ReactElement {
-  const { period, filterQuery } = props;
+  const { filterQuery } = props;
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>();
+  const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
 
+  const [showProgress, displayProgress, hideProgress] = useProgress();
   const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
 
   useEffect(() => {
     (async () => {
+      displayProgress();
       const res = await service.getSharesData({
         projectIds: selectedProjects,
         type: 'recent',
-        period,
+        period: selectedPeriod,
         filters: filterQuery,
       });
+      hideProgress();
       setColumns(res.data);
     })();
-  }, [selectedProjects, period, filterQuery]);
+  }, [selectedProjects, selectedPeriod, filterQuery]);
 
   const handleChange = (event: any, newValue: number) => {
     setCurrTab(newValue);
@@ -95,11 +100,11 @@ function ShareCharts(props: IProps): React.ReactElement {
     ];
   };
 
-  return columns === undefined ? (
+  return showProgress ? (
     <Progress />
   ) : (
     <Box>
-      {selectedProjects.length > 0 && (
+      {selectedProjects.length > 0 && columns !== undefined && (
         <Box>
           <Tabs value={currTab} onChange={handleChange}>
             {getPieChartInputs(columns).map((input, index) => (

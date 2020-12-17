@@ -1,40 +1,32 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import qs from 'qs';
 import { useDispatch } from 'react-redux';
-import PanopticonLogo from '../image/panopticon.png';
-import service from '../service';
-import { loginUser } from '../modules/user';
+import service from '../../service';
+import { loginUser } from '../../modules/user';
 
 const useStyles = makeStyles((theme) => ({
-  grid: {
-    marginTop: '20px',
-  },
-  button: {
-    backgroundColor: '#3A3A3A',
-    margin: theme.spacing(4),
+  button: (props: IProps) => ({
+    backgroundColor: props.color === 'white' ? '#eeeeee' : 'transparent',
     textTransform: 'none',
-    fontSize: '20px',
-    color: 'white',
-    fontWeight: 600,
+    fontSize: props.large ? '25px' : '16px',
+    color: props.color === 'white' ? 'black' : '#eeeeee',
+    borderColor: '#eee',
+    width: '100%',
+    fontWeight: props.large ? 600 : 500,
+    borderWidth: '2px',
     '&:hover': {
       backgroundColor: '#000000',
+      borderColor: '#000000',
       color: 'white',
     },
-  },
+  }),
   icon: {
     marginRight: '10px',
-  },
-  img: {
-    width: '240px',
-    height: 'auto',
-    margin: '0 auto',
   },
 }));
 
@@ -45,7 +37,12 @@ type IWindowProps = {
   height: number;
 };
 
-const Login = (): React.ReactElement => {
+interface IProps {
+  color: string;
+  large: boolean;
+}
+const Login = (props: IProps): React.ReactElement => {
+  const { color, large } = props;
   const dispatch = useDispatch();
 
   const OAUTH_URL = `https://github.com/login/oauth/authorize?client_id=${
@@ -97,18 +94,19 @@ const Login = (): React.ReactElement => {
           if (!code) return;
           clearTimer();
           const { data } = await service.login(code as string);
-          if (!data.token || !data.nickname) {
+          if (!data.token) {
             history.replace('/');
           } else {
             externalWindow.close();
-            const { nickname, token } = data;
+            const { token, email, nickname } = data;
             localStorage.setItem('token', token);
+            localStorage.setItem('email', email);
             localStorage.setItem('nickname', nickname);
             if (location.state) {
               history.go(-1);
             } else {
               if (loginUser) {
-                dispatch(loginUser(nickname, token));
+                dispatch(loginUser(token, email, nickname));
               }
               history.replace('/projects');
             }
@@ -125,27 +123,12 @@ const Login = (): React.ReactElement => {
     }
   });
 
-  const classes = useStyles();
+  const classes = useStyles(props);
   return (
-    <Grid
-      container
-      direction="column"
-      justify="flex-start"
-      alignItems="center"
-      className={classes.grid}
-    >
-      <Box height="100vh" pt={20}>
-        <Paper elevation={3}>
-          <Box display="flex" flexDirection="column" p={10}>
-            <img className={classes.img} src={PanopticonLogo} alt="logo" />
-            <Button onClick={handleClick} variant="contained" className={classes.button}>
-              <GitHubIcon fontSize="inherit" className={classes.icon} />
-              Sign in With GitHub
-            </Button>
-          </Box>
-        </Paper>
-      </Box>
-    </Grid>
+    <Button onClick={handleClick} variant="outlined" className={classes.button}>
+      <GitHubIcon fontSize="inherit" className={classes.icon} />
+      Sign in With GitHub
+    </Button>
   );
 };
 export default Login;

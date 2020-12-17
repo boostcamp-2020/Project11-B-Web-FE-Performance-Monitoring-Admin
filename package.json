@@ -22,9 +22,6 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-brands-svg-icons": "^5.15.1",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.13",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
@@ -49,11 +46,14 @@
     "billboard.js": "^2.2.0-next.2",
     "clipboard-polyfill": "^3.0.1",
     "clsx": "^1.1.1",
+    "core-js": "^3.8.1",
     "eslint-import-resolver-typescript": "^2.3.0",
     "http-proxy-middleware": "^1.0.6",
     "lodash": "^4.17.20",
+    "material-ui-image": "^3.3.1",
     "qs": "^6.9.4",
     "react": "^17.0.1",
+    "react-app-polyfill": "^2.0.0",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-redux": "^7.2.2",
@@ -64,6 +64,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "regenerator-runtime": "^0.13.7",
     "typescript": "^4.0.5",
     "validator": "^13.5.1",
     "web-vitals": "^0.2.4"
@@ -72,6 +73,7 @@
     "@types/react-redux": "^7.1.11",
     "@typescript-eslint/eslint-plugin": "^4.8.0",
     "@typescript-eslint/parser": "^4.8.0",
+    "cra-bundle-analyzer": "^0.1.0",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^6.15.0",
@@ -95,6 +97,8 @@
       "not op_mini all"
     ],
     "development": [
+      "ie 9",
+      "ie 11",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"

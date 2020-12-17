@@ -1,6 +1,7 @@
 export interface IUserLocalStorage {
   nickname?: string;
   token?: string;
+  email?: string;
 }
 
 export interface MatchParams {
@@ -83,6 +84,7 @@ export interface IProjectCardProps {
 export interface IProjectsModule {
   projects: IProjectCardProps[];
   selectedProjectsIds: string[];
+  selectedPeriod: string;
 }
 
 export interface ICrimesMeta {
@@ -121,4 +123,23 @@ export interface IGetSharesDataByIssueResponse {
     os: { name: string; count: number }[];
     url: { name: string; count: number }[];
   };
+}
+export interface IPeriod {
+  label: string;
+  query: string;
+}
+export interface IAlertsUserProfile {
+  _id: string;
+  email: string;
+  isSelected: boolean;
+}
+
+export interface IAlert {
+  _id: string;
+  users: { _id: string; email: string; nickname: string }[];
+  period: string;
+  count: number;
+  sendedAt: Date;
+  lastestIssueId: string;
+  project: { _id: string; name: string };
 }

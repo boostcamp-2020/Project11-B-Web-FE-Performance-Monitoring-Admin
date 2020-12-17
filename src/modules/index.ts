@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import projects from './projects';
+import projects from './filters';
 import issue from './issue';
 import crime from './crime';
 import user from './user';

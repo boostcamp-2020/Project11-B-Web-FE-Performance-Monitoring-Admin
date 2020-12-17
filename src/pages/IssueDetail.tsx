@@ -48,7 +48,6 @@ function IssueDetail(): React.ReactElement {
             <Tabs indicatorColor="primary" value={tabIndex} onChange={handleChangeTab}>
               <Tab label="DETAILS" id="tab-0" />
               <Tab label="EVENTS" id="tab-1" />
-              <Tab label="TAGS" id="tab-2" />
             </Tabs>
           </AppBar>
           <Box display="flex">
@@ -65,9 +64,6 @@ function IssueDetail(): React.ReactElement {
               </TabPanel>
               <TabPanel value={tabIndex} index={1}>
                 {issue && <Crimes issueId={issueId} setCrimeById={setCrimeById} />}
-              </TabPanel>
-              <TabPanel value={tabIndex} index={2}>
-                TAGS
               </TabPanel>
             </Box>
             <Box width="400px">

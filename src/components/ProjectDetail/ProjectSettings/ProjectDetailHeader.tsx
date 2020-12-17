@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { Box, Typography, Button, TextField, styled } from '@material-ui/core';
 
+const HeightBox = styled(Box)({
+  height: '55px',
+});
+
 const Description = styled(Box)({
   fontSize: '18px',
   margin: '10px 0',
 });
-
 interface IProps {
   title: string;
   desc: string;
+  isOwner: boolean;
   setProjectName: (name: string) => void;
 }
 
 function ProjectHeader(props: IProps): React.ReactElement {
-  const { title, desc, setProjectName } = props;
+  const { title, desc, isOwner, setProjectName } = props;
   const [isEditing, setIsEditing] = useState(false);
   const [titleInput, setTitleInput] = useState('');
 
@@ -35,7 +39,7 @@ function ProjectHeader(props: IProps): React.ReactElement {
 
   return (
     <>
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <HeightBox display="flex" flexDirection="row" alignItems="center" height="90">
         {isEditing ? (
           <>
             <TextField
@@ -62,14 +66,16 @@ function ProjectHeader(props: IProps): React.ReactElement {
             <Box display="flex" flexDirection="row" justifyContent="space-between">
               <Typography variant="h1">{title}</Typography>
             </Box>
-            <Box ml={5}>
-              <Button color="primary" size="small" onClick={() => startEdit(title)}>
-                Edit
-              </Button>
-            </Box>
+            {isOwner && (
+              <Box ml={5}>
+                <Button color="primary" size="small" onClick={() => startEdit(title)}>
+                  Edit
+                </Button>
+              </Box>
+            )}
           </>
         )}
-      </Box>
+      </HeightBox>
       <Description>{desc}</Description>
     </>
   );

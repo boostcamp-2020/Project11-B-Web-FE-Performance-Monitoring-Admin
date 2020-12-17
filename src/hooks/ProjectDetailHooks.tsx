@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import service from '../service';
+import { RootState } from '../modules';
 
 export interface IUser {
   projects: [];
@@ -20,11 +22,15 @@ export interface IProject {
 
 const useProject = (projectId: string) => {
   const [project, setProject] = useState<IProject>();
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+
+  const currentUser = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
     (async () => {
       const newProject = await service.getProject(projectId);
       setProject(newProject.data);
+      setIsOwner(currentUser.nickname === newProject.data.owner.nickname);
     })();
   }, []);
 
@@ -45,6 +51,7 @@ const useProject = (projectId: string) => {
       return newProject;
     });
   };
+
   const setProjectOwner = async (originUserId: string, targetUserId: string) => {
     await service.updateProjectOwner(projectId, { originUserId, targetUserId });
     const res = await service.getUser(targetUserId);
@@ -53,7 +60,10 @@ const useProject = (projectId: string) => {
       newProject.owner = res.data;
       return newProject;
     });
+    setIsOwner(currentUser.nickname === res.data.nickname);
   };
-  return [project, setProjectName, setProjectUsers, setProjectOwner] as const;
+
+  return [project, isOwner, setProjectName, setProjectUsers, setProjectOwner] as const;
 };
+
 export default useProject;

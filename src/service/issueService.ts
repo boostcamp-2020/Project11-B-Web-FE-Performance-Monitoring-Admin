@@ -1,12 +1,13 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
-export interface Irequest {
-  getIssue: () => Promise<AxiosRequestConfig>;
-}
+import { AxiosInstance, AxiosResponse } from 'axios';
+import qs from 'querystring';
 
 export interface IIssueService {
   getIssue: (id: string) => Promise<AxiosResponse>;
-  getIssues: (query: string) => Promise<AxiosResponse>;
+  getIssues: (
+    selectedProjectsIds: string[],
+    page: number,
+    period: string,
+  ) => Promise<AxiosResponse>;
   getCrime: (id: string) => Promise<AxiosResponse>;
   getCrimes: (id: string, pageNum: number) => Promise<AxiosResponse>;
 }
@@ -16,7 +17,12 @@ export default (apiRequest: AxiosInstance): IIssueService => {
     return apiRequest.get(`/api/issue/${id}`);
   };
 
-  const getIssues = (query: string) => {
+  const getIssues = (selectedProjectsIds: string[], page: number, period: string) => {
+    const query = `?${qs.stringify({
+      page,
+      projectId: selectedProjectsIds,
+      period,
+    })}`;
     return apiRequest.get(`/api/issues${query}`);
   };
 

@@ -14,9 +14,12 @@ function InviteProject(): React.ReactElement {
   useEffect(() => {
     const nickname = localStorage.getItem('nickname');
     const token = localStorage.getItem('token');
-    if (key && nickname && token) {
+    const email = localStorage.getItem('email');
+    if (key && nickname && token && email) {
       const encodeKey = encodeURIComponent(key as string);
-      dispatch(acceptInvitation(encodeKey, nickname, token, history));
+      dispatch(acceptInvitation(encodeKey, nickname, token, email, history));
+      localStorage.removeItem('nickname');
+      localStorage.removeItem('email');
     } else {
       history.push(`/`, { key });
     }

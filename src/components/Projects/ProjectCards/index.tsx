@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid } from '@material-ui/core';
 
 import ProjectCard from './ProjectCard';
-import { initializeProjects } from '../../../modules/projects';
+import { initializeProjects } from '../../../modules/filters';
 import { RootState } from '../../../modules';
 
 function ProjectCards(): React.ReactElement {

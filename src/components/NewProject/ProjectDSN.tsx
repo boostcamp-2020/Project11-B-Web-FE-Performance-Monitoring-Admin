@@ -1,82 +1,60 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { Box, Button, Snackbar, IconButton, Tooltip, Typography, styled } from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
-import * as clipboard from 'clipboard-polyfill/text';
+import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
+
+import CopyClipboardBox from '../common/CopyClipboardBox';
+import useProgress from '../../hooks/ProgressHooks';
+import service from '../../service';
+
+import CodeSnippet from './CodeSnippet';
 
 interface IProps {
-  dsn: string;
+  projectId: string;
 }
 
-const LowercaseButton = styled(Button)({
-  textTransform: 'none',
-  alignSelf: 'flex-start',
-});
-
-dark.hljs.padding = '10px';
-
-const makeCodeSnippet = (dsn: string) => {
-  return `import Panopticon from 'pan-opt';
-  
-const dsn = '${dsn}'
-
-Panopticon.init(dsn);`;
-};
-
 function NewProjectDSN(props: IProps): React.ReactElement {
-  const { dsn } = props;
+  const { projectId } = props;
+  const [isCreated, setIsCreated] = useState(false);
+  const [showProgress, displayProgress, hideProgress] = useProgress();
 
-  const [open, setOpen] = useState(false);
-  const tooltipMessage = 'Click to copy to clipboard';
-  const alertMessage = 'DSN copied to clipboard';
+  const dsn = `http://panopticon.gq/api/sdk/${projectId}`;
 
-  const handleClick = () => {
-    clipboard.writeText(dsn);
-    setOpen(true);
-  };
+  const congratsText =
+    '축하합니다! 새로운 프로젝트가 생성되었어요. 아래에서 프로젝트에 부여된 고유한 주소인 DSN을 확인할 수 있습니다.';
+  const descText =
+    'npm install pan-opt 명령어를 이용해서 Panopticon SDK를 설치하고, 예시 코드를 참조해서 프로젝트에 Panopticon을 적용해 보세요. 프로젝트에 직접 적용하기 이전에 기능들을 살펴보고 싶다면 샘플 데이터를 생성해 보세요.';
+  const createSampleText = '샘플 데이터 생성';
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSnackbarClose = (event: any, reason: string): void => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
+  const handleSampleCreate = async () => {
+    displayProgress();
+    await service.addSampleCrimes(projectId);
+    setIsCreated(true);
+    hideProgress();
   };
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box display="flex" flexDirection="row" alignItems="center">
-        <Typography>Your project DSN -</Typography>
-        <Tooltip title={tooltipMessage}>
-          <LowercaseButton onClick={handleClick} color="primary">
-            {dsn}
-          </LowercaseButton>
-        </Tooltip>
-        <Snackbar
-          open={open}
-          onClose={handleSnackbarClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          autoHideDuration={2500}
-          message={alertMessage}
-          action={
-            // eslint-disable-next-line react/jsx-wrap-multilines
-            <IconButton color="inherit" onClick={handleClose}>
-              <CloseIcon />
-            </IconButton>
-          }
-        />
+      <Typography>{congratsText}</Typography>
+      <Box pt={2} pb={2} display="flex" flexDirection="column" alignItems="flex-start">
+        <Box display="flex" flexDirection="row" alignItems="center">
+          <CopyClipboardBox textContent={dsn} />
+          <Box pl={2}>
+            {showProgress ? (
+              <CircularProgress />
+            ) : (
+              <Button
+                onClick={handleSampleCreate}
+                disabled={isCreated}
+                color="primary"
+                variant="contained"
+              >
+                {createSampleText}
+              </Button>
+            )}
+          </Box>
+        </Box>
       </Box>
-      <SyntaxHighlighter language="javascript" style={dark}>
-        {makeCodeSnippet(dsn)}
-      </SyntaxHighlighter>
+      <Typography>{descText}</Typography>
+      <CodeSnippet DSN={dsn} />
     </Box>
   );
 }
