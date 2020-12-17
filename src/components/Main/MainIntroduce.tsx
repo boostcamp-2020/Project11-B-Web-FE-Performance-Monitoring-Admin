@@ -42,7 +42,7 @@ function MainIntroduce(props: IProps): React.ReactElement {
         </Typography>
         <Box fontSize="16px">
           {list.map((el) => (
-            <Box display="flex" alignItems="center">
+            <Box key={el} display="flex" alignItems="center">
               <Box m={1}>
                 <CheckIcon />
               </Box>

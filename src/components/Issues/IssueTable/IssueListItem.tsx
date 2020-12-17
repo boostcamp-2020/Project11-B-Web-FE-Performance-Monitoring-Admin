@@ -3,14 +3,13 @@ import { Box, Typography, Tooltip, Hidden } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { styled, makeStyles } from '@material-ui/core/styles';
 import { AccessTime } from '@material-ui/icons';
-import { faJs } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactComponent as JsIcon } from '../../../image/javascript.svg';
 import timeAgo from '../../../utils/timeAgo';
 import { IIssue } from '../../../types';
 import Chart from '../../common/IssueCrimeChart';
 
 export interface IProps {
-  issue: any;
+  issue: IIssue;
 }
 const StyledLink = styled(Link)({
   fontSize: '18px',
@@ -29,6 +28,11 @@ const useStyle = makeStyles({
     '&:last-child': {
       border: 'none',
     },
+  },
+  svg: {
+    width: '16px',
+    height: '16px',
+    borderRadius: '1px',
   },
 });
 
@@ -49,7 +53,7 @@ function IssueListItem(props: IProps): React.ReactElement {
           <Box fontSize="14px">{issueData.message}</Box>
           <Box display="flex">
             <Box mr={1}>
-              <FontAwesomeIcon size="lg" icon={faJs} color="#f0db4f" />
+              <JsIcon className={styles.svg} />
             </Box>
             <Box mr={1}>{issueData.project.name}</Box>
             <Box display="flex" fontSize="small" color="textSecondary">

@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailDialog from './ProjectDetailDialog';
+import ProjectDetailHeader from './ProjectDetailHeader';
 import ProjectDetailOwner from './ProjectDetailOwner';
 import ProjectDetailChangeOwner from './ProjectDetailChangeOwner';
 import ProjectDetailDelete from './ProjectDetailDelete';

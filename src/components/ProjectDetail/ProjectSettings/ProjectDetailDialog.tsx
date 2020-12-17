@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Box from '@material-ui/core/Box';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import CodeSnippet from '../../NewProject/CodeSnippet';
 import CopyClipboardBox from '../../common/CopyClipboardBox';
 
 const useStyles = makeStyles({
@@ -17,14 +16,6 @@ const useStyles = makeStyles({
     padding: '30px 20px',
   },
 });
-
-const makeCodeSnippet = (dsn: string) => {
-  return `import Panopticon from 'pan-opt';
-  
-const dsn = '${dsn}'
-
-Panopticon.init(dsn);`;
-};
 
 interface IProps {
   dsn: string;
@@ -55,9 +46,7 @@ export default function ProjectDNSDialog(props: IProps): React.ReactElement {
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
         <Box className={classes.dialog}>
           <CopyClipboardBox textContent={dsn} />
-          <SyntaxHighlighter language="javascript" style={dark}>
-            {makeCodeSnippet(dsn)}
-          </SyntaxHighlighter>
+          <CodeSnippet DSN={dsn} />
         </Box>
       </Dialog>
     </Box>
