@@ -86,7 +86,7 @@ export default (apiRequest: AxiosInstance): IResponse => {
     return apiRequest.post(`/api/sdk/${projectId}/samples`);
   };
   const inviteMembers = (invite: IInvite) => {
-    return apiRequest.post('/api/invite', invite);
+    return apiRequest.post(`/api/invite/${invite.projectId}`, invite);
   };
 
   return {

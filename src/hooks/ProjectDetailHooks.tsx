@@ -60,6 +60,7 @@ const useProject = (projectId: string) => {
       newProject.owner = res.data;
       return newProject;
     });
+    setIsOwner(currentUser.nickname === res.data.nickname);
   };
 
   return [project, isOwner, setProjectName, setProjectUsers, setProjectOwner] as const;
