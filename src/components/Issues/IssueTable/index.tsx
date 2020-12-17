@@ -13,10 +13,13 @@ import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
 import useInterval from '../../../hooks/UseInterval';
 import NoProjectSelected from '../../common/NoProjectSelected';
+import useProgress from '../../../hooks/ProgressHooks';
+import Progress from '../../common/Progress';
 
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [showProgress, displayProgress, hideProgress] = useProgress();
 
   const [totalPage, setTotalPage] = useState<number>();
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
@@ -50,6 +53,7 @@ function IssueTable(): React.ReactElement {
     if (selectedProjectsIds[0] === undefined) return;
 
     const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod);
+    hideProgress();
     if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
@@ -61,9 +65,14 @@ function IssueTable(): React.ReactElement {
   useInterval(() => getData(), 10000);
 
   useEffect(() => {
-    getData();
+    (async () => {
+      displayProgress();
+      getData();
+    })();
   }, [selectedProjectsIds, page, getData]);
-  return (
+  return showProgress ? (
+    <Progress />
+  ) : (
     <Box my={1} display="flex" flexDirection="column">
       <Box flexGrow={1}>
         <Box my={1} display="flex" justifyContent="flex-end">
