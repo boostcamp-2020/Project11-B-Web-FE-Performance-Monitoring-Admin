@@ -100,8 +100,6 @@ const Login = (props: IProps): React.ReactElement => {
             externalWindow.close();
             const { token, email, nickname } = data;
             localStorage.setItem('token', token);
-            localStorage.setItem('email', email);
-            localStorage.setItem('nickname', nickname);
             if (location.state) {
               history.go(-1);
             } else {
