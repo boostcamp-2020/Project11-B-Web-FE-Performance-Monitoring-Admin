@@ -53,7 +53,6 @@ function IssueTable(): React.ReactElement {
     if (selectedProjectsIds[0] === undefined) return;
 
     const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod);
-    hideProgress();
     if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
@@ -67,7 +66,8 @@ function IssueTable(): React.ReactElement {
   useEffect(() => {
     (async () => {
       displayProgress();
-      getData();
+      await getData();
+      hideProgress();
     })();
   }, [selectedProjectsIds, page, getData]);
   return showProgress ? (
