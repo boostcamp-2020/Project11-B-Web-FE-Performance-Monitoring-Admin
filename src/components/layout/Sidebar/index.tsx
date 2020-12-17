@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent, FocusEvent } from 'react';
+import React, { useState, ChangeEvent, KeyboardEvent, FocusEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, NavLink } from 'react-router-dom';
 import { Box, Avatar } from '@material-ui/core';
@@ -95,6 +95,10 @@ function Sidebar(): React.ReactElement {
   const [email, setEmail] = useState(user.email);
   const [inputEmail, setInputEmail] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setEmail(user.email);
+  }, [user]);
 
   const history = useHistory();
   const handleDrawerOpen = () => {

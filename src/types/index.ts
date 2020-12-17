@@ -134,7 +134,7 @@ export interface IAlertsUserProfile {
   isSelected: boolean;
 }
 
-export interface IGetAlertsResponse {
+export interface IAlert {
   _id: string;
   users: { _id: string; email: string; nickname: string }[];
   period: string;

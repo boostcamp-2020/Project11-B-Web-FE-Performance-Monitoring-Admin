@@ -1,26 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Box from '@material-ui/core/Box';
 import Accordion from './Accordion';
-import service from '../../../service';
-import { IGetAlertsResponse } from '../../../types';
+import { IAlert } from '../../../types';
 
 interface IProps {
-  projects: string[];
+  alerts: IAlert[] | undefined;
 }
 
 function AlertList(props: IProps): React.ReactElement {
-  const { projects } = props;
-  const [alerts, setAlerts] = useState<IGetAlertsResponse[] | undefined>(undefined);
+  const { alerts } = props;
 
-  useEffect(() => {
-    const fetchAlerts = async () => {
-      const { data } = await service.getAlerts(projects);
-      setAlerts(data);
-    };
-    fetchAlerts();
-  }, [projects]);
-
-  return <Box flex="1">{alerts && alerts.map((alert) => <Accordion alert={alert} />)}</Box>;
+  return (
+    <Box flex="1">
+      {alerts && alerts.map((alert) => <Accordion key={alert._id} alert={alert} />)}
+    </Box>
+  );
 }
 
 export default AlertList;
