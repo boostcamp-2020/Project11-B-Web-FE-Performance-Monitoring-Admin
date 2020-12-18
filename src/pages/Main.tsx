@@ -84,6 +84,20 @@ function Main(): React.ReactElement {
 
   return (
     <Box>
+      <Box
+        position="absolute"
+        zIndex="-999"
+        height="85vh"
+        width="100%"
+        minHeight="700px"
+        className={classes.mainDescription}
+        style={{
+          backgroundImage: `url(${
+            loadedSrc ||
+            'https://firebasestorage.googleapis.com/v0/b/panopticon-7444c.appspot.com/o/laptop-2838918_640.jpg?alt=media&token=97ecb6c7-8a10-4ba4-8714-1f06b76033a9'
+          })`,
+        }}
+      />
       <ElevationScroll>
         <AppBar color="transparent">
           <Toolbar
@@ -104,25 +118,12 @@ function Main(): React.ReactElement {
         </AppBar>
       </ElevationScroll>
       <Box
-        position="absolute"
-        zIndex="-999"
-        height="85vh"
-        width="100%"
-        className={classes.mainDescription}
-        style={{
-          backgroundImage: `url(${
-            loadedSrc ||
-            'https://firebasestorage.googleapis.com/v0/b/panopticon-7444c.appspot.com/o/laptop-2838918_640.jpg?alt=media&token=97ecb6c7-8a10-4ba4-8714-1f06b76033a9'
-          })`,
-        }}
-      />
-
-      <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
         fontSize="1.5rem"
         height="85vh"
+        minHeight="700px"
         py={20}
         fontWeight="500"
         zIndex="2"
@@ -143,9 +144,7 @@ function Main(): React.ReactElement {
           <Box />
           <img width="450px" src={PanLogoWhite} alt="panopticon-logo" />
 
-          <Typography color="primary" variant="h2">
-            - 웹 APP 개발 에러 및 로그 모니터링 및 분석 플랫폼 -
-          </Typography>
+          <Typography variant="h2">- 웹 APP 개발 에러 및 로그 모니터링 및 분석 플랫폼 -</Typography>
           <Box minWidth="50%">
             <Login color="black" large />
           </Box>
@@ -153,7 +152,7 @@ function Main(): React.ReactElement {
       </Box>
 
       <Container style={{ height: '90vh' }}>
-        <Box>
+        <Box mt={15}>
           <Box textAlign="center" width="100%">
             <h1>Feature</h1>
           </Box>

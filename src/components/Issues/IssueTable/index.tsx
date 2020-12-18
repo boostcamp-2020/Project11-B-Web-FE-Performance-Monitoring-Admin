@@ -13,10 +13,13 @@ import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
 import useInterval from '../../../hooks/UseInterval';
 import NoProjectSelected from '../../common/NoProjectSelected';
+import useProgress from '../../../hooks/ProgressHooks';
+import Progress from '../../common/Progress';
 
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [showProgress, displayProgress, hideProgress] = useProgress();
 
   const [totalPage, setTotalPage] = useState<number>();
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
@@ -61,9 +64,15 @@ function IssueTable(): React.ReactElement {
   useInterval(() => getData(), 10000);
 
   useEffect(() => {
-    getData();
+    (async () => {
+      displayProgress();
+      await getData();
+      hideProgress();
+    })();
   }, [selectedProjectsIds, page, getData]);
-  return (
+  return showProgress ? (
+    <Progress />
+  ) : (
     <Box my={1} display="flex" flexDirection="column">
       <Box flexGrow={1}>
         <Box my={1} display="flex" justifyContent="flex-end">
@@ -84,7 +93,7 @@ function IssueTable(): React.ReactElement {
             borderRadius=".2rem"
           >
             <IssueToolbar />
-            {issues[0] ? (
+            {selectedProjectsIds[0] ? (
               issues.map((issue) => <IssueListItem key={issue._id} issue={issue} />)
             ) : (
               <NoProjectSelected />

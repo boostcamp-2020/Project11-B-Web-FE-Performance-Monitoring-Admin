@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import Sidebar from '../components/layout/Sidebar';
 import { PrivateRouter, PublicRouter } from '../Router';
 import { RootState } from '../modules';
+import Footer from '../components/layout/Footer';
 
 const useStyle = makeStyles({
   root: {
@@ -13,6 +14,8 @@ const useStyle = makeStyles({
   },
   w100: {
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 const title = 'PANOPTICON';
@@ -35,6 +38,7 @@ function MainLayout(): React.ReactElement {
       <Sidebar />
       <Box className={classes.w100}>
         <PrivateRouter />
+        <Footer />
       </Box>
     </div>
   ) : (

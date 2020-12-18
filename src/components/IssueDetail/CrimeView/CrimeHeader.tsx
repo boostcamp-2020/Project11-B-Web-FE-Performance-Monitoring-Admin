@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, createStyles, makeStyles, Typography, Theme } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 
 import { ICrime } from '../../../types';
 import BackNextButtons from '../../NewProject/BackNextButtons';

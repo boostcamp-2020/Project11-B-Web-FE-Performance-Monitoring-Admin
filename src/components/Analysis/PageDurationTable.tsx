@@ -1,9 +1,7 @@
 import React from 'react';
 import {
   Box,
-  Button,
   Table,
-  Typography,
   TableBody,
   TableCell,
   TableContainer,
@@ -11,8 +9,6 @@ import {
   TableRow,
   Paper,
 } from '@material-ui/core';
-
-import arrayToCSV from '../../utils/arrayToCSV';
 
 interface IDuration {
   _id: string;
