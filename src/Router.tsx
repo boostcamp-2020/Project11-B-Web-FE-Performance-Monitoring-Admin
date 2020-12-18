@@ -29,6 +29,7 @@ function PublicRouter(): React.ReactElement {
 function PrivateRouter(): React.ReactElement {
   return (
     <Switch>
+      <Route path="/accept" component={InviteProject} />
       <Route path="/projects/new" exact component={NewProject} />
       <Route path="/projects" exact component={Projects} />
       <Route path="/project/:id" exact component={ProjectDetail} />

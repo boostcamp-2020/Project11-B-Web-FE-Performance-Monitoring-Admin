@@ -37,15 +37,12 @@ export const validateUser = (token: string | undefined) => async (
   }
 };
 
-export const acceptInvitation = (
-  encodeKey: string,
-  nickname: string,
-  token: string,
-  email: string,
-  history: any,
-) => async (dispatch: Dispatch): Promise<void> => {
+export const acceptInvitation = (encodeKey: string, token: string, history: any) => async (
+  dispatch: Dispatch,
+): Promise<void> => {
+  const { data } = await service.getUser();
   await service.acceptInvitation(encodeKey);
-  dispatch(loginUser(token, email, nickname));
+  dispatch(loginUser(token, data.email, data.nickname));
   history.push('/projects');
 };
 
