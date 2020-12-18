@@ -48,7 +48,6 @@ const useProject = (projectId: string) => {
     setProject(() => {
       const newProject = _.cloneDeep(project) as IProject;
       newProject.users = newProject.users.filter((user) => !selectedIds.includes(user._id));
-      newProject.users.push();
       return newProject;
     });
   };
