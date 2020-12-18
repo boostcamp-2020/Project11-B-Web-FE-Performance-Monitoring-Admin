@@ -15,13 +15,13 @@ function FilterPage(props: IPageProps): React.ReactElement {
     <Box width="100%" p={3}>
       <Grid container spacing={2}>
         {showProjectSelector && (
-          <Grid item xs={showPeriodSelector ? 6 : 12}>
+          <Grid item xs={6}>
             <ProjectSelector />
           </Grid>
         )}
 
         {showPeriodSelector && (
-          <Grid item xs={showProjectSelector ? 6 : 12}>
+          <Grid item xs={6}>
             <PeriodSelector />
           </Grid>
         )}

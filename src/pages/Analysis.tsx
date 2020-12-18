@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Container } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import ProjectSelector from '../components/common/ProjectSelector';
 
 import DailyDurationTable from '../components/Analysis/DailyDurationTable';
 import PageDurationTable from '../components/Analysis/PageDurationTable';
 import PageMoveTable, { IPageMove } from '../components/Analysis/PageMoveTable';
 import service from '../service';
 import { RootState } from '../modules';
-import FilterPage from '../components/layout/FilterPage';
 
 interface IDuration {
   _id: string;
   avg_duration: number;
   sum_duration: number;
   count: number;
-  userCount: number;
 }
 interface IPerDay {
   _id: {
@@ -25,7 +24,6 @@ interface IPerDay {
   sum_duration: number;
   avg_duration: number;
   count: number;
-  userCount: number;
 }
 function Analysis(): React.ReactElement {
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
@@ -45,15 +43,23 @@ function Analysis(): React.ReactElement {
     })();
   }, [selectedProjectsIds]);
   return (
-    <FilterPage showPeriodSelector={false}>
-      <Container>
-        <PageMoveTable pageMoveData={pageMoveData} />
+    <Box maxWidth="100%" overflow="hidden" p={3}>
+      <ProjectSelector />
+      <Typography variant="h3" id="tableTitle" component="span">
+        페이지간 이동 추이
+      </Typography>
+      <PageMoveTable pageMoveData={pageMoveData} />
 
-        <DailyDurationTable pageDurationPerDay={pageDurationPerDay} />
+      <Typography variant="h3" id="tableTitle" component="div">
+        일별 체류시간
+      </Typography>
+      <DailyDurationTable pageDurationPerDay={pageDurationPerDay} />
 
-        <PageDurationTable pageDurationData={pageDurationData} />
-      </Container>
-    </FilterPage>
+      <Typography variant="h3" id="tableTitle" component="div">
+        페이지별 체류시간
+      </Typography>
+      <PageDurationTable pageDurationData={pageDurationData} />
+    </Box>
   );
 }
 
