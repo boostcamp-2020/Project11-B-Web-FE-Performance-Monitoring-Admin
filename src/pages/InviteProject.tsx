@@ -12,14 +12,10 @@ function InviteProject(): React.ReactElement {
   } = history;
   const { key } = qs.parse(search, { ignoreQueryPrefix: true });
   useEffect(() => {
-    const nickname = localStorage.getItem('nickname');
     const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
-    if (key && nickname && token && email) {
+    if (key && token) {
       const encodeKey = encodeURIComponent(key as string);
-      dispatch(acceptInvitation(encodeKey, nickname, token, email, history));
-      localStorage.removeItem('nickname');
-      localStorage.removeItem('email');
+      dispatch(acceptInvitation(encodeKey, token, history));
     } else {
       history.push(`/`, { key });
     }

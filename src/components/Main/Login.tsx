@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +7,13 @@ import qs from 'qs';
 import { useDispatch } from 'react-redux';
 import service from '../../service';
 import { loginUser } from '../../modules/user';
+
+interface IProps {
+  // eslint-disable-next-line react/no-unused-prop-types
+  color: string;
+  // eslint-disable-next-line react/no-unused-prop-types
+  large: boolean;
+}
 
 const useStyles = makeStyles((theme) => ({
   button: (props: IProps) => ({
@@ -37,12 +43,7 @@ type IWindowProps = {
   height: number;
 };
 
-interface IProps {
-  color: string;
-  large: boolean;
-}
 const Login = (props: IProps): React.ReactElement => {
-  const { color, large } = props;
   const dispatch = useDispatch();
 
   const OAUTH_URL = `https://github.com/login/oauth/authorize?client_id=${
@@ -100,8 +101,6 @@ const Login = (props: IProps): React.ReactElement => {
             externalWindow.close();
             const { token, email, nickname } = data;
             localStorage.setItem('token', token);
-            localStorage.setItem('email', email);
-            localStorage.setItem('nickname', nickname);
             if (location.state) {
               history.go(-1);
             } else {

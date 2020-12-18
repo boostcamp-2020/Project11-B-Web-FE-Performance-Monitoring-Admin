@@ -1,7 +1,6 @@
 import Box from '@material-ui/core/Box';
 import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import _ from 'lodash';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ProjectSettings from '../components/ProjectDetail/ProjectSettings';

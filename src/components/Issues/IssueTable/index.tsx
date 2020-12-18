@@ -13,12 +13,16 @@ import { RootState } from '../../../modules';
 import arrayToCSV from '../../../utils/arrayToCSV';
 import useInterval from '../../../hooks/UseInterval';
 import NoProjectSelected from '../../common/NoProjectSelected';
+import useProgress from '../../../hooks/ProgressHooks';
+import Progress from '../../common/Progress';
 
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
   const [query, setQuery] = useState<string[]>([]);
   const [input, setInput] = useState('');
+  const [showProgress, displayProgress, hideProgress] = useProgress();
+
   const [totalPage, setTotalPage] = useState<number>();
   const selectedProjectsIds = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   const selectedPeriod = useSelector((state: RootState) => state.projects.selectedPeriod);
@@ -87,9 +91,15 @@ function IssueTable(): React.ReactElement {
   useInterval(() => getData(), 20000);
 
   useEffect(() => {
-    getData();
-  }, [selectedProjectsIds, page, query]);
-  return (
+    (async () => {
+      displayProgress();
+      await getData();
+      hideProgress();
+    })();
+  }, [selectedProjectsIds, page, getData, query]);
+  return showProgress ? (
+    <Progress />
+  ) : (
     <Box my={1} display="flex" flexDirection="column">
       <TextField
         id="tag-fillter"
@@ -120,7 +130,7 @@ function IssueTable(): React.ReactElement {
             borderRadius=".2rem"
           >
             <IssueToolbar />
-            {issues[0] ? (
+            {selectedProjectsIds[0] ? (
               issues.map((issue) => <IssueListItem key={issue._id} issue={issue} />)
             ) : (
               <NoProjectSelected />

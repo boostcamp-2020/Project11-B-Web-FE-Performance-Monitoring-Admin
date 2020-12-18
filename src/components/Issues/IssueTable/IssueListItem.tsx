@@ -60,7 +60,11 @@ function IssueListItem(props: IProps): React.ReactElement {
               <Box>
                 <AccessTime fontSize="inherit" />
               </Box>
-              <Tooltip title={issueData.lastCrime.occuredAt} placement="right" arrow>
+              <Tooltip
+                title={new Date(issueData.lastCrime.occuredAt).toLocaleString()}
+                placement="right"
+                arrow
+              >
                 <span> {timeAgo(issueData.lastCrime.occuredAt)}</span>
               </Tooltip>
             </Box>

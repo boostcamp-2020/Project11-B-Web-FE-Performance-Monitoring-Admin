@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Dispatch } from 'redux';
 import { IIssue } from '../types';
 
