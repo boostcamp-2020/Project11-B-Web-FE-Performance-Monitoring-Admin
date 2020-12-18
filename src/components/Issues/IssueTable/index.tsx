@@ -47,9 +47,9 @@ function IssueTable(): React.ReactElement {
     arrayToCSV(rows);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setInput(event.target.value);
-    const strArr = event.target.value.split(',');
+  const onClickBtn = async () => {
+    console.log(input);
+    const strArr = input.split(',');
     const temp: any[] = strArr.map((str) => {
       const splited = str.split(':');
       const key = splited[0];
@@ -59,39 +59,50 @@ function IssueTable(): React.ReactElement {
       if (!key || !val) {
         return undefined;
       }
-      // obj.splited[0] = splited[1];
       return JSON.stringify(obj) as string;
     });
     if (!temp[0]) {
-      return setQuery([]);
+      setQuery([]);
+    } else {
+      setQuery(temp as string[]);
     }
-
-    return setQuery(temp as string[]);
+    console.log(query);
+    await getData();
   };
-  const getData = useCallback(async () => {
+  const onChange = (e: any) => {
+    setInput(e.target.value);
+  };
+  const getData = async () => {
     if (selectedProjectsIds[0] === undefined) return;
 
     const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod, query);
 
-    if (!res.data.data) {
+    if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
       return;
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  }, [selectedProjectsIds, page, input]);
-  const delayedQuery = useCallback(_.debounce(getData, 1000), [input]);
+  };
 
   useInterval(() => getData(), 20000);
 
   useEffect(() => {
-    delayedQuery();
-    return delayedQuery.cancel;
-  }, [selectedProjectsIds, page, delayedQuery]);
+    getData();
+  }, [selectedProjectsIds, page, query]);
   return (
     <Box my={1} display="flex" flexDirection="column">
-      <TextField id="tag-fillter" label="Tag-fillter" onChange={handleChange} variant="outlined" />
+      <TextField
+        id="tag-fillter"
+        label="Tag-fillter"
+        variant="outlined"
+        onChange={onChange}
+        value={input}
+      />
+      <Button variant="contained" color="primary" onClick={onClickBtn}>
+        submit
+      </Button>
       <Box flexGrow={1}>
         <Box my={1} display="flex" justifyContent="flex-end">
           <Box mr={1}>
