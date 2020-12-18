@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import _ from 'lodash';
+
 import Pagination from '@material-ui/lab/Pagination';
-import { Box, Button, Paper, TextField } from '@material-ui/core';
+import { Box, Button, Paper } from '@material-ui/core';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { useSelector } from 'react-redux';
 import TimerBtn from '../../common/TimerBtn';
@@ -19,8 +19,6 @@ import Progress from '../../common/Progress';
 function IssueTable(): React.ReactElement {
   const [issues, setIssues] = useState<IIssue[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [query, setQuery] = useState<string[]>([]);
-  const [input, setInput] = useState('');
   const [showProgress, displayProgress, hideProgress] = useProgress();
 
   const [totalPage, setTotalPage] = useState<number>();
@@ -51,34 +49,10 @@ function IssueTable(): React.ReactElement {
     arrayToCSV(rows);
   };
 
-  const onClickBtn = async () => {
-    const strArr = input.split(',');
-    const temp: any[] = strArr.map((str) => {
-      const splited = str.split(':');
-      const key = splited[0];
-      const val = splited[1];
-      const obj: any = {};
-      obj[`${key}`] = val;
-      if (!key || !val) {
-        return undefined;
-      }
-      return JSON.stringify(obj) as string;
-    });
-    if (!temp[0]) {
-      setQuery([]);
-    } else {
-      setQuery(temp as string[]);
-    }
-    await getData();
-  };
-  const onChange = (e: any) => {
-    setInput(e.target.value);
-  };
-  const getData = async () => {
+  const getData = useCallback(async () => {
     if (selectedProjectsIds[0] === undefined) return;
 
-    const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod, query);
-
+    const res = await service.getIssues(selectedProjectsIds, page, selectedPeriod);
     if (res.data.data === undefined) {
       setTotalPage(0);
       setIssues([]);
@@ -86,9 +60,8 @@ function IssueTable(): React.ReactElement {
     }
     setTotalPage(res.data.metaData.totalPage);
     setIssues(res.data.data);
-  };
-
-  useInterval(() => getData(), 20000);
+  }, [selectedProjectsIds, page, selectedPeriod]);
+  useInterval(() => getData(), 10000);
 
   useEffect(() => {
     (async () => {
@@ -96,21 +69,11 @@ function IssueTable(): React.ReactElement {
       await getData();
       hideProgress();
     })();
-  }, [selectedProjectsIds, page, getData, query]);
+  }, [selectedProjectsIds, page, getData]);
   return showProgress ? (
     <Progress />
   ) : (
     <Box my={1} display="flex" flexDirection="column">
-      <TextField
-        id="tag-fillter"
-        label="Tag-fillter"
-        variant="outlined"
-        onChange={onChange}
-        value={input}
-      />
-      <Button variant="contained" color="primary" onClick={onClickBtn}>
-        submit
-      </Button>
       <Box flexGrow={1}>
         <Box my={1} display="flex" justifyContent="flex-end">
           <Box mr={1}>

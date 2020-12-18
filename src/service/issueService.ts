@@ -7,7 +7,6 @@ export interface IIssueService {
     selectedProjectsIds: string[],
     page: number,
     period: string,
-    tags: string[],
   ) => Promise<AxiosResponse>;
   getCrime: (id: string) => Promise<AxiosResponse>;
   getCrimes: (id: string, pageNum: number) => Promise<AxiosResponse>;
@@ -18,17 +17,11 @@ export default (apiRequest: AxiosInstance): IIssueService => {
     return apiRequest.get(`/api/issue/${id}`);
   };
 
-  const getIssues = (
-    selectedProjectsIds: string[],
-    page: number,
-    period: string,
-    tags: string[],
-  ) => {
+  const getIssues = (selectedProjectsIds: string[], page: number, period: string) => {
     const query = `?${qs.stringify({
       page,
       projectId: selectedProjectsIds,
       period,
-      tags: tags || undefined,
     })}`;
     return apiRequest.get(`/api/issues${query}`);
   };
