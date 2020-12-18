@@ -96,7 +96,7 @@ function IssueTable(): React.ReactElement {
       await getData();
       hideProgress();
     })();
-  }, [selectedProjectsIds, page, getData, query]);
+  }, [selectedProjectsIds, page, query]);
   return showProgress ? (
     <Progress />
   ) : (
