@@ -48,7 +48,6 @@ function IssueTable(): React.ReactElement {
   };
 
   const onClickBtn = async () => {
-    console.log(input);
     const strArr = input.split(',');
     const temp: any[] = strArr.map((str) => {
       const splited = str.split(':');
@@ -66,7 +65,6 @@ function IssueTable(): React.ReactElement {
     } else {
       setQuery(temp as string[]);
     }
-    console.log(query);
     await getData();
   };
   const onChange = (e: any) => {
