@@ -31,7 +31,7 @@ function LineChart(props: IProps): React.ReactElement {
   const flatColumns = columns.map((column) => [column.name, ...column.values]);
 
   useEffect(() => {
-    const chart = bb.generate({
+    bb.generate({
       data: {
         x: 'x',
         columns: flatColumns,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup, styled } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 interface IProps {
   leftButtonText?: string;

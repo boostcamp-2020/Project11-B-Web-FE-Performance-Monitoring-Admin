@@ -32,7 +32,7 @@ const useProject = (projectId: string) => {
       setProject(newProject.data);
       setIsOwner(currentUser.nickname === newProject.data.owner.nickname);
     })();
-  }, []);
+  }, [currentUser]);
 
   const setProjectName = async (name: string) => {
     await service.updateProjectName(projectId, { name });
@@ -54,13 +54,18 @@ const useProject = (projectId: string) => {
 
   const setProjectOwner = async (originUserId: string, targetUserId: string) => {
     await service.updateProjectOwner(projectId, { originUserId, targetUserId });
-    const res = await service.getUser(targetUserId);
+    const newOwnerRes = await service.getUser(targetUserId);
+    const originOwnerRes = await service.getUser(originUserId);
+    const newOwner = newOwnerRes.data;
+    const originOwner = originOwnerRes.data;
     setProject(() => {
       const newProject: IProject = _.cloneDeep(project) as IProject;
-      newProject.owner = res.data;
+      newProject.owner = newOwner;
+      newProject.users = newProject.users.filter((user) => user._id !== targetUserId);
+      newProject.users.push(originOwner);
       return newProject;
     });
-    setIsOwner(currentUser.nickname === res.data.nickname);
+    setIsOwner(currentUser.nickname === newOwner.nickname);
   };
 
   return [project, isOwner, setProjectName, setProjectUsers, setProjectOwner] as const;
