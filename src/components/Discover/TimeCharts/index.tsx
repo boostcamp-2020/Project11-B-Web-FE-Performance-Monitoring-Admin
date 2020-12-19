@@ -7,6 +7,7 @@ import Progress from '../../common/Progress';
 import service from '../../../service';
 import { RootState } from '../../../modules';
 import useInterval from '../../../hooks/UseInterval';
+import useProgress from '../../../hooks/ProgressHooks';
 
 interface IProps {
   filterQuery: Record<string, string[] | undefined>;
@@ -19,16 +20,19 @@ function TimeCharts(props: IProps): React.ReactElement {
 
   const [currTab, setCurrTab] = useState(0);
   const [columns, setColumns] = useState<any>([]);
+  const [showProgress, displayProgress, hideProgress] = useProgress();
   const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
 
   useEffect(() => {
     (async () => {
+      displayProgress();
       const res = await service.getCountByInterval({
         projectIds: selectedProjects,
         type: 'recent',
         period: selectedPeriod,
         filters: filterQuery,
       });
+      hideProgress();
       setColumns(res.data);
     })();
   }, [selectedProjects, selectedPeriod, filterQuery]);
@@ -72,7 +76,7 @@ function TimeCharts(props: IProps): React.ReactElement {
 
   useInterval(updateColumns, 30000);
 
-  return columns === undefined ? (
+  return showProgress ? (
     <Progress />
   ) : (
     <Box>
