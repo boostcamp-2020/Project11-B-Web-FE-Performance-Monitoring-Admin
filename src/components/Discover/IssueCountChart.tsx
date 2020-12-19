@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux';
 import bb, { zoom, bar } from 'billboard.js';
 import 'billboard.js/dist/billboard.css';
 import qs from 'querystring';
+import Progress from '../common/Progress';
 import service from '../../service';
 import { RootState } from '../../modules';
+import useProgress from '../../hooks/ProgressHooks';
 
 interface IIssueCount {
   _id: string;
@@ -20,9 +22,11 @@ interface IProps {
 function IssueCountChart(props: IProps): React.ReactElement {
   const { filterQuery } = props;
   const chartDiv = useRef(null);
+  const [showProgress, displayProgress, hideProgress] = useProgress();
   const selectedProjects = useSelector((state: RootState) => state.projects.selectedProjectsIds);
   useEffect(() => {
     (async (): Promise<void> => {
+      displayProgress();
       const query = `?${qs.stringify({
         projectId: selectedProjects,
         ...filterQuery,
@@ -30,6 +34,7 @@ function IssueCountChart(props: IProps): React.ReactElement {
       try {
         const res = await service.getCountByIssue(query);
         const statsData = res.data;
+        hideProgress();
         bb.generate({
           data: {
             x: 'x',
@@ -80,6 +85,6 @@ function IssueCountChart(props: IProps): React.ReactElement {
       } catch (e) {}
     })();
   }, [selectedProjects, filterQuery]);
-  return <div ref={chartDiv} />;
+  return showProgress ? <Progress /> : <div ref={chartDiv} />;
 }
 export default IssueCountChart;
